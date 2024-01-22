@@ -1,0 +1,1 @@
+export const tableData = [["Ebay","Ebay"],["Flipkart","Flipkart"],["HUL","Hindustan Unilevel"],["IsDB","Islamic Development Bank"],["TCL","Tata Consumers Products Limited India"]];

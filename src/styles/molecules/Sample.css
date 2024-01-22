@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap:48px;
+    height: 90dvh;
+    overflow: scroll;
+}
+
+.container p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+.card-container{
+    display: flex;
+    border: 1px solid rgb(0,0,0,0.3);
+    padding: 32px;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.table-container{
+    flex-grow: 1;
+}
+
+
