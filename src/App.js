@@ -1,14 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
-import Layout from "./components/layout/index"
-import Sample from './components/molecules/Sample';
+import "./App.css";
+import Layout from "./components/layout/index";
+import Sample from "./components/molecules/Sample";
 
 function App() {
   return (
     <>
-    <Layout>
-       <Sample/>
-    </Layout>
+      <Layout>
+        <Sample />
+      </Layout>
     </>
   );
 }

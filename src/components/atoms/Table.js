@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "../../styles/atoms/table.css";
-import { tableData } from "../../data/tableData";
+import { tablePaginatedData } from "../../data/tableData";
 import del from "../../assets/images/delete.svg";
 import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
@@ -136,6 +136,14 @@ const Table = () => {
   const [selectedData, setSelectedData] = useState({});
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
+  // state for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const handleAddNewClick = () => {
     // Open the Add New modal
     setAddModalOpen(true);
@@ -160,6 +168,7 @@ const Table = () => {
     setDeleteModalOpen(false);
   };
 
+  console.log(tablePaginatedData[currentPage - 1]);
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className="flex justify-between gap-4">
@@ -231,11 +240,14 @@ const Table = () => {
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeModal}
-        onDelete={()=>{}}
+        onDelete={() => {}}
         itemName={selectedData[0]}
       />
       <div>
-        <div className="relative overflow-x-auto">
+        <div
+          className="relative overflow-x-auto"
+          style={{ minHeight: "300px" }}
+        >
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
             <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -251,7 +263,7 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((data, index) => {
+              {tablePaginatedData[currentPage - 1].map((data, index) => {
                 return (
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
@@ -264,7 +276,14 @@ const Table = () => {
                     <td className="flex gap-3 px-6 py-4">
                       {[write, look, del, info].map((image, index) => {
                         return (
-                          <button key={index} onClick={() => image===del ? handleDeleteClick(data) : handleEditClick(data)}>
+                          <button
+                            key={index}
+                            onClick={() =>
+                              image === del
+                                ? handleDeleteClick(data)
+                                : handleEditClick(data)
+                            }
+                          >
                             <img src={image} alt="icon" />
                           </button>
                         );
@@ -276,6 +295,45 @@ const Table = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="pagination">
+        {currentPage > 1 && (
+          <>
+            <button
+              className="pagination-button"
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              {"<"}
+            </button>
+          </>
+        )}
+
+        <div className="pages">
+          <button className="active-page">{currentPage}</button>
+          {currentPage < tablePaginatedData.length && (
+            <>
+              <button
+                className="non-active-page"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+              {currentPage + 2 <= tablePaginatedData.length && <span>...</span>}
+            </>
+          )}
+        </div>
+
+        {currentPage < tablePaginatedData.length && (
+          <>
+            <button
+              className="pagination-button"
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              {">"}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,24 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
-.table-container-inside{
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    gap:8px;
-    height: 100%;
+.table-container-inside {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+  height: 100%;
 }
 
-.table-header{
-    background-color: #4856BEF5;
-    height: 56px;
-    border-radius: 10px;
-    font-size: 16px;
-    color:white;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    padding: 16px;
-    font-family: 'Inter', sans-serif;
+.table-header {
+  background-color: #4856bef5;
+  height: 56px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
 }
 
+.pagination {
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  margin-left: auto;
+}
 
+.pagination-button {
+  padding: 5px;
+}
+
+.pages {
+  margin: 5px 15px;
+}
+
+.active-page {
+  background-color: #4856bef5;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.non-active-page {
+  padding: 5px 10px;
+}
