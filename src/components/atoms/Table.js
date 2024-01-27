@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "../../styles/atoms/table.css";
-import { tablePaginatedData } from "../../data/tableData";
+import { tablePaginatedData,TableDataForSearch } from "../../data/tableData";
 import del from "../../assets/images/delete.svg";
 import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
@@ -10,9 +10,10 @@ import write from "../../assets/images/write.svg";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import { SearchModal } from "./SearchModal";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FilterModal from "./FilterModal";
 import KPMGContext from "../../context/SampleContext";
+
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -143,6 +144,10 @@ const Table = () => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [openFilterModal,setOpenFilterModal] = useState(false);
 
+
+  
+
+
   // state for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -152,6 +157,7 @@ const Table = () => {
 
   // search modal
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const {searchData,setSearchData} = useContext(KPMGContext);
 
   const {columns,setColumns} = useContext(KPMGContext);
   
@@ -198,10 +204,35 @@ const Table = () => {
     setEditModalOpen(false);
     setDeleteModalOpen(false);
     setOpenFilterModal(false);
+    setIsSearchModalOpen(false);
   };
 
   const handleFilterModal = () =>{
     setOpenFilterModal(true);
+  }
+
+  const handleSearch = (event) => {
+     
+     function customIncludes(array,term){
+         if(array[0].toLowerCase().includes(term.toLowerCase())){
+           return true;
+         }
+         return false;
+     }
+     const term = event.target.value;
+    
+     if (term==null || term==""){
+      setSearchData(TableDataForSearch);
+     }
+     else{
+      const filteredData = TableDataForSearch.filter((row)=>customIncludes(row,term));
+      console.log(filteredData,"search");
+      setSearchData(filteredData);
+     }
+     
+     
+     console.log(term,"search");
+     console.log(searchData,"searchdata")
   }
 
   useEffect(() => {
@@ -214,9 +245,9 @@ const Table = () => {
       return pages;
     }
 
-    setTableData(paginateData(tablePaginatedData, itemsPerPage));
-  }, [itemsPerPage]);
-
+    setTableData(paginateData(searchData, itemsPerPage));
+  }, [itemsPerPage,searchData]);
+  console.log(tableData,"tableData")
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className="flex justify-between gap-4">
@@ -235,9 +266,9 @@ const Table = () => {
             Download
           </button> */}
         </div>
-        <div className="flex justify-evenly  items-center  w-[35%]">
-          <FilterAltIcon className="hover:bg-[rgb(0,0,0,0.1)]" onClick={handleFilterModal} />
-          <form className="w-auto" >
+        <div className="flex justify-end gap-10  items-center">
+          <FilterAltOutlinedIcon className="hover:bg-[rgb(0,0,0,0.1)]" onClick={handleFilterModal} />
+          <form onSubmit={(e)=>e.preventDefault()} className="w-auto" >
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -266,25 +297,17 @@ const Table = () => {
                 type="search"
                 id="default-search"
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search"
+                placeholder="Type Desired Keyword"
                 required=""
+                onChange={handleSearch}
               />
-              <div className="absolute inset-y-0 right-20 flex items-center pl-3 pointer-events-none ">
-                <button
-                  className="focus:outline-none"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openSearchModal();
-                  }}
-                >
-                  <RiArrowDropDownLine size={"30px"} />
-                </button>
-              </div>
-              <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              
+              {/* <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Search
-              </button>
+              </button> */}
             </div>
           </form>
+          {/* <button onClick={openSearchModal} type="button" class="text-white bg-[#4856BE] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Search</button> */}
         </div>
       </div>
       <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
@@ -303,6 +326,10 @@ const Table = () => {
       />
       <FilterModal
       isOpen={openFilterModal}
+      onClose={closeModal}
+      />
+      <SearchModal
+      isOpen={isSearchModalOpen}
       onClose={closeModal}
       />
       <div>

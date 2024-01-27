@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import KPMGContext from "../../context/SampleContext";
 
 export const SearchModal = ({ isOpen, onClose }) => {
+  const {searchData,setSearchData} = useContext(KPMGContext);
+
   const handleSave = () => {
     // Implement save logic here
     console.log("Save clicked:");
@@ -9,11 +12,13 @@ export const SearchModal = ({ isOpen, onClose }) => {
     onClose();
   };
 
+
+
   return (
     // Modal container
     <div
       className={`${
-        isOpen ? "flex" : "hidden"
+        isOpen ? "flex " : "hidden"
       } fixed inset-0 items-center justify-center z-50 bg-gray-800 bg-opacity-50`}
     >
       <form className="w-[30%] bg-white rounded-lg p-6">
@@ -23,7 +28,7 @@ export const SearchModal = ({ isOpen, onClose }) => {
         >
           Search
         </label>
-        <div className="relative">
+        <div className="relative ">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -59,7 +64,18 @@ export const SearchModal = ({ isOpen, onClose }) => {
             Search
           </button>
         </div>
+         {/* Modal footer */}
+      <div className=" px-4 py-3 sm:px-6 flex justify-center">
+            <button
+              type="button"
+              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+          </div>
       </form>
+     
     </div>
   );
 };

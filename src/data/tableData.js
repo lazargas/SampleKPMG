@@ -25,3 +25,31 @@ const tableData = [
 ];
 
 export const tablePaginatedData = tableData;
+
+export const TableDataForSearch = [
+  ["Ebay", "Ebay"],
+  ["Flipkart", "Flipkart"],
+  ["HUL", "Hindustan Unilever"],
+  ["IsDB", "Islamic Development Bank"],
+  ["TCL", "Tata Consumers Products Limited India"],
+  ["Amazon", "Amazon"],
+  ["Google", "Google"],
+  ["Apple", "Apple Inc."],
+  ["Microsoft", "Microsoft Corporation"],
+  ["Samsung", "Samsung Electronics"],
+  ["Sony", "Sony Corporation"],
+  ["HP", "HP Inc."],
+  ["Dell", "Dell Technologies"],
+  ["Toyota", "Toyota Motor Corporation"],
+  ["Honda", "Honda Motor Co., Ltd."],
+  ["BMW", "Bayerische Motoren Werke AG"],
+  ["Mercedes-Benz", "Mercedes-Benz"],
+  ["Coca-Cola", "The Coca-Cola Company"],
+  ["Pepsi", "PepsiCo"],
+  ["Nike", "Nike, Inc."],
+  ["Adidas", "Adidas AG"],
+  ["Facebook", "Meta Platforms, Inc."],
+  ["Twitter", "Twitter, Inc."],
+];
+
+
