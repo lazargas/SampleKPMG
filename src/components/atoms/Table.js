@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "../../styles/atoms/table.css";
@@ -7,6 +7,9 @@ import del from "../../assets/images/delete.svg";
 import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
 import write from "../../assets/images/write.svg";
+import { GrPrevious, GrNext } from "react-icons/gr";
+import { SearchModal } from "./SearchModal";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -138,10 +141,32 @@ const Table = () => {
 
   // state for pagination
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  // set table data
+  const [tableData, setTableData] = useState([]);
+
+  // search modal
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
+  const openSearchModal = (e) => {
+    e.preventDefault();
+    setIsSearchModalOpen(true);
+  };
+
+  const closeSearchModal = () => {
+    setIsSearchModalOpen(false);
+  };
 
   // handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  // handle items per page change
+  const handleItemsPerPageChange = (event) => {
+    setItemsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(1);
   };
 
   const handleAddNewClick = () => {
@@ -168,7 +193,19 @@ const Table = () => {
     setDeleteModalOpen(false);
   };
 
-  console.log(tablePaginatedData[currentPage - 1]);
+  useEffect(() => {
+    console.log(tablePaginatedData);
+    function paginateData(data, itemsPerPage) {
+      const pages = [];
+      for (let i = 0; i < data.length; i += itemsPerPage) {
+        pages.push(data.slice(i, i + itemsPerPage));
+      }
+      return pages;
+    }
+
+    setTableData(paginateData(tablePaginatedData, itemsPerPage));
+  }, [itemsPerPage]);
+
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className="flex justify-between gap-4">
@@ -220,16 +257,25 @@ const Table = () => {
                 placeholder="Search Name, Type..."
                 required=""
               />
-              <button
-                type="submit"
-                className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
+              <div className="absolute inset-y-0 right-20 flex items-center pl-3 pointer-events-none ">
+                <button
+                  className="focus:outline-none"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openSearchModal();
+                  }}
+                >
+                  <RiArrowDropDownLine size={"30px"} />
+                </button>
+              </div>
+              <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Search
               </button>
             </div>
           </form>
         </div>
       </div>
+      <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
       <AddNewModal isOpen={isAddModalOpen} onClose={closeModal} />
       <EditModal
         isOpen={isEditModalOpen}
@@ -263,31 +309,35 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {tablePaginatedData[currentPage - 1].map((data, index) => {
+              {tableData[currentPage - 1]?.map((data, index) => {
                 return (
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      className="flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      style={{ width: "33%" }}
                     >
                       {data[0]}
                     </th>
-                    <td className="px-6 py-4">{data[1]}</td>
+                    <td
+                      className="flex-grow px-6 py-4"
+                      style={{ width: "33%" }}
+                    >
+                      {data[1]}
+                    </td>
                     <td className="flex gap-3 px-6 py-4">
-                      {[write, look, del, info].map((image, index) => {
-                        return (
-                          <button
-                            key={index}
-                            onClick={() =>
-                              image === del
-                                ? handleDeleteClick(data)
-                                : handleEditClick(data)
-                            }
-                          >
-                            <img src={image} alt="icon" />
-                          </button>
-                        );
-                      })}
+                      {[write, look, del, info].map((image, index) => (
+                        <button
+                          key={index}
+                          onClick={() =>
+                            image === del
+                              ? handleDeleteClick(data)
+                              : handleEditClick(data)
+                          }
+                        >
+                          <img src={image} alt="icon" />
+                        </button>
+                      ))}
                     </td>
                   </tr>
                 );
@@ -298,42 +348,45 @@ const Table = () => {
       </div>
 
       <div className="pagination">
-        {currentPage > 1 && (
-          <>
-            <button
-              className="pagination-button"
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              {"<"}
-            </button>
-          </>
-        )}
-
-        <div className="pages">
-          <button className="active-page">{currentPage}</button>
-          {currentPage < tablePaginatedData.length && (
-            <>
-              <button
-                className="non-active-page"
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                {currentPage + 1}
-              </button>
-              {currentPage + 2 <= tablePaginatedData.length && <span>...</span>}
-            </>
-          )}
+        <div className="relative inline-block">
+          <label htmlFor="rowsPerPage" className="mr-2 text-gray-700">
+            Rows Per Page:
+          </label>
+          <select
+            id="rowsPerPage"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="border-none bg-transparent rounded p-2 appearance-none"
+          >
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="50">50</option>
+          </select>
         </div>
 
-        {currentPage < tablePaginatedData.length && (
-          <>
-            <button
-              className="pagination-button"
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              {">"}
-            </button>
-          </>
-        )}
+        <div className="pages pt-1">
+          <button>{`${(currentPage - 1) * itemsPerPage + 1} - ${
+            (currentPage - 1) * itemsPerPage +
+            tableData[currentPage - 1]?.length
+          } of ${tablePaginatedData?.length}`}</button>
+        </div>
+
+        <button
+          className="pagination-button mr-5 pt-2"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage <= 1}
+        >
+          <GrPrevious color={currentPage <= 1 ? "lightgrey" : "black"} />
+        </button>
+        <button
+          className="pagination-button pt-2"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage >= tableData.length}
+        >
+          <GrNext
+            color={currentPage >= tableData.length ? "lightgrey" : "black"}
+          />
+        </button>
       </div>
     </div>
   );
