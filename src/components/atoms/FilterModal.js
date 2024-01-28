@@ -3,18 +3,17 @@ import KPMGContext from "../../context/SampleContext";
 
 const FilterModal = ({ isOpen, onClose }) => {
   const { columns, setColumns } = useContext(KPMGContext);
-  
 
   const handleChecked = (event) => {
-     const value = event.target.value;
-     if(event.target.checked){
-        setColumns((prevSelected)=>[...prevSelected,value]);
-     }
-     else{
-        setColumns((prevSelected)=> prevSelected.filter((items)=> items!==value));
-     }
+    const value = event.target.value;
+    if (event.target.checked) {
+      setColumns((prevSelected) => [...prevSelected, value]);
+    } else {
+      setColumns((prevSelected) =>
+        prevSelected.filter((items) => items !== value)
+      );
+    }
   };
-  console.log(columns,"filter");
   return (
     <div
       className={`${

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "../../styles/atoms/table.css";
-import { tablePaginatedData, TableDataForSearch } from "../../data/tableData";
 import del from "../../assets/images/delete.svg";
 import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
@@ -13,6 +12,7 @@ import FilterModal from "./FilterModal";
 import KPMGContext from "../../context/SampleContext";
 import SearchBar from "./SearchBar";
 import { IoIosClose } from "react-icons/io";
+import demoData from "../../data/tableData";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -148,12 +148,23 @@ const Table = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
   // set table data
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(demoData);
+  const [tablePaginatedData, setTablePaginatedData] = useState([]);
+  const [dataLength, setDataLength] = useState(demoData.length);
 
-  // search modal
-  const { searchData, setSearchData } = useContext(KPMGContext);
-
+  // get columns from context
   const { columns, setColumns } = useContext(KPMGContext);
+
+  // search filter
+  const [searchFilter, setSearchFilter] = useState("");
+
+  function paginateData(data, itemsPerPage) {
+    const pages = [];
+    for (let i = 0; i < data.length; i += itemsPerPage) {
+      pages.push(data.slice(i, i + itemsPerPage));
+    }
+    return pages;
+  }
 
   const initialAdvancedFilterState = Object.fromEntries(
     columns
@@ -243,43 +254,67 @@ const Table = () => {
     setOpenFilterModal(true);
   };
 
-  const handleSearch = (event) => {
-    function customIncludes(array, term) {
-      if (array[0].toLowerCase().includes(term.toLowerCase())) {
-        return true;
-      }
-      return false;
-    }
-    const term = event.target.value;
-
-    const filteredData = tablePaginatedData.filter((row) =>
-      customIncludes(row, term)
-    );
-
-    if (term == null || term == "") {
-      setSearchData(TableDataForSearch);
-    } else {
-      const filteredData = TableDataForSearch.filter((row) =>
-        customIncludes(row, term)
-      );
-      console.log(filteredData, "search");
-      setSearchData(filteredData);
-    }
-
-    console.log(term, "search");
-    console.log(searchData, "searchdata");
+  const handleSearch = (e) => {
+    setSearchFilter(e.target.value);
   };
 
+  const applyAdvancedFilter = (data, advancedFilter) => {
+    return data.filter((item) => {
+      return Object.entries(advancedFilter).every(([fieldName, filter]) => {
+        const columnValue = item[fieldName] || "";
+
+        const filterValue = filter.value;
+        const filterOperator = filter.operator;
+
+        switch (filterOperator) {
+          case "contains":
+            return (
+              !filterValue ||
+              columnValue.toLowerCase().includes(filterValue?.toLowerCase())
+            );
+          case "equals":
+            return (
+              !filterValue ||
+              columnValue.toLowerCase() === filterValue?.toLowerCase()
+            );
+          case "starts with":
+            return (
+              !filterValue ||
+              columnValue.toLowerCase().startsWith(filterValue?.toLowerCase())
+            );
+          case "ends with":
+            return (
+              !filterValue ||
+              columnValue.toLowerCase().endsWith(filterValue?.toLowerCase())
+            );
+          case "is empty":
+            return columnValue === "";
+          case "is not empty":
+            return columnValue !== "";
+          default:
+            return true;
+        }
+      });
+    });
+  };
+
+  // Example usage:
+
   useEffect(() => {
-    function paginateData(data, itemsPerPage) {
-      const pages = [];
-      for (let i = 0; i < data.length; i += itemsPerPage) {
-        pages.push(data.slice(i, i + itemsPerPage));
-      }
-      return pages;
-    }
-    setTableData(paginateData(searchData, itemsPerPage));
-  }, [itemsPerPage, searchData]);
+    // first filter from search
+    let filteredData = tableData.filter(
+      (row) =>
+        !searchFilter ||
+        row["Lookup Type Name"]
+          .toLowerCase()
+          .startsWith(searchFilter.toLowerCase())
+    );
+
+    // then advanced filter
+    filteredData = applyAdvancedFilter(filteredData, advancedFilterState);
+    setDataLength(filteredData.length);
+    setTablePaginatedData(paginateData(filteredData, itemsPerPage));
+  }, [itemsPerPage, searchFilter, advancedFilterState]);
 
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
@@ -307,7 +342,7 @@ const Table = () => {
                   {operator && (
                     <div
                       key={columnName}
-                      className="bg-blue-500 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs"
+                      className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs"
                     >
                       <span className="">{columnName} :</span>
                       <span className="">{operator}</span>
@@ -326,6 +361,20 @@ const Table = () => {
                 </div>
               )
             )}
+
+            {searchFilter && (
+              <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
+                <span className="">{searchFilter} </span>
+                <span
+                  className="pt-0.25 cursor-pointer"
+                  onClick={() => {
+                    setSearchFilter("");
+                  }}
+                >
+                  <IoIosClose color="white" size={"20px"} />
+                </span>
+              </div>
+            )}
           </div>
           <FilterAltOutlinedIcon
             className="hover:bg-[rgb(0,0,0,0.1)]"
@@ -340,6 +389,7 @@ const Table = () => {
             updateOperator={updateOperator}
             updateValue={updateValue}
             clearAdvancedFilter={clearAdvancedFilter}
+            searchFilter={searchFilter}
           />
           {/* <button onClick={openSearchModal} type="button" class="text-white bg-[#4856BE] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Search</button> */}
         </div>
@@ -394,7 +444,7 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData[currentPage - 1]?.map((data, index) => {
+              {tablePaginatedData[currentPage - 1]?.map((data, index) => {
                 return (
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
@@ -404,7 +454,7 @@ const Table = () => {
                       } `}
                       style={{ width: "33%" }}
                     >
-                      {data[0]}
+                      {data["Lookup Type Name"]}
                     </th>
                     <td
                       className={`flex-grow px-6 py-4 ${
@@ -412,7 +462,7 @@ const Table = () => {
                       } `}
                       style={{ width: "33%" }}
                     >
-                      {data[1]}
+                      {data["Display Name"]}
                     </td>
                     <td
                       className={`flex gap-3 px-6 py-4 ${
@@ -459,13 +509,15 @@ const Table = () => {
 
         <div className="pages pt-1">
           <button>{`${
-            searchData?.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1
+            tablePaginatedData?.length === 0
+              ? 0
+              : (currentPage - 1) * itemsPerPage + 1
           } - ${
-            searchData?.length === 0
+            tablePaginatedData?.length === 0
               ? 0
               : (currentPage - 1) * itemsPerPage +
-                tableData[currentPage - 1]?.length
-          } of ${searchData?.length}`}</button>
+                tablePaginatedData[currentPage - 1]?.length
+          } of ${dataLength}`}</button>
         </div>
 
         <button
@@ -478,10 +530,12 @@ const Table = () => {
         <button
           className="pagination-button pt-2"
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage >= tableData.length}
+          disabled={currentPage >= tablePaginatedData.length}
         >
           <GrNext
-            color={currentPage >= tableData.length ? "lightgrey" : "black"}
+            color={
+              currentPage >= tablePaginatedData.length ? "lightgrey" : "black"
+            }
           />
         </button>
       </div>

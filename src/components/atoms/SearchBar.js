@@ -11,6 +11,7 @@ const SearchBar = ({
   operatorOptions,
   updateValue,
   clearAdvancedFilter,
+  searchFilter,
 }) => {
   const { columns, setColumns } = useContext(KPMGContext);
 
@@ -41,6 +42,7 @@ const SearchBar = ({
             className="block w-[250px] p-4 ps-10 text-sm text-gray-900 border border-none rounded-l-lg"
             placeholder="Type Desired Keyword"
             required=""
+            value={searchFilter}
             onChange={(e) => handleSearch(e)}
           />
 
@@ -93,6 +95,7 @@ const SearchBar = ({
               placeholder="Choose the filters to be applied"
               required=""
               onChange={(e) => handleSearch(e)}
+              value={searchFilter}
             />
 
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
