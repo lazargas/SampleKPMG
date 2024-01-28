@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import "../../styles/atoms/table.css";
-import { tablePaginatedData,TableDataForSearch } from "../../data/tableData";
+import { tablePaginatedData, TableDataForSearch } from "../../data/tableData";
 import del from "../../assets/images/delete.svg";
 import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
@@ -10,10 +10,9 @@ import write from "../../assets/images/write.svg";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import { SearchModal } from "./SearchModal";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterModal from "./FilterModal";
 import KPMGContext from "../../context/SampleContext";
-
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -142,11 +141,7 @@ const Table = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState({});
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [openFilterModal,setOpenFilterModal] = useState(false);
-
-
-  
-
+  const [openFilterModal, setOpenFilterModal] = useState(false);
 
   // state for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -157,10 +152,10 @@ const Table = () => {
 
   // search modal
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const {searchData,setSearchData} = useContext(KPMGContext);
+  const { searchData, setSearchData } = useContext(KPMGContext);
 
-  const {columns,setColumns} = useContext(KPMGContext);
-  
+  const { columns, setColumns } = useContext(KPMGContext);
+
   const openSearchModal = (e) => {
     e.preventDefault();
     setIsSearchModalOpen(true);
@@ -207,36 +202,34 @@ const Table = () => {
     setIsSearchModalOpen(false);
   };
 
-  const handleFilterModal = () =>{
+  const handleFilterModal = () => {
     setOpenFilterModal(true);
-  }
+  };
 
   const handleSearch = (event) => {
-     
-     function customIncludes(array,term){
-         if(array[0].toLowerCase().includes(term.toLowerCase())){
-           return true;
-         }
-         return false;
-     }
-     const term = event.target.value;
-    
-     if (term==null || term==""){
+    function customIncludes(array, term) {
+      if (array[0].toLowerCase().includes(term.toLowerCase())) {
+        return true;
+      }
+      return false;
+    }
+    const term = event.target.value;
+
+    if (term == null || term == "") {
       setSearchData(TableDataForSearch);
-     }
-     else{
-      const filteredData = TableDataForSearch.filter((row)=>customIncludes(row,term));
-      console.log(filteredData,"search");
+    } else {
+      const filteredData = TableDataForSearch.filter((row) =>
+        customIncludes(row, term)
+      );
+      console.log(filteredData, "search");
       setSearchData(filteredData);
-     }
-     
-     
-     console.log(term,"search");
-     console.log(searchData,"searchdata")
-  }
+    }
+
+    console.log(term, "search");
+    console.log(searchData, "searchdata");
+  };
 
   useEffect(() => {
-    console.log(tablePaginatedData);
     function paginateData(data, itemsPerPage) {
       const pages = [];
       for (let i = 0; i < data.length; i += itemsPerPage) {
@@ -246,8 +239,8 @@ const Table = () => {
     }
 
     setTableData(paginateData(searchData, itemsPerPage));
-  }, [itemsPerPage,searchData]);
-  console.log(tableData,"tableData")
+  }, [itemsPerPage, searchData]);
+
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className="flex justify-between gap-4">
@@ -267,8 +260,11 @@ const Table = () => {
           </button> */}
         </div>
         <div className="flex justify-end gap-10  items-center">
-          <FilterAltOutlinedIcon className="hover:bg-[rgb(0,0,0,0.1)]" onClick={handleFilterModal} />
-          <form onSubmit={(e)=>e.preventDefault()} className="w-auto" >
+          <FilterAltOutlinedIcon
+            className="hover:bg-[rgb(0,0,0,0.1)]"
+            onClick={handleFilterModal}
+          />
+          <form onSubmit={(e) => e.preventDefault()} className="w-auto">
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -301,7 +297,13 @@ const Table = () => {
                 required=""
                 onChange={handleSearch}
               />
-              
+
+              {/* Dropdown Button */}
+              <select
+                className="absolute top-0 end-0 h-full px-2 py-4 pr-10 text-gray-500 bg-gray-50 border border-l-0 rounded-r-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                // onChange={handleDropdownChange}
+              ></select>
+
               {/* <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Search
               </button> */}
@@ -324,14 +326,8 @@ const Table = () => {
         onDelete={() => {}}
         itemName={selectedData[0]}
       />
-      <FilterModal
-      isOpen={openFilterModal}
-      onClose={closeModal}
-      />
-      <SearchModal
-      isOpen={isSearchModalOpen}
-      onClose={closeModal}
-      />
+      <FilterModal isOpen={openFilterModal} onClose={closeModal} />
+      <SearchModal isOpen={isSearchModalOpen} onClose={closeModal} />
       <div>
         <div
           className="relative overflow-x-auto"
@@ -340,13 +336,28 @@ const Table = () => {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
             <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className={`px-6 py-3 ${columns.includes("Lookup Type Name") ? `` :`hidden`} `}>
+                <th
+                  scope="col"
+                  className={`px-6 py-3 ${
+                    columns.includes("Lookup Type Name") ? `` : `hidden`
+                  } `}
+                >
                   Lookup Type Name
                 </th>
-                <th scope="col" className={`px-6 py-3 ${columns.includes("Display Name") ? `` :`hidden`} `}>
+                <th
+                  scope="col"
+                  className={`px-6 py-3 ${
+                    columns.includes("Display Name") ? `` : `hidden`
+                  } `}
+                >
                   Display Name
                 </th>
-                <th scope="col" className={`px-6 py-3 ${columns.includes("Actions") ? `` :`hidden`} `}>
+                <th
+                  scope="col"
+                  className={`px-6 py-3 ${
+                    columns.includes("Actions") ? `` : `hidden`
+                  } `}
+                >
                   Actions
                 </th>
               </tr>
@@ -357,18 +368,26 @@ const Table = () => {
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
-                      className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ${columns.includes("Lookup Type Name") ? `` :`hidden`} `}
+                      className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ${
+                        columns.includes("Lookup Type Name") ? `` : `hidden`
+                      } `}
                       style={{ width: "33%" }}
                     >
                       {data[0]}
                     </th>
                     <td
-                      className={`flex-grow px-6 py-4 ${columns.includes("Display Name") ? `` :`hidden`} `}
+                      className={`flex-grow px-6 py-4 ${
+                        columns.includes("Display Name") ? `` : `hidden`
+                      } `}
                       style={{ width: "33%" }}
                     >
                       {data[1]}
                     </td>
-                    <td className={`flex gap-3 px-6 py-4 ${columns.includes("Actions") ? `` :`hidden`} `}>
+                    <td
+                      className={`flex gap-3 px-6 py-4 ${
+                        columns.includes("Actions") ? `` : `hidden`
+                      } `}
+                    >
                       {[write, look, del, info].map((image, index) => (
                         <button
                           key={index}
@@ -408,10 +427,14 @@ const Table = () => {
         </div>
 
         <div className="pages pt-1">
-          <button>{`${(currentPage - 1) * itemsPerPage + 1} - ${
-            (currentPage - 1) * itemsPerPage +
-            tableData[currentPage - 1]?.length
-          } of ${tablePaginatedData?.length}`}</button>
+          <button>{`${
+            searchData?.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1
+          } - ${
+            searchData?.length === 0
+              ? 0
+              : (currentPage - 1) * itemsPerPage +
+                tableData[currentPage - 1]?.length
+          } of ${searchData?.length}`}</button>
         </div>
 
         <button
