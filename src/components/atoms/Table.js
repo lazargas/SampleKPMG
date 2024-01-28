@@ -8,11 +8,11 @@ import info from "../../assets/images/info.svg";
 import look from "../../assets/images/look.svg";
 import write from "../../assets/images/write.svg";
 import { GrPrevious, GrNext } from "react-icons/gr";
-import { SearchModal } from "./SearchModal";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterModal from "./FilterModal";
 import KPMGContext from "../../context/SampleContext";
+import SearchBar from "./SearchBar";
+import { IoIosClose } from "react-icons/io";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -151,18 +151,56 @@ const Table = () => {
   const [tableData, setTableData] = useState([]);
 
   // search modal
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const { searchData, setSearchData } = useContext(KPMGContext);
 
   const { columns, setColumns } = useContext(KPMGContext);
 
-  const openSearchModal = (e) => {
-    e.preventDefault();
-    setIsSearchModalOpen(true);
+  const initialAdvancedFilterState = Object.fromEntries(
+    columns
+      .filter((col) => {
+        return col !== "Actions";
+      })
+      .map((column) => [column, { value: null, operator: null }])
+  );
+  const [advancedFilterState, setAdvancedFilterState] = useState(
+    initialAdvancedFilterState
+  );
+
+  const operatorOptions = [
+    "contains",
+    "equals",
+    "starts with",
+    "ends with",
+    "is empty",
+    "is not empty",
+    // "is any of",
+  ];
+
+  // Update state for a specific column's operator
+  const updateOperator = (columnName, operator) => {
+    setAdvancedFilterState((prevFilterState) => ({
+      ...prevFilterState,
+      [columnName]: {
+        ...prevFilterState[columnName],
+        operator: operator,
+        value: null,
+      },
+    }));
   };
 
-  const closeSearchModal = () => {
-    setIsSearchModalOpen(false);
+  // Update state for a specific column's value
+  const updateValue = (columnName, value) => {
+    setAdvancedFilterState((prevFilterState) => ({
+      ...prevFilterState,
+      [columnName]: {
+        ...prevFilterState[columnName],
+        value: value,
+      },
+    }));
+  };
+
+  const clearAdvancedFilter = () => {
+    setAdvancedFilterState(initialAdvancedFilterState);
   };
 
   // handle page change
@@ -199,7 +237,6 @@ const Table = () => {
     setEditModalOpen(false);
     setDeleteModalOpen(false);
     setOpenFilterModal(false);
-    setIsSearchModalOpen(false);
   };
 
   const handleFilterModal = () => {
@@ -214,6 +251,10 @@ const Table = () => {
       return false;
     }
     const term = event.target.value;
+
+    const filteredData = tablePaginatedData.filter((row) =>
+      customIncludes(row, term)
+    );
 
     if (term == null || term == "") {
       setSearchData(TableDataForSearch);
@@ -237,7 +278,6 @@ const Table = () => {
       }
       return pages;
     }
-
     setTableData(paginateData(searchData, itemsPerPage));
   }, [itemsPerPage, searchData]);
 
@@ -260,59 +300,50 @@ const Table = () => {
           </button> */}
         </div>
         <div className="flex justify-end gap-10  items-center">
+          <div className="flex flex-row gap-3">
+            {Object.entries(advancedFilterState).map(
+              ([columnName, { value, operator }]) => (
+                <div key={columnName} className="flex items-center space-x-2">
+                  {operator && (
+                    <div
+                      key={columnName}
+                      className="bg-blue-500 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs"
+                    >
+                      <span className="">{columnName} :</span>
+                      <span className="">{operator}</span>
+                      <span className="">{value}</span>
+                      <span
+                        className="pt-0.25 cursor-pointer"
+                        onClick={() => {
+                          updateOperator(columnName, null);
+                          updateValue(columnName, null);
+                        }}
+                      >
+                        <IoIosClose color="white" size={"20px"} />
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )
+            )}
+          </div>
           <FilterAltOutlinedIcon
             className="hover:bg-[rgb(0,0,0,0.1)]"
             onClick={handleFilterModal}
           />
-          <form onSubmit={(e) => e.preventDefault()} className="w-auto">
-            <label
-              htmlFor="default-search"
-              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-            >
-              Search
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="default-search"
-                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Type Desired Keyword"
-                required=""
-                onChange={handleSearch}
-              />
-
-              {/* Dropdown Button */}
-              <select
-                className="absolute top-0 end-0 h-full px-2 py-4 pr-10 text-gray-500 bg-gray-50 border border-l-0 rounded-r-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                // onChange={handleDropdownChange}
-              ></select>
-
-              {/* <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Search
-              </button> */}
-            </div>
-          </form>
+          <SearchBar
+            handleSearch={handleSearch}
+            advancedFilterState={advancedFilterState}
+            setAdvancedFilterState={setAdvancedFilterState}
+            initialAdvancedFilterState={initialAdvancedFilterState}
+            operatorOptions={operatorOptions}
+            updateOperator={updateOperator}
+            updateValue={updateValue}
+            clearAdvancedFilter={clearAdvancedFilter}
+          />
           {/* <button onClick={openSearchModal} type="button" class="text-white bg-[#4856BE] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Search</button> */}
         </div>
       </div>
-      <SearchModal isOpen={isSearchModalOpen} onClose={closeSearchModal} />
       <AddNewModal isOpen={isAddModalOpen} onClose={closeModal} />
       <EditModal
         isOpen={isEditModalOpen}
@@ -327,7 +358,7 @@ const Table = () => {
         itemName={selectedData[0]}
       />
       <FilterModal isOpen={openFilterModal} onClose={closeModal} />
-      <SearchModal isOpen={isSearchModalOpen} onClose={closeModal} />
+
       <div>
         <div
           className="relative overflow-x-auto"
