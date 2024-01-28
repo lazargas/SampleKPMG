@@ -13,6 +13,7 @@ import KPMGContext from "../../context/SampleContext";
 import SearchBar from "./SearchBar";
 import { IoIosClose } from "react-icons/io";
 import demoData from "../../data/tableData";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -376,10 +377,14 @@ const Table = () => {
               </div>
             )}
           </div>
+
           <FilterAltOutlinedIcon
             className="hover:bg-[rgb(0,0,0,0.1)]"
             onClick={handleFilterModal}
           />
+
+          <ArrowDownwardIcon />
+
           <SearchBar
             handleSearch={handleSearch}
             advancedFilterState={advancedFilterState}
