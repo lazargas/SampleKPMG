@@ -11,9 +11,10 @@ function App() {
     "Display Name",
     "Actions",
   ]);
+  const [selectedData, setSelectedData] = useState({});
 
   return (
-    <KPMGContext.Provider value={{ columns, setColumns }}>
+    <KPMGContext.Provider value={{ columns, setColumns,selectedData, setSelectedData }}>
       <div className="overflow-hidden">
         <Layout>
           <Sample />

@@ -140,7 +140,7 @@ const AddNewModal = ({ isOpen, onClose }) => {
 const Table = () => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState({});
+  const {selectedData, setSelectedData} = useContext(KPMGContext);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
 
@@ -232,6 +232,7 @@ const Table = () => {
   };
 
   const handleEditClick = (data) => {
+    
     // Open the Edit modal and set the selected data
     setSelectedData(data);
     setEditModalOpen(true);
@@ -316,7 +317,7 @@ const Table = () => {
     setDataLength(filteredData.length);
     setTablePaginatedData(paginateData(filteredData, itemsPerPage));
   }, [itemsPerPage, searchFilter, advancedFilterState]);
-
+  
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className="flex justify-between gap-4">
@@ -403,14 +404,14 @@ const Table = () => {
       <EditModal
         isOpen={isEditModalOpen}
         onClose={closeModal}
-        initialValue1={selectedData[0]}
-        initialValue2={selectedData[1]}
+        initialValue1={selectedData["Lookup Type Name"]}
+        initialValue2={selectedData["Display Name"]}
       />
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeModal}
         onDelete={() => {}}
-        itemName={selectedData[0]}
+        itemName={selectedData["Lookup Type Name"]}
       />
       <FilterModal isOpen={openFilterModal} onClose={closeModal} />
 

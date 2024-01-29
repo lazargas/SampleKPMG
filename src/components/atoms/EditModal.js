@@ -1,15 +1,19 @@
 // EditModal.js
 import React, { useState, useEffect } from "react";
+import demoData from "../../data/tableData";
 
 const EditModal = ({ isOpen, onClose, initialValue1, initialValue2 }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
 
+
+
   useEffect(() => {
     // Set initial values when the modal is opened
     setInput1(initialValue1);
     setInput2(initialValue2);
+    
   }, [isOpen, initialValue1, initialValue2]);
 
   const handleSave = () => {
@@ -18,7 +22,7 @@ const EditModal = ({ isOpen, onClose, initialValue1, initialValue2 }) => {
     // Close the modal after saving
     onClose();
   };
-
+  console.log(initialValue1, initialValue2,"akarsh");
   return (
     // Modal container
     <div
