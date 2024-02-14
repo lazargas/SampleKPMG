@@ -12,9 +12,10 @@ function App() {
     "Actions",
   ]);
   const [selectedData, setSelectedData] = useState({});
+  const [dropdown,setDropdown] = useState("Lookup Type");
 
   return (
-    <KPMGContext.Provider value={{ columns, setColumns,selectedData, setSelectedData }}>
+    <KPMGContext.Provider value={{ columns, setColumns,selectedData, setSelectedData,dropdown,setDropdown }}>
       <div className="overflow-hidden">
         <Layout>
           <Sample />

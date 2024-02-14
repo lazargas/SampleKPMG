@@ -8,6 +8,9 @@ import card5 from "../../assets/images/Card-5.svg";
 import card6 from "../../assets/images/Card-6.svg";
 import line from "../../assets/images/Line2.svg";
 import Table from "../atoms/Table";
+import { gsap, ScrollTrigger, Power2 } from "gsap";
+import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
+import LineWeightIcon from '@mui/icons-material/LineWeight';
 
 const Sample = () => {
   const [selectedCard, setSelectedCard] = useState(5);
@@ -21,6 +24,228 @@ const Sample = () => {
     "References",
   ];
 
+  var tl = gsap.timeline({
+    ease: Power2.easeOut,
+    duration: 0.5,
+  });
+
+  const handleAnimation = () => {
+    tl.to(
+      "#arrow",
+      {
+        rotate: 180,
+      },
+      "b"
+    )
+      .to(
+        "#arrow",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-1",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-2",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-3",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-4",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-5",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-6",
+        {
+          opacity: 0,
+        },
+        "b"
+      )
+      .to(
+        "#cards-1",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .to(
+        "#cards-2",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .to(
+        "#cards-3",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .to(
+        "#cards-4",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .to(
+        "#cards-5",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .to(
+        "#cards-6",
+        {
+          display: "none",
+        },
+        "a"
+      )
+      .then(() => {
+        document.querySelector(".collapse-container").style.flexDirection =
+          "row";
+        document.querySelector("#arrowdown").classList.remove("hidden");
+      });
+  };
+
+  const handleAnimationReverse = () => {
+    const animate = ()=>{
+      tl.to(
+        "#arrowdown",
+        {
+          rotate: 180,
+        },
+        "b"
+      )
+        .to(
+          "#arrowdown",
+          {
+            display: "none",
+          },
+          "b"
+        )
+        .to(
+          "#cards-1",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-2",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-3",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-4",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-5",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-6",
+          {
+            opacity: 0,
+          },
+          "b"
+        )
+        .to(
+          "#cards-1",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .to(
+          "#cards-2",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .to(
+          "#cards-3",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .to(
+          "#cards-4",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .to(
+          "#cards-5",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .to(
+          "#cards-6",
+          {
+            display: "none",
+          },
+          "a"
+        )
+        .reverse();
+    }
+    document.querySelector(".collapse-container").style.flexDirection =
+      "column";
+    document.querySelector("#arrow").classList.remove("hidden").then(animate());
+   
+   
+   
+      
+  };
+
   const handleCardClick = (index) => {
     setSelectedCard(index);
   };
@@ -28,38 +253,41 @@ const Sample = () => {
   return (
     <>
       <div className="container">
-        <div className="card-container">
-          {[card1, card2, card3, card4, card5, card6].map((card, index) => (
-            <button
-              className={`flex flex-col items-start ${
-                selectedCard === index ? "" : "opacity-60"
-              }`}
-              key={index}
-              onClick={() => handleCardClick(index)}
-            >
-              <img src={card} alt={`Card ${index + 1}`} />
-              <h3 className={`${selectedCard === index ? "font-bold" : ""}`}>
-                {pages[index]}
-              </h3>
+        <div className="collapse-container">
+          <div className="tile-container">
+            <h3 className="text-lg ">Model / {pages[selectedCard]} :</h3>
+            <button id="arrow" className="" onClick={handleAnimation}>
+              <ArrowUpwardOutlinedIcon />
             </button>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg ">Model / {pages[selectedCard]} :</h3>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              className="text-white bg-[#4856BE] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Lookup Type
-            </button>
-            <button
-              type="button"
-              className="text-white bg-[#4856BE] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Lookup
-            </button>
+          </div>
+          <button
+            id="arrowdown"
+            className="hidden relative left-[100px] rotate-180"
+            
+          >
+            
+            <LineWeightIcon/>
+          </button>
+          <div className="card-container">
+            {[card1, card2, card3, card4, card5, card6].map((card, index) => (
+              <button
+                className={`flex flex-col items-start ${
+                  selectedCard === index ? "" : "opacity-60"
+                }`}
+                key={index}
+                onClick={() => handleCardClick(index)}
+              >
+                <img
+                  id={`cards-${index + 1}`}
+                  className="icons"
+                  src={card}
+                  alt={`Card ${index + 1}`}
+                />
+                <h3 className={`${selectedCard === index ? "font-bold" : ""}`}>
+                  {pages[index]}
+                </h3>
+              </button>
+            ))}
           </div>
         </div>
 

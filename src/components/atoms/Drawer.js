@@ -44,7 +44,6 @@ export default function PersistentDrawerLeft() {
        }
     </ul>
   </div>
-  <div className="main-content"></div>
 </div>
 
   );

@@ -6,7 +6,7 @@ const EditModal = ({ isOpen, onClose, initialValue1, initialValue2 }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
-
+  const [second,setSecond] = useState(true);
 
 
   useEffect(() => {
@@ -111,7 +111,52 @@ const EditModal = ({ isOpen, onClose, initialValue1, initialValue2 }) => {
           </div>
 
           {/* Modal footer */}
-          <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
+           <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-between items-center">
+            <nav aria-label="Page navigation example">
+              <ul className="inline-flex -space-x-px text-sm">
+                <li
+                onClick={()=>setSecond(true)}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    Previous
+                  </a>
+                </li>
+                <li
+                onClick={()=>setSecond(true)}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    1
+                  </a>
+                </li>
+                <li
+                onClick={()=>setSecond(false)}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    2
+                  </a>
+                </li>
+                <li
+                onClick={()=>setSecond(false)}
+                >
+                  <a
+                    href="#"
+                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav> 
+           <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
             <button
               type="button"
               className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
@@ -126,6 +171,7 @@ const EditModal = ({ isOpen, onClose, initialValue1, initialValue2 }) => {
             >
               Cancel
             </button>
+          </div>
           </div>
         </div>
       </div>
