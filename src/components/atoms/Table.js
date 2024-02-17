@@ -113,101 +113,52 @@ const AddNewModal = ({ isOpen, onClose }) => {
           >
             {/* Input fields */}
             {mode === "web" && (
-              <div>
-                <>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input1"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Lookup Type Code
-                    </label>
-                    <input
-                      type="text"
-                      id="input1"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      value={input1}
-                      onChange={(e) => setInput1(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input2"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Lookup Type Name
-                    </label>
-                    <input
-                      type="text"
-                      id="input2"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      value={input2}
-                      onChange={(e) => setInput2(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input3"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Description
-                    </label>
-                    <textarea
-                      id="input3"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      rows={2} // Set the number of rows
-                      value={input3}
-                      onChange={(e) => setInput3(e.target.value)}
-                    />
-                  </div>
-                </>
-                <>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input1"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Lookup Type Code
-                    </label>
-                    <input
-                      type="text"
-                      id="input1"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      value={input1}
-                      onChange={(e) => setInput1(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input2"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Lookup Type Name
-                    </label>
-                    <input
-                      type="text"
-                      id="input2"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      value={input2}
-                      onChange={(e) => setInput2(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="input3"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Description
-                    </label>
-                    <textarea
-                      id="input3"
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      rows={2} // Set the number of rows
-                      value={input3}
-                      onChange={(e) => setInput3(e.target.value)}
-                    />
-                  </div>
-                </>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="input1"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Lookup Type Code
+                  </label>
+                  <input
+                    type="text"
+                    id="input1"
+                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                    value={input1}
+                    onChange={(e) => setInput1(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="input2"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Lookup Type Name
+                  </label>
+                  <input
+                    type="text"
+                    id="input2"
+                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                    value={input2}
+                    onChange={(e) => setInput2(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="input3"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="input3"
+                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                    rows={2}
+                    value={input3}
+                    onChange={(e) => setInput3(e.target.value)}
+                  />
+                </div>
               </div>
             )}
 
@@ -774,7 +725,7 @@ const Table = () => {
             {tablePaginatedData[currentPage - 1]?.map((data, index) => (
               <div
                 key={index}
-                className="flex items-center bg-white border border-[#4856bef5] dark:bg-gray-800 dark:border-gray-700 my-4 rounded-lg"
+                className="flex items-center bg-white border border-[#4856bef5] dark:bg-gray-800 dark:border-gray-700 my-4 rounded-lg hover:bg-gray-100 transition-colors duration-300"
               >
                 <div
                   className={`w-[80px] h-[80px] flex font-medium text-white bg-[#4856bef5] justify-center pt-7 rounded-l-lg`}

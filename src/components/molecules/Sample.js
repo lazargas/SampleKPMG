@@ -253,9 +253,6 @@ const Sample = () => {
         <div className="collapse-container">
           <div className="tile-container">
             <h3 className="text-lg ">Model / {pages[selectedCard]} :</h3>
-            <button id="arrow" className="" onClick={handleAnimation}>
-              <ArrowUpwardOutlinedIcon />
-            </button>
           </div>
           <button
             id="arrowdown"
