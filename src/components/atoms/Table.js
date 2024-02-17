@@ -16,6 +16,7 @@ import demoData from "../../data/tableData";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Dropdown from "./Dropdown";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
@@ -252,6 +253,9 @@ const Table = () => {
   // search filter
   const [searchFilter, setSearchFilter] = useState("");
 
+  // select view type
+  const [tabView, setTabView] = useState("table");
+
   function paginateData(data, itemsPerPage) {
     const pages = [];
     for (let i = 0; i < data.length; i += itemsPerPage) {
@@ -392,6 +396,10 @@ const Table = () => {
     });
   };
 
+  const handleSelectTabView = (viewType) => {
+    setTabView(viewType);
+  };
+
   // Example usage:
 
   useEffect(() => {
@@ -479,8 +487,8 @@ const Table = () => {
           )}
         </div>
 
-        <div className="flex flex-col gap-4 justify-between px-4">
-          <div className="flex flex-row justify-between gap-4">
+        <div className="flex flex-col gap-1 justify-between px-4 pb-4">
+          <div className="flex flex-row justify-between gap-4 pt-4">
             <button type="button" onClick={handleAddNewClick}>
               <AddCircleOutlinedIcon />
             </button>
@@ -491,6 +499,44 @@ const Table = () => {
             />
 
             <ArrowDownwardIcon />
+          </div>
+
+          <div className="flex flex-row justify-between gap-3">
+            <div
+              className="mt-1 cursor-pointer"
+              onClick={() => {
+                handleSelectTabView("table");
+              }}
+            >
+              <TableIcon
+                size="19px"
+                strokeColor={tabView === "table" ? "#4856bef5" : "black"}
+              />
+            </div>
+
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                handleSelectTabView("list");
+              }}
+            >
+              <ListIcon
+                size="24px"
+                color={tabView === "list" ? "#4856bef5" : "black"}
+              />
+            </div>
+
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                handleSelectTabView("grid");
+              }}
+            >
+              <GridIcon
+                size="26px"
+                color={tabView === "grid" ? "#4856bef5" : "black"}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -510,84 +556,228 @@ const Table = () => {
       <FilterModal isOpen={openFilterModal} onClose={closeModal} />
 
       <div>
-        <div
-          className="relative overflow-x-auto"
-          style={{ minHeight: "300px" }}
-        >
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
-            <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th
-                  scope="col"
-                  className={`px-6 py-3 ${
-                    columns.includes("Lookup Type Name") ? `` : `hidden`
-                  } `}
+        {tabView === "table" && (
+          <div
+            className="relative overflow-x-auto"
+            style={{ minHeight: "300px" }}
+          >
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
+              <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th
+                    scope="col"
+                    className={`px-6 py-3 ${
+                      columns.includes("Lookup Type Name") ? `` : `hidden`
+                    } `}
+                  >
+                    Lookup Type Name
+                  </th>
+                  <th
+                    scope="col"
+                    className={`px-6 py-3 ${
+                      columns.includes("Display Name") ? `` : `hidden`
+                    } `}
+                  >
+                    Display Name
+                  </th>
+                  <th
+                    scope="col"
+                    className={`px-6 py-3 ${
+                      columns.includes("Actions") ? `` : `hidden`
+                    } `}
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tablePaginatedData[currentPage - 1]?.map((data, index) => {
+                  return (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th
+                        scope="row"
+                        className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ${
+                          columns.includes("Lookup Type Name") ? `` : `hidden`
+                        } `}
+                        style={{ width: "33%" }}
+                      >
+                        {data["Lookup Type Name"]}
+                      </th>
+                      <td
+                        className={`flex-grow px-6 py-4 ${
+                          columns.includes("Display Name") ? `` : `hidden`
+                        } `}
+                        style={{ width: "33%" }}
+                      >
+                        {data["Display Name"]}
+                      </td>
+                      <td
+                        className={`flex gap-3 px-6 py-4 ${
+                          columns.includes("Actions") ? `` : `hidden`
+                        } `}
+                      >
+                        {[write, look, del, info].map((image, index) => (
+                          <button
+                            key={index}
+                            onClick={() =>
+                              image === del
+                                ? handleDeleteClick(data)
+                                : handleEditClick(data)
+                            }
+                          >
+                            <img src={image} alt="icon" />
+                          </button>
+                        ))}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {tabView === "list" && (
+          <div className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            {tablePaginatedData[currentPage - 1]?.map((data, index) => (
+              <div
+                key={index}
+                className="flex items-center bg-white border border-[#4856bef5] dark:bg-gray-800 dark:border-gray-700 my-4 rounded-lg"
+              >
+                <div
+                  className={`w-[80px] h-[80px] flex font-medium text-white bg-[#4856bef5] justify-center pt-7 rounded-l-lg`}
                 >
-                  Lookup Type Name
-                </th>
-                <th
-                  scope="col"
-                  className={`px-6 py-3 ${
-                    columns.includes("Display Name") ? `` : `hidden`
-                  } `}
-                >
-                  Display Name
-                </th>
-                <th
-                  scope="col"
-                  className={`px-6 py-3 ${
-                    columns.includes("Actions") ? `` : `hidden`
-                  } `}
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tablePaginatedData[currentPage - 1]?.map((data, index) => {
-                return (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ${
-                        columns.includes("Lookup Type Name") ? `` : `hidden`
-                      } `}
-                      style={{ width: "33%" }}
+                  {index + 1}
+                </div>
+                <div className="w-full flex flex-row ml-[80px]">
+                  <div className="w-[33%]">
+                    <div
+                      className={` ${
+                        columns.includes("Lookup Type Name") ? "" : "hidden"
+                      }`}
                     >
+                      <p
+                        className="text-gray-400 py-1"
+                        style={{ fontWeight: "400" }}
+                      >
+                        Lookup Type Name
+                      </p>
+
+                      <p className="text-black"> {data["Lookup Type Name"]}</p>
+                    </div>
+                  </div>
+
+                  <div className="w-[33%]">
+                    <div
+                      className={` ${
+                        columns.includes("Display Name") ? "" : "hidden"
+                      }`}
+                    >
+                      <p
+                        className="text-gray-400 py-1"
+                        style={{ fontWeight: "400" }}
+                      >
+                        Display Name
+                      </p>
+                      <p className="text-black">{data["Display Name"]}</p>
+                    </div>
+                  </div>
+
+                  <div className="w-[33%]">
+                    <div
+                      className={`  ${
+                        columns.includes("Actions") ? "" : "hidden"
+                      } `}
+                    >
+                      <p
+                        className="text-gray-400 py-1"
+                        style={{ fontWeight: "400" }}
+                      >
+                        Actions
+                      </p>
+
+                      <div className="flex gap-3">
+                        {[write, look, del, info].map((image, index) => (
+                          <button
+                            key={index}
+                            onClick={() =>
+                              image === del
+                                ? handleDeleteClick(data)
+                                : handleEditClick(data)
+                            }
+                          >
+                            <img src={image} alt="icon" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tabView === "grid" && (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tablePaginatedData[currentPage - 1]?.map((data, index) => (
+              <div
+                key={index}
+                className="w-[400px] rounded-lg border-2 border-[#4856bef5]"
+              >
+                <div className="flex flex-row justify-between bg-[#4856bef5] rounded-t-lg p-4">
+                  <p className="text-white text-sm">Row {index + 1}</p>
+                  <div className="flex gap-3">
+                    {[write, look, del, info].map((image, btnIndex) => (
+                      <button
+                        key={btnIndex}
+                        onClick={() =>
+                          image === del
+                            ? handleDeleteClick(data)
+                            : handleEditClick(data)
+                        }
+                      >
+                        <img src={image} alt="icon" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-row justify-between bg-white rounded-b-lg p-4">
+                  <div
+                    className={`w-[50%] ${
+                      columns.includes("Lookup Type Name") ? "" : "hidden"
+                    }`}
+                  >
+                    <p
+                      className="text-gray-400 py-1 text-sm"
+                      style={{ fontWeight: "400" }}
+                    >
+                      Lookup Type Name
+                    </p>
+                    <p className="text-black text-xs">
                       {data["Lookup Type Name"]}
-                    </th>
-                    <td
-                      className={`flex-grow px-6 py-4 ${
-                        columns.includes("Display Name") ? `` : `hidden`
-                      } `}
-                      style={{ width: "33%" }}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`w-[50%] ${
+                      columns.includes("Display Name") ? "" : "hidden"
+                    }`}
+                  >
+                    <p
+                      className="text-gray-400 py-1 text-sm"
+                      style={{ fontWeight: "400" }}
                     >
-                      {data["Display Name"]}
-                    </td>
-                    <td
-                      className={`flex gap-3 px-6 py-4 ${
-                        columns.includes("Actions") ? `` : `hidden`
-                      } `}
-                    >
-                      {[write, look, del, info].map((image, index) => (
-                        <button
-                          key={index}
-                          onClick={() =>
-                            image === del
-                              ? handleDeleteClick(data)
-                              : handleEditClick(data)
-                          }
-                        >
-                          <img src={image} alt="icon" />
-                        </button>
-                      ))}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      Display Name
+                    </p>
+                    <p className="text-black text-xs">{data["Display Name"]}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="pagination">

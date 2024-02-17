@@ -11,6 +11,7 @@ import Table from "../atoms/Table";
 import { gsap, ScrollTrigger, Power2 } from "gsap";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import LineWeightIcon from "@mui/icons-material/LineWeight";
+import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
 
 const Sample = () => {
   const [selectedCard, setSelectedCard] = useState(5);
