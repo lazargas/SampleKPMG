@@ -10,7 +10,7 @@ import line from "../../assets/images/Line2.svg";
 import Table from "../atoms/Table";
 import { gsap, ScrollTrigger, Power2 } from "gsap";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import LineWeightIcon from '@mui/icons-material/LineWeight';
+import LineWeightIcon from "@mui/icons-material/LineWeight";
 
 const Sample = () => {
   const [selectedCard, setSelectedCard] = useState(5);
@@ -136,7 +136,7 @@ const Sample = () => {
   };
 
   const handleAnimationReverse = () => {
-    const animate = ()=>{
+    const animate = () => {
       tl.to(
         "#arrowdown",
         {
@@ -236,14 +236,10 @@ const Sample = () => {
           "a"
         )
         .reverse();
-    }
+    };
     document.querySelector(".collapse-container").style.flexDirection =
       "column";
     document.querySelector("#arrow").classList.remove("hidden").then(animate());
-   
-   
-   
-      
   };
 
   const handleCardClick = (index) => {
@@ -263,29 +259,41 @@ const Sample = () => {
           <button
             id="arrowdown"
             className="hidden relative left-[100px] rotate-180"
-            
           >
-            
-            <LineWeightIcon/>
+            <LineWeightIcon />
           </button>
           <div className="card-container">
             {[card1, card2, card3, card4, card5, card6].map((card, index) => (
               <button
-                className={`flex flex-col items-start ${
+                className={`flex flex-col items-center  text-center p-2  rounded-lg ${
                   selectedCard === index ? "" : "opacity-60"
                 }`}
                 key={index}
                 onClick={() => handleCardClick(index)}
               >
-                <img
-                  id={`cards-${index + 1}`}
-                  className="icons"
-                  src={card}
-                  alt={`Card ${index + 1}`}
-                />
-                <h3 className={`${selectedCard === index ? "font-bold" : ""}`}>
+                <div className="flex flex-row justify-center mx-2">
+                  <img
+                    id={`cards-${index + 1}`}
+                    className="ml-7"
+                    src={card}
+                    width="80px"
+                    alt={`Card ${index + 1}`}
+                  />
+                </div>
+
+                <p
+                  className={`text-sm mt-2 ${
+                    selectedCard === index
+                      ? "text-[#4856BEF5]"
+                      : "text-gray-700"
+                  }`}
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: selectedCard === index ? "500" : "400",
+                  }}
+                >
                   {pages[index]}
-                </h3>
+                </p>
               </button>
             ))}
           </div>
