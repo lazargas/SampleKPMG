@@ -1,0 +1,23 @@
+.custom-select-container {
+  position: relative;
+}
+
+.custom-select {
+  width: 235px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4856bef5;
+  color: white;
+  appearance: none; /* Remove default arrow icon */
+}
+
+.custom-select-container::after {
+  content: "˅"; /* Unicode character for a simple down arrow */
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: white; /* Set the color to white for the arrow */
+  pointer-events: none; /* Ensure the arrow doesn't interfere with the select input */
+}

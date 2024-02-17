@@ -35,18 +35,18 @@ const SearchBar = ({
         >
           Search
         </label>
-        <div className="w-[300px] relative border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div className="w-[235px] relative border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <input
             type="search"
             id="default-search"
-            className="block w-[250px] p-4 ps-10 text-sm text-gray-900 border border-none rounded-l-lg"
-            placeholder="Type Desired Keyword"
+            className="block w-[200px] p-2 ps-10 text-sm text-gray-900 border border-none rounded-l-lg"
+            placeholder="Search keyword"
             required=""
             value={searchFilter}
             onChange={(e) => handleSearch(e)}
           />
 
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer"
               aria-hidden="true"
@@ -65,7 +65,7 @@ const SearchBar = ({
           </div>
 
           <div
-            className="absolute inset-y-0 right-0 flex items-center p-3"
+            className="absolute inset-y-0 right-0 flex items-center p-1"
             onClick={toggleAdvancedModal}
             style={{ cursor: "pointer" }}
           >
