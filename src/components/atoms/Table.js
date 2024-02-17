@@ -17,12 +17,22 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Dropdown from "./Dropdown";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
+import "../../styles/atoms/select.css";
 
 const AddNewModal = ({ isOpen, onClose }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
   const [second, setSecond] = useState(true);
+
+  const [mode, setMode] = useState("web");
+  const [uploaded, setUploaded] = useState("pending");
+
+  const [selectedFile, setSelectedFile] = useState();
+
+  const handleFileChange = (file) => {
+    setSelectedFile(file);
+  };
 
   const handleSave = () => {
     // Implement save logic here
@@ -68,225 +78,284 @@ const AddNewModal = ({ isOpen, onClose }) => {
             </h3>
           </div>
 
-          {/* Modal body */}
-          <div className="p-6 max-h-[350px] overflow-y-scroll flex gap-[2.5rem]
-          ">
-            {/* Input fields */}
-            <div>
-            <>
-                <div className="mb-4">
-              <label
-                htmlFor="input1"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Code
-              </label>
+          <div className="px-6 pt-4">
+            <div className="flex items-center">
               <input
-                type="text"
-                id="input1"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input1}
-                onChange={(e) => setInput1(e.target.value)}
+                type="radio"
+                id="web"
+                value="web"
+                checked={mode === "web"}
+                onChange={() => setMode("web")}
+                className="mr-2"
               />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input2"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Name
+              <label htmlFor="web" className="text-sm">
+                Web
               </label>
-              <input
-                type="text"
-                id="input2"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input2}
-                onChange={(e) => setInput2(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input3"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
-                id="input3"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                rows={2} // Set the number of rows
-                value={input3}
-                onChange={(e) => setInput3(e.target.value)}
-              />
-            </div>
-            </>
-            <>
-                <div className="mb-4">
-              <label
-                htmlFor="input1"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Code
-              </label>
-              <input
-                type="text"
-                id="input1"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input1}
-                onChange={(e) => setInput1(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input2"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Name
-              </label>
-              <input
-                type="text"
-                id="input2"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input2}
-                onChange={(e) => setInput2(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input3"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
-                id="input3"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                rows={2} // Set the number of rows
-                value={input3}
-                onChange={(e) => setInput3(e.target.value)}
-              />
-            </div>
-            </>
-            </div>
-            <div>
-            <>
-                <div className="mb-4">
-              <label
-                htmlFor="input1"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Code
-              </label>
-              <input
-                type="text"
-                id="input1"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input1}
-                onChange={(e) => setInput1(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input2"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Name
-              </label>
-              <input
-                type="text"
-                id="input2"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input2}
-                onChange={(e) => setInput2(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input3"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
-                id="input3"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                rows={2} // Set the number of rows
-                value={input3}
-                onChange={(e) => setInput3(e.target.value)}
-              />
-            </div>
-            </>
-            <>
-                <div className="mb-4">
-              <label
-                htmlFor="input1"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Code
-              </label>
-              <input
-                type="text"
-                id="input1"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input1}
-                onChange={(e) => setInput1(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input2"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Lookup Type Name
-              </label>
-              <input
-                type="text"
-                id="input2"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                value={input2}
-                onChange={(e) => setInput2(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="input3"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
-                id="input3"
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                rows={2} // Set the number of rows
-                value={input3}
-                onChange={(e) => setInput3(e.target.value)}
-              />
-            </div>
-            </>
-            </div>
 
-            
+              <input
+                type="radio"
+                id="excel"
+                value="excel"
+                checked={mode === "excel"}
+                onChange={() => setMode("excel")}
+                className="ml-4 mr-2"
+              />
+              <label htmlFor="excel" className="text-sm">
+                Excel
+              </label>
+            </div>
+          </div>
+
+          {/* Modal body */}
+          <div
+            className="p-6 max-h-[350px] overflow-y-scroll flex gap-[2.5rem]
+          "
+          >
+            {/* Input fields */}
+            {mode === "web" && (
+              <div>
+                <>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input1"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Lookup Type Code
+                    </label>
+                    <input
+                      type="text"
+                      id="input1"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      value={input1}
+                      onChange={(e) => setInput1(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input2"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Lookup Type Name
+                    </label>
+                    <input
+                      type="text"
+                      id="input2"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      value={input2}
+                      onChange={(e) => setInput2(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input3"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id="input3"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      rows={2} // Set the number of rows
+                      value={input3}
+                      onChange={(e) => setInput3(e.target.value)}
+                    />
+                  </div>
+                </>
+                <>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input1"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Lookup Type Code
+                    </label>
+                    <input
+                      type="text"
+                      id="input1"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      value={input1}
+                      onChange={(e) => setInput1(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input2"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Lookup Type Name
+                    </label>
+                    <input
+                      type="text"
+                      id="input2"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      value={input2}
+                      onChange={(e) => setInput2(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="input3"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id="input3"
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      rows={2} // Set the number of rows
+                      value={input3}
+                      onChange={(e) => setInput3(e.target.value)}
+                    />
+                  </div>
+                </>
+              </div>
+            )}
+
+            {mode === "excel" && (
+              <div>
+                {uploaded === "pending" && (
+                  <div className="h-[350px]">
+                    <p className="text-gray-700 text-sm mb-4">
+                      Please fill the data according to the following columns
+                      structure:
+                    </p>
+                    <div className="bg-gray-100 p-4 rounded-md mb-4">
+                      <p className="text-gray-600 font-semibold">
+                        Example Excel Structure:
+                      </p>
+                      <table className="w-full mt-2">
+                        <thead>
+                          <tr>
+                            <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
+                              Lookup Type
+                            </th>
+                            <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
+                              Display name
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[1, 2, 3].map((index) => (
+                            <tr key={index}>
+                              <td
+                                className={`border-b border-gray-400 p-2 ${
+                                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                                }`}
+                              >
+                                Data 1
+                              </td>
+                              <td
+                                className={`border-b border-gray-400 p-2 ${
+                                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                                }`}
+                              >
+                                Data 2
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {uploaded === "uploading" && (
+                  <div className="h-[350px]">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Choose File:
+                      <input
+                        type="file"
+                        className="mt-1 block w-full border-gray-300 rounded-md pt-2 "
+                        onChange={(e) => handleFileChange(e.target.files[0])}
+                      />{" "}
+                    </label>
+                  </div>
+                )}
+
+                {uploaded === "uploaded" && (
+                  <div className="w-[450px] h-[350px]">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
+                      <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                          <th scope="col" className={`px-6 py-3 `}>
+                            Lookup Type Name
+                          </th>
+                          <th scope="col" className={`px-6 py-3 `}>
+                            Display Name
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[1, 2, 3, 4].map((data, index) => {
+                          return (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                              <th
+                                scope="row"
+                                className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  `}
+                              >
+                                Data 1
+                              </th>
+                              <td className={`flex-grow px-6 py-4 `}>Data 2</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Modal footer */}
           <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end items-center">
-          
-           <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
-            <button
-              type="button"
-              className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-          </div>
+            <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
+              {mode === "excel" && uploaded === "pending" && (
+                <button
+                  type="button"
+                  className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+                  onClick={() => setUploaded("uploading")}
+                >
+                  Generate Excel
+                </button>
+              )}
+
+              {mode === "excel" && uploaded === "uploading" && (
+                <button
+                  type="button"
+                  disabled={!selectedFile}
+                  className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${
+                    !selectedFile
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-blue-800"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
+                  onClick={() => setUploaded("uploaded")}
+                >
+                  Upload Excel File
+                </button>
+              )}
+              {(mode === "web" || uploaded === "uploaded") && (
+                <button
+                  type="button"
+                  className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+                  onClick={handleSave}
+                >
+                  Save
+                </button>
+              )}
+              <button
+                type="button"
+                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+                onClick={() => {
+                  setSelectedFile();
+                  setUploaded("pending");
+                  onClose();
+                  setMode("web");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
