@@ -36,7 +36,7 @@ const AddNewModal = ({ isOpen, onClose }) => {
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed inset-0 overflow-y-auto z-50`}
+      } fixed inset-0 overflow-y-auto z-50 `}
     >
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Background overlay */}
@@ -69,161 +69,224 @@ const AddNewModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Modal body */}
-          <div className="p-6">
+          <div className="p-6 max-h-[350px] overflow-y-scroll flex gap-[2.5rem]
+          ">
             {/* Input fields */}
-            {second ? (
-              <>
+            <div>
+            <>
                 <div className="mb-4">
-                  <label
-                    htmlFor="input1"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Lookup Type Code
-                  </label>
-                  <input
-                    type="text"
-                    id="input1"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    value={input1}
-                    onChange={(e) => setInput1(e.target.value)}
-                  />
-                </div>
+              <label
+                htmlFor="input1"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Code
+              </label>
+              <input
+                type="text"
+                id="input1"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input1}
+                onChange={(e) => setInput1(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input2"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Name
+              </label>
+              <input
+                type="text"
+                id="input2"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input3"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <textarea
+                id="input3"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                rows={2} // Set the number of rows
+                value={input3}
+                onChange={(e) => setInput3(e.target.value)}
+              />
+            </div>
+            </>
+            <>
                 <div className="mb-4">
-                  <label
-                    htmlFor="input2"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Lookup Type Name
-                  </label>
-                  <input
-                    type="text"
-                    id="input2"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    value={input2}
-                    onChange={(e) => setInput2(e.target.value)}
-                  />
-                </div>
+              <label
+                htmlFor="input1"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Code
+              </label>
+              <input
+                type="text"
+                id="input1"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input1}
+                onChange={(e) => setInput1(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input2"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Name
+              </label>
+              <input
+                type="text"
+                id="input2"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input3"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <textarea
+                id="input3"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                rows={2} // Set the number of rows
+                value={input3}
+                onChange={(e) => setInput3(e.target.value)}
+              />
+            </div>
+            </>
+            </div>
+            <div>
+            <>
                 <div className="mb-4">
-                  <label
-                    htmlFor="input3"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="input3"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    rows={2} // Set the number of rows
-                    value={input3}
-                    onChange={(e) => setInput3(e.target.value)}
-                  />
-                </div>
-              </>
-            ) : (
-              <>
+              <label
+                htmlFor="input1"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Code
+              </label>
+              <input
+                type="text"
+                id="input1"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input1}
+                onChange={(e) => setInput1(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input2"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Name
+              </label>
+              <input
+                type="text"
+                id="input2"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input3"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <textarea
+                id="input3"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                rows={2} // Set the number of rows
+                value={input3}
+                onChange={(e) => setInput3(e.target.value)}
+              />
+            </div>
+            </>
+            <>
                 <div className="mb-4">
-                  <label
-                    htmlFor="input1"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Lookup Type
-                  </label>
-                  <input
-                    type="text"
-                    id="input1"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    value={input1}
-                    onChange={(e) => setInput1(e.target.value)}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="input2"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Lookup
-                  </label>
-                  <input
-                    type="text"
-                    id="input2"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    value={input2}
-                    onChange={(e) => setInput2(e.target.value)}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="input3"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Lookup type Code
-                  </label>
-                  <input
-                    type="text"
-                    id="input2"
-                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    value={input2}
-                    onChange={(e) => setInput2(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
+              <label
+                htmlFor="input1"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Code
+              </label>
+              <input
+                type="text"
+                id="input1"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input1}
+                onChange={(e) => setInput1(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input2"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Lookup Type Name
+              </label>
+              <input
+                type="text"
+                id="input2"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                value={input2}
+                onChange={(e) => setInput2(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="input3"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <textarea
+                id="input3"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                rows={2} // Set the number of rows
+                value={input3}
+                onChange={(e) => setInput3(e.target.value)}
+              />
+            </div>
+            </>
+            </div>
+
+            
           </div>
 
           {/* Modal footer */}
-          <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-between items-center">
-            <nav aria-label="Page navigation example">
-              <ul className="inline-flex -space-x-px text-sm">
-                <li onClick={() => setSecond(true)}>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Previous
-                  </a>
-                </li>
-                <li onClick={() => setSecond(true)}>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    1
-                  </a>
-                </li>
-                <li onClick={() => setSecond(false)}>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    2
-                  </a>
-                </li>
-                <li onClick={() => setSecond(false)}>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
-              <button
-                type="button"
-                className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-                onClick={onClose}
-              >
-                Cancel
-              </button>
-            </div>
+          <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end items-center">
+          
+           <div className="bg-gray-100 px-4 py-3 sm:px-6 flex justify-end">
+            <button
+              type="button"
+              className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+          </div>
           </div>
         </div>
       </div>
