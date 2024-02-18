@@ -4,17 +4,13 @@ import KPMGContext from "../../context/SampleContext";
 
 const SearchBar = ({
   advancedFilterState,
-  setAdvancedFilterState,
   handleSearch,
-  initialAdvancedFilterState,
   updateOperator,
   operatorOptions,
   updateValue,
   clearAdvancedFilter,
   searchFilter,
 }) => {
-  const { columns, setColumns } = useContext(KPMGContext);
-
   const [advancedModal, setAdvancedModal] = useState(false);
 
   const toggleAdvancedModal = () => {
@@ -132,53 +128,53 @@ const SearchBar = ({
               </tr>
             </thead>
             <tbody>
-              {columns
-                ?.filter((col) => {
-                  return col !== "Actions";
-                })
-                .map((data, index) => {
-                  return (
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th
-                        scope="row"
-                        className={`w-[30%] flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white `}
+              {advancedFilterState.map(
+                ({ col: columnName, value, operator }, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  >
+                    <th
+                      scope="row"
+                      className={`w-[30%] flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white `}
+                    >
+                      {columnName}
+                    </th>
+                    <td className={`w-[300px] flex-grow px-6 py-4 `}>
+                      <select
+                        className="block w-[100%] p-4 text-sm border rounded-lg text-black focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        onChange={(e) =>
+                          updateOperator(columnName, e.target.value)
+                        }
+                        value={operator || ""}
                       >
-                        {data}
-                      </th>
-                      <td className={`w-[300px] flex-grow px-6 py-4 `}>
-                        <select
-                          className="block w-[100%] p-4 text-sm border rounded-lg text-black focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          onChange={(e) => updateOperator(data, e.target.value)}
-                          value={advancedFilterState[data]?.operator || ""}
-                        >
-                          <option value="">Select an operator</option>
-
-                          {operatorOptions.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                      <td className={` flex gap-3 px-6 py-4 `}>
-                        {advancedFilterState[data]?.operator?.includes(
-                          "empty"
-                        ) ? (
-                          <></>
-                        ) : (
-                          <input
-                            type="text"
-                            className="w-full px-4 py-3 border rounded-md"
-                            placeholder="Enter text"
-                            disabled={!advancedFilterState[data]?.operator}
-                            value={advancedFilterState[data]?.value || ""}
-                            onChange={(e) => updateValue(data, e.target.value)}
-                          />
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
+                        <option value="">Select an operator</option>
+                        {operatorOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className={`flex gap-3 px-6 py-4 `}>
+                      {operator?.includes("empty") ? (
+                        <></>
+                      ) : (
+                        <input
+                          type="text"
+                          className="w-full px-4 py-3 border rounded-md"
+                          placeholder="Enter text"
+                          disabled={!operator}
+                          value={value || ""}
+                          onChange={(e) =>
+                            updateValue(columnName, e.target.value)
+                          }
+                        />
+                      )}
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
 

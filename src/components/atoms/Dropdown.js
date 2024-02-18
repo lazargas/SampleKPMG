@@ -1,32 +1,49 @@
-import React, { useContext } from "react";
-import KPMGContext from "../../context/SampleContext";
+import React, { useState, useEffect } from "react";
+import { Select, MenuItem, FormControl } from "@mui/material";
 
-const Dropdown = () => {
-  const { dropdown, setDropdown } = useContext(KPMGContext);
+const Dropdown = ({ data }) => {
+  const [selectedValue, setSelectedValue] = useState("");
+
+  useEffect(() => {
+    // Set the initial selected value to the first item in the data array
+    if (data.length > 0) {
+      setSelectedValue(data[0]);
+    }
+  }, [data]);
 
   return (
     <>
-      {/* Dropdown menu */}
-
-      <select
-        value={dropdown}
-        onChange={(event) => setDropdown(event.target.value)}
-        className="w-[235px] text-white bg-[#4856BEF5] font-medium rounded-lg text-md  focus:outline-none appearance-none"
-        aria-labelledby="dropdownDefaultButton"
+      <FormControl
+        sx={{ minWidth: 120, bgcolor: "#4856BEF5", borderRadius: "5px" }}
       >
-        <option
-          value="Lookup Type"
-          className="bg-white text-black font-medium text-sm py-5 "
+        <Select
+          value={selectedValue}
+          onChange={(e) => setSelectedValue(e.target.value)}
+          displayEmpty
+          sx={{
+            color: "white",
+            ".MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgba(228, 219, 233, 0.25)",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgba(228, 219, 233, 0.25)",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgba(228, 219, 233, 0.25)",
+            },
+            ".MuiSvgIcon-root ": {
+              fill: "white !important",
+            },
+          }}
         >
-          Lookup Type
-        </option>
-        <option
-          value="Lookup"
-          className="bg-white text-black font-medium text-sm py-5 "
-        >
-          Lookup
-        </option>
-      </select>
+          {data &&
+            data.map((item) => (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
     </>
   );
 };
