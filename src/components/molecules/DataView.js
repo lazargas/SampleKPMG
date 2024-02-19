@@ -80,6 +80,10 @@ const DataView = ({ data }) => {
     operator: null,
   }));
 
+  const [tempAdvancedFilterState, setTempAdvancedFilterState] = useState(
+    initialAdvancedFilterState
+  );
+
   const [advancedFilterState, setAdvancedFilterState] = useState(
     initialAdvancedFilterState
   );
@@ -106,7 +110,34 @@ const DataView = ({ data }) => {
   ];
 
   const updateOperator = (columnName, operator) => {
+    setTempAdvancedFilterState((prevFilterState) => {
+      return prevFilterState.map((filter) => {
+        if (filter.col === columnName) {
+          return {
+            ...filter,
+            operator: operator,
+            value: null,
+          };
+        }
+        return filter;
+      });
+    });
+  };
+
+  const updateAllOperator = (columnName, operator) => {
     setAdvancedFilterState((prevFilterState) => {
+      return prevFilterState.map((filter) => {
+        if (filter.col === columnName) {
+          return {
+            ...filter,
+            operator: operator,
+            value: null,
+          };
+        }
+        return filter;
+      });
+    });
+    setTempAdvancedFilterState((prevFilterState) => {
       return prevFilterState.map((filter) => {
         if (filter.col === columnName) {
           return {
@@ -122,7 +153,7 @@ const DataView = ({ data }) => {
 
   // Update state for a specific column's value
   const updateValue = (columnName, value) => {
-    setAdvancedFilterState((prevFilterState) => {
+    setTempAdvancedFilterState((prevFilterState) => {
       return prevFilterState.map((filter) => {
         if (filter.col === columnName) {
           return {
@@ -135,7 +166,38 @@ const DataView = ({ data }) => {
     });
   };
 
+  const updateAllValue = (columnName, value) => {
+    setAdvancedFilterState((prevFilterState) => {
+      return prevFilterState.map((filter) => {
+        if (filter.col === columnName) {
+          return {
+            ...filter,
+            value: value,
+          };
+        }
+        return filter;
+      });
+    });
+
+    setTempAdvancedFilterState((prevFilterState) => {
+      return prevFilterState.map((filter) => {
+        if (filter.col === columnName) {
+          return {
+            ...filter,
+            value: value,
+          };
+        }
+        return filter;
+      });
+    });
+  };
+
+  const handleAdvancedFilter = () => {
+    setAdvancedFilterState(tempAdvancedFilterState);
+  };
+
   const clearAdvancedFilter = () => {
+    setTempAdvancedFilterState(initialAdvancedFilterState);
     setAdvancedFilterState(initialAdvancedFilterState);
   };
 
@@ -239,7 +301,6 @@ const DataView = ({ data }) => {
 
   const checkFiltered = (columnName) => {
     const column = filteredColumns.find((col) => col.col === columnName);
-
     return column ? column.filtered : false;
   };
 
@@ -274,19 +335,20 @@ const DataView = ({ data }) => {
 
           <SearchBar
             handleSearch={handleSearch}
-            advancedFilterState={advancedFilterState}
-            setAdvancedFilterState={setAdvancedFilterState}
+            tempAdvancedFilterState={tempAdvancedFilterState}
+            setTempAdvancedFilterState={setTempAdvancedFilterState}
             initialAdvancedFilterState={initialAdvancedFilterState}
             operatorOptions={operatorOptions}
             updateOperator={updateOperator}
             updateValue={updateValue}
             clearAdvancedFilter={clearAdvancedFilter}
             searchFilter={searchFilter}
+            handleAdvancedFilter={handleAdvancedFilter}
           />
         </div>
 
         <div className="w-full flex overflow-auto mt-10 justify-start">
-        {searchFilter && (
+          {searchFilter && (
             <div className="flex items-center space-x-2 ml-4">
               <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
                 <span className="">{searchFilter} </span>
@@ -304,7 +366,7 @@ const DataView = ({ data }) => {
 
           {advancedFilterState.map(({ col: columnName, value, operator }) => (
             <div key={columnName} className="flex items-center space-x-2">
-              {operator && value && (
+              {operator && (value || operator?.includes("empty")) && (
                 <div
                   key={columnName}
                   className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs"
@@ -315,8 +377,8 @@ const DataView = ({ data }) => {
                   <span
                     className="pt-0.25 cursor-pointer"
                     onClick={() => {
-                      updateOperator(columnName, null);
-                      updateValue(columnName, null);
+                      updateAllOperator(columnName, null);
+                      updateAllValue(columnName, null);
                     }}
                   >
                     <IoIosClose color="white" size={"20px"} />
@@ -326,13 +388,9 @@ const DataView = ({ data }) => {
             </div>
           ))}
 
-{
-  advancedFilterState.length+(searchFilter ? 1 : 0 ) > 0 && 
-  <button>
-    
-  </button>
-}
-          
+          {advancedFilterState.length + (searchFilter ? 1 : 0) > 0 && (
+            <button></button>
+          )}
         </div>
 
         <div className="flex flex-col gap-1 justify-between px-4 pb-4">
@@ -544,9 +602,10 @@ const DataView = ({ data }) => {
               </Table>
             </TableContainer>
             {tablePaginatedData.length === 0 && (
-              <div
-              >
-                <h3 style={{width: "max-content", margin: "24px auto"}}>No Data Found</h3>
+              <div>
+                <h3 style={{ width: "max-content", margin: "24px auto" }}>
+                  No Data Found
+                </h3>
               </div>
             )}
           </>

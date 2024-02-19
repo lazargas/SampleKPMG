@@ -3,16 +3,16 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import KPMGContext from "../../context/SampleContext";
 
 const SearchBar = ({
-  advancedFilterState,
+  tempAdvancedFilterState,
   handleSearch,
   updateOperator,
   operatorOptions,
   updateValue,
   clearAdvancedFilter,
   searchFilter,
+  handleAdvancedFilter,
 }) => {
   const [advancedModal, setAdvancedModal] = useState(false);
-  const [tempAdvanceFilterState, setTempAdvanceFilterState] = useState(advancedFilterState);
 
   const toggleAdvancedModal = () => {
     setAdvancedModal((prevState) => !prevState);
@@ -129,7 +129,7 @@ const SearchBar = ({
               </tr>
             </thead>
             <tbody>
-              {advancedFilterState.map(
+              {tempAdvancedFilterState.map(
                 ({ col: columnName, value, operator }, index) => (
                   <tr
                     key={index}
@@ -184,7 +184,10 @@ const SearchBar = ({
             <button
               type="button"
               className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-[#4856BE] text-white rounded-md hover:bg-blue-800"
-              onClick={toggleAdvancedModal}
+              onClick={() => {
+                handleAdvancedFilter();
+                toggleAdvancedModal();
+              }}
             >
               Search
             </button>
