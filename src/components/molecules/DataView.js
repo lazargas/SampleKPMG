@@ -18,7 +18,9 @@ import { IoIosClose } from "react-icons/io";
 import demoData from "../../data/tableData";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Dropdown from "../atoms/Dropdown";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
 import "../../styles/atoms/select.css";
 
@@ -34,10 +36,12 @@ import {
   Box,
 } from "@mui/material";
 import AddNewModal from "../atoms/AddNewModal";
+import ViewModal from "../atoms/ViewModal";
 
 const DataView = ({ data }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isViewModalOpen, setViewModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
@@ -157,6 +161,12 @@ const DataView = ({ data }) => {
     setEditModalOpen(true);
   };
 
+  const handleViewClick = (data) => {
+    // Open the Edit modal and set the selected data
+    setSelectedData(data);
+    setViewModalOpen(true);
+  };
+
   const handleDeleteClick = (data) => {
     // Open the Delete modal and set the selected data
     setSelectedData(data);
@@ -168,6 +178,7 @@ const DataView = ({ data }) => {
     setAddModalOpen(false);
     setEditModalOpen(false);
     setDeleteModalOpen(false);
+    setViewModalOpen(false);
     setOpenFilterModal(false);
   };
 
@@ -247,6 +258,7 @@ const DataView = ({ data }) => {
     setDataLength(filteredData.length);
     setTablePaginatedData(paginateData(filteredData, itemsPerPage));
   }, [
+    data,
     itemsPerPage,
     searchFilter,
     advancedFilterState,
@@ -274,9 +286,25 @@ const DataView = ({ data }) => {
         </div>
 
         <div className="w-full flex overflow-auto mt-10 justify-start">
+        {searchFilter && (
+            <div className="flex items-center space-x-2 ml-4">
+              <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
+                <span className="">{searchFilter} </span>
+                <span
+                  className="pt-0.25 cursor-pointer"
+                  onClick={() => {
+                    setSearchFilter("");
+                  }}
+                >
+                  <IoIosClose color="white" size={"20px"} />
+                </span>
+              </div>
+            </div>
+          )}
+
           {advancedFilterState.map(({ col: columnName, value, operator }) => (
             <div key={columnName} className="flex items-center space-x-2">
-              {operator && (
+              {operator && value && (
                 <div
                   key={columnName}
                   className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs"
@@ -298,35 +326,28 @@ const DataView = ({ data }) => {
             </div>
           ))}
 
-          {searchFilter && (
-            <div className="flex items-center space-x-2 ml-4">
-              <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
-                <span className="">{searchFilter} </span>
-                <span
-                  className="pt-0.25 cursor-pointer"
-                  onClick={() => {
-                    setSearchFilter("");
-                  }}
-                >
-                  <IoIosClose color="white" size={"20px"} />
-                </span>
-              </div>
-            </div>
-          )}
+{
+  advancedFilterState.length+(searchFilter ? 1 : 0 ) > 0 && 
+  <button>
+    
+  </button>
+}
+          
         </div>
 
         <div className="flex flex-col gap-1 justify-between px-4 pb-4">
-          <div className="flex flex-row justify-between gap-4 pt-4">
-            <button type="button" onClick={handleAddNewClick}>
-              <AddCircleOutlinedIcon />
-            </button>
+          <div className="flex flex-row justify-between gap-4 pt-8">
+            <AddCircleOutlineIcon
+              className="hover:bg-[rgb(0,0,0,0.1)]"
+              onClick={handleAddNewClick}
+            />
 
-            <FilterAltOutlinedIcon
+            <DisplaySettingsIcon
               className="hover:bg-[rgb(0,0,0,0.1)]"
               onClick={handleFilterModal}
             />
 
-            <ArrowDownwardIcon />
+            <ArrowCircleDownIcon className="hover:bg-[rgb(0,0,0,0.1)]" />
           </div>
 
           <div className="flex flex-row justify-between gap-3">
@@ -378,6 +399,11 @@ const DataView = ({ data }) => {
         onClose={closeModal}
         selectedData={selectedData}
       />
+      <ViewModal
+        isOpen={isViewModalOpen}
+        onClose={closeModal}
+        selectedData={selectedData}
+      />
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeModal}
@@ -394,97 +420,107 @@ const DataView = ({ data }) => {
 
       <div className="min-h-[350px]">
         {tabView === "table" && (
-          <TableContainer
-            sx={{
-              width: { lg: "950px", xl: "1230px" },
-              overflowX: "auto",
-              mx: "auto",
-              my: 1,
-            }}
-            component={Paper}
-          >
-            <Table className=" text-sm text-left">
-              <TableHead>
-                <TableRow>
-                  {tableData &&
-                    tableData[0]?.map((col, index) => (
-                      <TableCell
-                        key={index}
-                        align="left"
-                        sx={{
-                          backgroundColor: "#4856BEF5",
-                          color: "white",
-                          fontWeight: "bold",
-                          borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          paddingRight: "0",
-                          minWidth: { md: "250px", xl: "300px" },
-                          fontSize: { md: "12px", lg: "14px" },
-                          display: `${
-                            checkFiltered(col.columnName) ? "none" : ""
-                          }`,
-                        }}
-                      >
-                        {col.columnName}
-                      </TableCell>
-                    ))}
-                  <TableCell
-                    align="left"
-                    sx={{
-                      backgroundColor: "#4856BEF5",
-                      color: "white",
-                      fontWeight: "bold",
-                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                      paddingRight: "0",
-                      minWidth: { md: "250px", xl: "300px" },
-                      fontSize: { md: "12px", lg: "14px" },
-                      display: `${checkFiltered("Actions") ? "none" : ""}`,
-                    }}
-                  >
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {tablePaginatedData[currentPage - 1]?.map(
-                  (rowData, rowIndex) => (
-                    <TableRow key={rowIndex} className="border-b">
-                      {rowData.map((col, colIndex) => {
-                        return (
-                          <TableCell
-                            key={colIndex}
-                            align="left"
-                            sx={{
-                              borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                              paddingRight: "0",
-                              minWidth: { md: "250px", xl: "300px" },
-                              fontSize: { md: "10px", lg: "12px" },
-                              display: `${
-                                checkFiltered(col.columnName) ? "none" : ""
-                              }`,
-                            }}
-                          >
-                            {col.columnValue}
-                          </TableCell>
-                        );
-                      })}
-                      <TableCell
-                        align="left"
-                        style={{
-                          borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          paddingRight: "0",
-                          minWidth: { md: "250px", xl: "300px" },
-                          display: `${checkFiltered("Actions") ? "none" : ""}`,
-                        }}
-                        className={`flex gap-3 `}
-                      >
-                        {[EditIcon, RemoveRedEyeIcon, DeleteIcon, InfoIcon].map(
-                          (IconComponent, index) => (
+          <>
+            <TableContainer
+              sx={{
+                width: { lg: "950px", xl: "1230px" },
+                overflowX: "auto",
+                mx: "auto",
+                my: 0,
+              }}
+              component={Paper}
+            >
+              <Table className=" text-sm text-left">
+                <TableHead>
+                  <TableRow>
+                    {tableData &&
+                      tableData[0]?.map((col, index) => (
+                        <TableCell
+                          key={index}
+                          align="left"
+                          sx={{
+                            backgroundColor: "#4856BEF5",
+                            color: "white",
+                            fontWeight: "bold",
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            paddingRight: "0",
+                            minWidth: { md: "250px", xl: "300px" },
+                            fontSize: { md: "12px", lg: "14px" },
+                            display: `${
+                              checkFiltered(col.columnName) ? "none" : ""
+                            }`,
+                          }}
+                        >
+                          {col.columnName}
+                        </TableCell>
+                      ))}
+                    <TableCell
+                      align="left"
+                      sx={{
+                        backgroundColor: "#4856BEF5",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                        paddingRight: "0",
+                        minWidth: { md: "250px", xl: "300px" },
+                        fontSize: { md: "12px", lg: "14px" },
+                        display: `${checkFiltered("Actions") ? "none" : ""}`,
+                      }}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tablePaginatedData[currentPage - 1]?.map(
+                    (rowData, rowIndex) => (
+                      <TableRow key={rowIndex} className="border-b">
+                        {rowData.map((col, colIndex) => {
+                          return (
+                            <TableCell
+                              key={colIndex}
+                              align="left"
+                              sx={{
+                                borderBottom:
+                                  "1px solid rgba(224, 224, 224, 1)",
+                                paddingRight: "0",
+                                minWidth: { md: "250px", xl: "300px" },
+                                fontSize: { md: "10px", lg: "12px" },
+                                display: `${
+                                  checkFiltered(col.columnName) ? "none" : ""
+                                }`,
+                              }}
+                            >
+                              {col.columnValue}
+                            </TableCell>
+                          );
+                        })}
+                        <TableCell
+                          align="left"
+                          style={{
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            paddingRight: "0",
+                            minWidth: { md: "250px", xl: "300px" },
+                            display: `${
+                              checkFiltered("Actions") ? "none" : ""
+                            }`,
+                          }}
+                          className={`flex gap-3 `}
+                        >
+                          {[
+                            EditIcon,
+                            RemoveRedEyeIcon,
+                            DeleteIcon,
+                            InfoIcon,
+                          ].map((IconComponent, index) => (
                             <button
                               key={index}
                               onClick={() =>
                                 IconComponent === DeleteIcon
                                   ? handleDeleteClick(rowData)
-                                  : handleEditClick(rowData)
+                                  : IconComponent === EditIcon
+                                  ? handleEditClick(rowData)
+                                  : handleViewClick(rowData)
                               }
                             >
                               <IconComponent
@@ -499,15 +535,21 @@ const DataView = ({ data }) => {
                                 }}
                               />
                             </button>
-                          )
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                          ))}
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {tablePaginatedData.length === 0 && (
+              <div
+              >
+                <h3 style={{width: "max-content", margin: "24px auto"}}>No Data Found</h3>
+              </div>
+            )}
+          </>
         )}
 
         {tabView === "list" && (
@@ -581,7 +623,9 @@ const DataView = ({ data }) => {
                               onClick={() =>
                                 IconComponent === DeleteIcon
                                   ? handleDeleteClick(rowData)
-                                  : handleEditClick(rowData)
+                                  : IconComponent === EditIcon
+                                  ? handleEditClick(rowData)
+                                  : handleViewClick(rowData)
                               }
                             >
                               <IconComponent
@@ -632,7 +676,9 @@ const DataView = ({ data }) => {
                           onClick={() =>
                             IconComponent === DeleteIcon
                               ? handleDeleteClick(data)
-                              : handleEditClick(data)
+                              : IconComponent === EditIcon
+                              ? handleEditClick(data)
+                              : handleViewClick(data)
                           }
                         >
                           <IconComponent

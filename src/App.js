@@ -20,8 +20,10 @@ import Sections from "./assets/images/Sections.svg";
 import SectionsSelected from "./assets/images/Sections - selected.svg";
 
 function App() {
+
   const [pageLabels, setPageLabels] = useState({
     name: "Lookup Type",
+    dataIndex: 0,
     data: lookupTypeData,
   });
 
@@ -67,7 +69,8 @@ function App() {
   const handleCardClick = (index) => {
     setPageLabels({
       name: pages[index].name,
-      data: pages[index].data,
+      dataIndex: 1,
+      data: businessEntityData,
     });
 
     setSelectedCard(index);

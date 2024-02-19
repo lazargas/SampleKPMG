@@ -12,6 +12,7 @@ const SearchBar = ({
   searchFilter,
 }) => {
   const [advancedModal, setAdvancedModal] = useState(false);
+  const [tempAdvanceFilterState, setTempAdvanceFilterState] = useState(advancedFilterState);
 
   const toggleAdvancedModal = () => {
     setAdvancedModal((prevState) => !prevState);
@@ -191,7 +192,10 @@ const SearchBar = ({
             <button
               type="button"
               className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-              onClick={clearAdvancedFilter}
+              onClick={() => {
+                clearAdvancedFilter();
+                toggleAdvancedModal();
+              }}
             >
               Clear
             </button>

@@ -132,10 +132,10 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                         <thead>
                           <tr>
                             <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
-                              Lookup Type
+                              Input Field 1
                             </th>
                             <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
-                              Display name
+                              Input Field 2
                             </th>
                           </tr>
                         </thead>

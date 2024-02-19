@@ -5,6 +5,7 @@ import DataView from "./DataView";
 
 import LineWeightIcon from "@mui/icons-material/LineWeight";
 import KPMGContext from "../../context/SampleContext";
+import { businessEntityData, lookupTypeData } from "../../data/tableData";
 
 const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
@@ -59,6 +60,8 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
         </div>
 
         <div className="table-container">
+          {/* {pageLabels.dataIndex===0 && <DataView data={pageLabels.data} />}
+          {pageLabels.dataIndex===1 && <DataView data={pageLabels.data} />} */}
           <DataView data={pageLabels.data} />
         </div>
       </div>
