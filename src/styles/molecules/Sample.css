@@ -24,6 +24,7 @@
   border-radius: 10px;
   justify-content: space-around;
   gap:3rem;
+  position: relative;
 }
 
 .table-container {

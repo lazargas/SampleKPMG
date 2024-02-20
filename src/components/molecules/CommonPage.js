@@ -1,15 +1,42 @@
 import React, { useContext, useState } from "react";
+import { gsap } from "gsap";
 import "../../styles/molecules/Sample.css";
+
 
 import DataView from "./DataView";
 
 import LineWeightIcon from "@mui/icons-material/LineWeight";
 import KPMGContext from "../../context/SampleContext";
 import { businessEntityData, lookupTypeData } from "../../data/tableData";
+import Slider from "../Animation/Slider";
+import "../../styles/Animation/slider.css";
+
 
 const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
+  const [gsapselect,setgsapSelect] = useState("");
+  const animateSlide = (iconName) => {
+    const icon = document.getElementById(iconName);
+    const bgIcon = document.getElementById("backgroundIcon");
+    //root.style.setProperty('--widthVariable', icon.offsetWidth )
+    setgsapSelect(iconName);
+    // Calculate the distance to slide
+    const distance = icon.offsetLeft - bgIcon.offsetLeft;
+    const width = icon.offsetWidth;
+    bgIcon.style.width = width + "px";
+    
+    // Animate the background icon
+    gsap.to(bgIcon, {
+      x: distance,
+      duration: 0.5,
+      ease: "power2.inOut"
+    });
 
+  };
+  const handleClick = (iconName) => {
+    // Call the animation function
+    animateSlide(iconName);
+  };
   return (
     <>
       <div className="container">
@@ -28,7 +55,8 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
               <button
                 className={`flex flex-col items-center  text-center p-2  rounded-lg `}
                 key={index}
-                onClick={() => handleCardClick(index)}
+                onClick={() => { handleCardClick(index); handleClick(pages[index].name) }}
+
               >
                 <div className="flex flex-row justify-center mx-2">
                   <img
@@ -41,21 +69,26 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
                   />
                 </div>
 
-                <p
-                  className={`text-lg mt-2 px-2  rounded-md ${
-                    selectedCard === index
-                      ? "text-white bg-[#4856bef5] "
-                      : "text-black"
-                  } `}
+                <div
+                  className={`slider text-lg mt-2 px-2  rounded-md ${gsapselect === pages[index].name
+                    ? "text-white"
+                    : "text-black"
+                    } `}
                   style={{
                     fontSize: "13px",
                     fontWeight: 400,
                   }}
+
+                  id={pages[index].name}
                 >
                   {pages[index].name}
-                </p>
+
+                </div>
+
               </button>
+
             ))}
+            <div id="backgroundIcon" className="background-icon"></div>
           </div>
         </div>
 
