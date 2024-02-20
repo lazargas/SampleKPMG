@@ -37,6 +37,7 @@ import {
 } from "@mui/material";
 import AddNewModal from "../atoms/AddNewModal";
 import ViewModal from "../atoms/ViewModal";
+import TagsModal from "../atoms/TagsModal";
 
 const DataView = ({ data }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -45,7 +46,7 @@ const DataView = ({ data }) => {
   const [selectedData, setSelectedData] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
-
+  const [isTagModalOpen,setIsTagModalOpen] = useState(false);
   // state for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -242,10 +243,15 @@ const DataView = ({ data }) => {
     setDeleteModalOpen(false);
     setViewModalOpen(false);
     setOpenFilterModal(false);
+    setIsTagModalOpen(false);
   };
 
   const handleFilterModal = () => {
     setOpenFilterModal(true);
+  };
+
+  const handleTagModal = () => {
+    setIsTagModalOpen(true);
   };
 
   const handleSearch = (e) => {
@@ -351,7 +357,7 @@ const DataView = ({ data }) => {
           {searchFilter && (
             <div className="flex items-center space-x-2 ml-4">
               <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
-                <span className="">{searchFilter} </span>
+                <span className="">{searchFilter}</span>
                 <span
                   className="pt-0.25 cursor-pointer"
                   onClick={() => {
@@ -393,8 +399,20 @@ const DataView = ({ data }) => {
           )}
         </div>
 
-        <div className="flex flex-col gap-1 justify-between px-4 pb-4">
+        <div className="relative flex flex-col gap-1 justify-between px-4 pb-4">
+        <div            
+          className="font-poppins absolute left-[-80px] top-[60px] opacity-60"
+          onClick={handleTagModal}
+            >
+          Show all
+          <ArrowDownwardIcon
+            sx={{rotate:"-90deg",
+             opacity:"0.6"  
+          }}
+            />  
+         </div>     
           <div className="flex flex-row justify-between gap-4 pt-8">
+            
             <AddCircleOutlineIcon
               className="hover:bg-[rgb(0,0,0,0.1)]"
               onClick={handleAddNewClick}
@@ -447,6 +465,7 @@ const DataView = ({ data }) => {
           </div>
         </div>
       </div>
+
       <AddNewModal
         isOpen={isAddModalOpen}
         onClose={closeModal}
@@ -475,7 +494,17 @@ const DataView = ({ data }) => {
         filteredColumns={filteredColumns}
         setFilteredColumns={setFilteredColumns}
       />
-
+      <TagsModal
+      isOpen={isTagModalOpen}
+      onClose={closeModal}
+      onDelete={() => {}}
+      searchFilter = {searchFilter}
+      setSearchFilter={setSearchFilter}
+      advancedFilterState={advancedFilterState}
+      updateAllOperator={updateAllOperator}
+      updateAllValue={updateAllValue}
+      
+      />
       <div className="min-h-[350px]">
         {tabView === "table" && (
           <>
