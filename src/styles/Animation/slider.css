@@ -1,0 +1,26 @@
+
+
+.icon {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .background-icon {
+    position: absolute;
+    bottom: 13px;
+    left: 0; /* Set the width of the background icon */
+    height: 25px;
+    border-radius: 10px; /* Set the height of the background icon */
+    background-color: #4856bef5; /* Set the background color of the background icon */
+    z-index: -1;
+  }
+  .icon {
+    transition: transform 0.5s ease;
+  }
+
+  .slider{
+    transition: color 0.6s ease-in-out;
+  }
+    
