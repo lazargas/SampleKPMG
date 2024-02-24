@@ -14,7 +14,7 @@ import "../../styles/Animation/slider.css";
 
 const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
-  const [gsapselect,setgsapSelect] = useState("");
+  const [gsapselect, setgsapSelect] = useState("");
   const animateSlide = (iconName) => {
     const icon = document.getElementById(iconName);
     const bgIcon = document.getElementById("backgroundIcon");
@@ -24,7 +24,7 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
     const distance = icon.offsetLeft - bgIcon.offsetLeft;
     const width = icon.offsetWidth;
     bgIcon.style.width = width + "px";
-    
+
     // Animate the background icon
     gsap.to(bgIcon, {
       x: distance,
@@ -37,12 +37,34 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
     // Call the animation function
     animateSlide(iconName);
   };
+  const handleSort = (data, order) => {
+    if (order === 'asc') {
+      return data.sort((a, b) => {
+        if (a[0].columnValue > b[0].columnValue) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }
+    else {
+      return data.sort((a, b) => {
+        if (a[0].columnValue < b[0].columnValue) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }
+  }
   return (
     <>
       <div className="container">
         <div className="collapse-container">
           <div className="tile-container">
-            <p className="text-lg " style={{fontSize:"16px", fontWeight:"400"}}>Model / {pages[selectedCard].name} :</p>
+            <p className="text-lg " style={{ fontSize: "16px", fontWeight: "400" }}>Model / {pages[selectedCard].name} :</p>
           </div>
           <button
             id="arrowdown"
@@ -95,7 +117,7 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
         <div className="table-container">
           {/* {pageLabels.dataIndex===0 && <DataView data={pageLabels.data} />}
           {pageLabels.dataIndex===1 && <DataView data={pageLabels.data} />} */}
-          <DataView data={pageLabels.data} />
+          <DataView data={handleSort(pageLabels.data,'asc')}/>
         </div>
       </div>
     </>
