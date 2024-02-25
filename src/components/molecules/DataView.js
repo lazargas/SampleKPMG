@@ -23,6 +23,10 @@ import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
 import "../../styles/atoms/select.css";
+import TagsModal from "../atoms/TagsModal";
+
+
+
 
 import {
   Table,
@@ -34,6 +38,7 @@ import {
   Paper,
   Typography,
   Box,
+  TableSortLabel
 } from "@mui/material";
 import AddNewModal from "../atoms/AddNewModal";
 import ViewModal from "../atoms/ViewModal";
@@ -45,6 +50,7 @@ const DataView = ({ data }) => {
   const [selectedData, setSelectedData] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
+  const [isTagModalOpen, setIsTagModalOpen] = useState(false);
 
   // state for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,6 +69,9 @@ const DataView = ({ data }) => {
 
   // select view type
   const [tabView, setTabView] = useState("table");
+
+  //Variables for sorting
+  const [rotation, setRotation] = useState(0);
 
   function paginateData(data, itemsPerPage) {
     const pages = [];
@@ -242,15 +251,47 @@ const DataView = ({ data }) => {
     setDeleteModalOpen(false);
     setViewModalOpen(false);
     setOpenFilterModal(false);
+    setIsTagModalOpen(false);
   };
 
   const handleFilterModal = () => {
     setOpenFilterModal(true);
   };
 
+  const handleTagModal = () => {
+    setIsTagModalOpen(true);
+  };
+
   const handleSearch = (e) => {
     setSearchFilter(e.target.value);
   };
+
+  const handleSort = (data, order) => {
+    console.log(order);
+    console.log(rotation);
+    if (order === 'asc') {
+      setTableData(data.sort((a, b) => {
+        if (a[0].columnValue > b[0].columnValue) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }))
+    }
+    else {
+      setTableData(data.sort((a, b) => {
+        if (a[0].columnValue < b[0].columnValue) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }))
+    }
+  }
+
+
 
   const applyAdvancedFilter = (data, advancedFilter) => {
     return data.filter((row) => {
@@ -325,12 +366,15 @@ const DataView = ({ data }) => {
     advancedFilterState,
     tableData,
     filteredColumns,
+    rotation
   ]);
 
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
-        <div className="flex flex-col gap-4 pb-4">
+        <div className="relative flex flex-col z-[1] gap-4 pb-4">
+          {/* <p className="absolute text-[12px]  top-[-20px]  opacity-[0.4] " >Select Page</p> */}
+
           <Dropdown data={["Lookup Type", "Lookup"]} />
 
           <SearchBar
@@ -393,26 +437,46 @@ const DataView = ({ data }) => {
           )}
         </div>
 
-        <div className="flex flex-col gap-1 justify-between px-4 pb-4">
+        <div className="relative flex flex-col gap-1 justify-between px-4 pb-4">
           <div className="flex flex-row justify-between gap-4 pt-8">
-            <AddCircleOutlineIcon
-              className="cursor-pointer "
-              onClick={handleAddNewClick}
-              style={{ fontSize: "18px" }}
-            />
+            <button title="Add Row">
+              <AddCircleOutlineIcon
+                className="cursor-pointer "
+                onClick={handleAddNewClick}
+                style={{ fontSize: "18px" }}
+              />
+            </button>
 
-            <DisplaySettingsIcon
-              className="cursor-pointer "
-              onClick={handleFilterModal}
-              style={{ fontSize: "18px" }}
-            />
+            <button title="Filter Column">
+              <DisplaySettingsIcon
+                className="cursor-pointer "
+                onClick={handleFilterModal}
+                style={{ fontSize: "18px" }}
+              />
+            </button>
+            <button title="Download Data" >
+              <ArrowCircleDownIcon className="cursor-pointer " style={{ fontSize: "18px" }} />
+            </button>
 
-            <ArrowCircleDownIcon className="cursor-pointer " style={{ fontSize: "18px" }} />
+
+
           </div>
-
+          <div
+            className="font-poppins absolute opacity-40"
+            onClick={handleTagModal}
+          >
+            <button title="Show All Tags" className="font-bold" >All Tags</button> 
+            {/* <ArrowDownwardIcon
+              sx={{
+                rotate: "-90deg",
+                opacity: "0.6"
+              }}
+            /> */}
+          </div>
           <div className="flex flex-row justify-between gap-3">
-            <div
-              className="mt-1 cursor-pointer"
+            <button
+              title="Table"
+              className=" cursor-pointer"
               onClick={() => {
                 handleSelectTabView("table");
               }}
@@ -421,9 +485,10 @@ const DataView = ({ data }) => {
                 size="16px"
                 strokeColor={tabView === "table" ? "#4856bef5" : "black"}
               />
-            </div>
+            </button>
 
-            <div
+            <button
+              title="List"
               className="cursor-pointer"
               onClick={() => {
                 handleSelectTabView("list");
@@ -433,9 +498,10 @@ const DataView = ({ data }) => {
                 size="21px"
                 color={tabView === "list" ? "#4856bef5" : "black"}
               />
-            </div>
+            </button>
 
-            <div
+            <button
+              title="Grid"
               className="cursor-pointer"
               onClick={() => {
                 handleSelectTabView("grid");
@@ -445,7 +511,7 @@ const DataView = ({ data }) => {
                 size="23px"
                 color={tabView === "grid" ? "#4856bef5" : "black"}
               />
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -476,6 +542,18 @@ const DataView = ({ data }) => {
         onClose={closeModal}
         filteredColumns={filteredColumns}
         setFilteredColumns={setFilteredColumns}
+      />
+
+      <TagsModal
+        isOpen={isTagModalOpen}
+        onClose={closeModal}
+        onDelete={() => { }}
+        searchFilter={searchFilter}
+        setSearchFilter={setSearchFilter}
+        advancedFilterState={advancedFilterState}
+        updateAllOperator={updateAllOperator}
+        updateAllValue={updateAllValue}
+
       />
 
       <div className="min-h-[350px]">
@@ -510,7 +588,21 @@ const DataView = ({ data }) => {
                               }`,
                           }}
                         >
-                          {col.columnName}
+                          <div className="flex gap-[0.25rem]"
+
+                            onClick={() => {
+                              setRotation((prevRotation) => prevRotation + 180);
+                              const ascOrDesc = (rotation / 180) % 2 == 0 ? 'asc' : 'desc';
+                              handleSort(tableData, ascOrDesc)
+                            }}
+                            key={index}
+                          >
+                            <p>{col.columnName}</p>
+                            <ArrowDownwardIcon
+                              fontSize="small"
+                              style={{ transform: `rotate(${rotation}deg)` }}
+                            />
+                          </div>
                         </TableCell>
                       ))}
                     <TableCell
@@ -533,8 +625,7 @@ const DataView = ({ data }) => {
                 <TableBody>
                   {tablePaginatedData[currentPage - 1]?.map(
                     (rowData, rowIndex) => (
-                      <TableRow key={rowIndex} className={`border-b ${rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
-                        }`}>
+                      <TableRow key={rowIndex} className={`border-b  bg-white hover:bg-gray-100 `}>
                         {rowData.map((col, colIndex) => {
                           return (
                             <TableCell
@@ -581,7 +672,21 @@ const DataView = ({ data }) => {
                                     : handleViewClick(rowData)
                               }
                             >
-                              <IconComponent
+                              {
+                                IconComponent==DeleteIcon ? 
+                                <IconComponent
+                                className="mr-3"
+                                sx={{
+                                  fontSize: "25px",
+                                  padding: "4px",
+                                  borderRadius: "50%",
+                                  "&:hover": {
+                                    backgroundColor: "#f5f5f5",
+                                  },
+                                }}
+                                style={{ color: 'red' }}
+                              />
+                                : <IconComponent
                                 className="mr-3"
                                 sx={{
                                   fontSize: "25px",
@@ -592,6 +697,8 @@ const DataView = ({ data }) => {
                                   },
                                 }}
                               />
+                              }
+                              
                             </button>
                           ))}
                         </TableCell>
@@ -826,8 +933,8 @@ const DataView = ({ data }) => {
 
         <div className="pages pt-1">
           <button style={{ fontSize: "14px" }}>{`${tablePaginatedData?.length === 0
-              ? 0
-              : (currentPage - 1) * itemsPerPage + 1
+            ? 0
+            : (currentPage - 1) * itemsPerPage + 1
             } - ${tablePaginatedData?.length === 0
               ? 0
               : (currentPage - 1) * itemsPerPage +

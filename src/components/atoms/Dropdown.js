@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select, MenuItem, FormControl } from "@mui/material";
+import { Select, MenuItem, FormControl,Typography } from "@mui/material";
 
 const Dropdown = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState("");
@@ -12,7 +12,8 @@ const Dropdown = ({ data }) => {
   }, [data]);
 
   return (
-    <>
+    <div title="Select Page">
+      
       <FormControl
         sx={{ width: 190, bgcolor: "#4856BEF5", borderRadius: "5px" }}
       >
@@ -48,7 +49,7 @@ const Dropdown = ({ data }) => {
             ))}
         </Select>
       </FormControl>
-    </>
+    </div>
   );
 };
 
