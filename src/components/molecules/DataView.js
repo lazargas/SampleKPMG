@@ -42,8 +42,10 @@ import {
 } from "@mui/material";
 import AddNewModal from "../atoms/AddNewModal";
 import ViewModal from "../atoms/ViewModal";
+import ExportExcel from "../../Excel/ExcelExport";
+import ExcelData from "../../data/excelData.json";
 
-const DataView = ({ data }) => {
+const DataView = ({ data,handleSort }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModalOpen, setViewModalOpen] = useState(false);
@@ -266,30 +268,7 @@ const DataView = ({ data }) => {
     setSearchFilter(e.target.value);
   };
 
-  const handleSort = (data, order) => {
-    console.log(order);
-    console.log(rotation);
-    if (order === 'asc') {
-      setTableData(data.sort((a, b) => {
-        if (a[0].columnValue > b[0].columnValue) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }))
-    }
-    else {
-      setTableData(data.sort((a, b) => {
-        if (a[0].columnValue < b[0].columnValue) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }))
-    }
-  }
+  
 
 
 
@@ -391,7 +370,7 @@ const DataView = ({ data }) => {
           />
         </div>
 
-        <div className="w-full flex overflow-auto mt-10 justify-start">
+        <div className="w-full flex mt-10 justify-start overflow-scroll">
           {searchFilter && (
             <div className="flex items-center space-x-2 ml-2">
               <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
@@ -437,8 +416,8 @@ const DataView = ({ data }) => {
           )}
         </div>
 
-        <div className="relative flex flex-col gap-1 justify-between px-4 pb-4">
-          <div className="flex flex-row justify-between gap-4 pt-8">
+        <div className="relative flex flex-col gap-2 justify-between items-center px-4 pb-4">
+          <div className="flex flex-row justify-between gap-4">
             <button title="Add Row">
               <AddCircleOutlineIcon
                 className="cursor-pointer "
@@ -454,24 +433,10 @@ const DataView = ({ data }) => {
                 style={{ fontSize: "18px" }}
               />
             </button>
-            <button title="Download Data" >
-              <ArrowCircleDownIcon className="cursor-pointer " style={{ fontSize: "18px" }} />
-            </button>
+            <ExportExcel fileName={"LookupTypeData"} excelData={ExcelData} />
 
 
 
-          </div>
-          <div
-            className="font-poppins absolute opacity-40"
-            onClick={handleTagModal}
-          >
-            <button title="Show All Tags" className="font-bold" >All Tags</button> 
-            {/* <ArrowDownwardIcon
-              sx={{
-                rotate: "-90deg",
-                opacity: "0.6"
-              }}
-            /> */}
           </div>
           <div className="flex flex-row justify-between gap-3">
             <button
@@ -512,6 +477,19 @@ const DataView = ({ data }) => {
                 color={tabView === "grid" ? "#4856bef5" : "black"}
               />
             </button>
+          </div>
+          <div
+            className="font-poppins opacity-40"
+            onClick={handleTagModal}
+          >
+            
+            <button title="Show All Tags" className="font-bold" >All Tags</button> 
+            {/* <ArrowDownwardIcon
+              sx={{
+                rotate: "-90deg",
+                opacity: "0.6"
+              }}
+            /> */}
           </div>
         </div>
       </div>
@@ -663,6 +641,7 @@ const DataView = ({ data }) => {
                             InfoIcon,
                           ].map((IconComponent, index) => (
                             <button
+                              title={IconComponent===EditIcon ? "Edit" : (IconComponent===DeleteIcon ? "Delete" : "View" ) }
                               key={index}
                               onClick={() =>
                                 IconComponent === DeleteIcon

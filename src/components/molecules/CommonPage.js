@@ -38,23 +38,30 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
     animateSlide(iconName);
   };
   const handleSort = (data, order) => {
+    
     if (order === 'asc') {
       return data.sort((a, b) => {
         if (a[0].columnValue > b[0].columnValue) {
-          return true;
+          return 1;
+        }
+        else if(a[0].columnValue == b[0].columnValue){
+          return 0;
         }
         else {
-          return false;
+          return -1;
         }
       })
     }
     else {
       return data.sort((a, b) => {
         if (a[0].columnValue < b[0].columnValue) {
-          return true;
+          return 1;
+        }
+        else if(a[0].columnValue == b[0].columnValue){
+          return 0;
         }
         else {
-          return false;
+          return -1;
         }
       })
     }
@@ -117,7 +124,7 @@ const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
         <div className="table-container">
           {/* {pageLabels.dataIndex===0 && <DataView data={pageLabels.data} />}
           {pageLabels.dataIndex===1 && <DataView data={pageLabels.data} />} */}
-          <DataView data={handleSort(pageLabels.data,'asc')}/>
+          <DataView data={handleSort(pageLabels.data,'asc')} handleSort={handleSort} />
         </div>
       </div>
     </>

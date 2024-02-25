@@ -37,7 +37,7 @@ const TagsModal = ({ isOpen, onClose, onDelete, searchFilter, setSearchFilter,
                     &#8203;
                 </span>
                 <div
-                    className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                    className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[fit-content] min-h-[fit-content] sm:w-full"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="modal-headline"
