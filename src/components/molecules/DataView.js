@@ -13,7 +13,7 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterModal from "../atoms/FilterModal";
 import KPMGContext from "../../context/SampleContext";
-import SearchBar from "../atoms/SearchBar";
+import SearchBar from "../atoms/SearchBar.js";
 import { IoIosClose } from "react-icons/io";
 import demoData from "../../data/tableData";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -347,7 +347,7 @@ const DataView = ({ data,handleSort }) => {
     filteredColumns,
     rotation
   ]);
-
+  
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
@@ -416,7 +416,7 @@ const DataView = ({ data,handleSort }) => {
           )}
         </div>
 
-        <div className="relative flex flex-col gap-2 justify-between items-center px-4 pb-4">
+        <div className={`relative flex flex-col gap-2 justify-between items-center px-4 ${advancedFilterState[0].value || searchFilter!="" || advancedFilterState[1].value ? `pb-4` : ``}`}>
           <div className="flex flex-row justify-between gap-4">
             <button title="Add Row">
               <AddCircleOutlineIcon
@@ -482,8 +482,10 @@ const DataView = ({ data,handleSort }) => {
             className="font-poppins opacity-40"
             onClick={handleTagModal}
           >
+            {
+              advancedFilterState[0].value || searchFilter!="" || advancedFilterState[1].value ? <button title="Show All Tags" className="font-bold" >All Tags</button>  : <></>
+            }
             
-            <button title="Show All Tags" className="font-bold" >All Tags</button> 
             {/* <ArrowDownwardIcon
               sx={{
                 rotate: "-90deg",
@@ -596,7 +598,8 @@ const DataView = ({ data,handleSort }) => {
                         display: `${checkFiltered("Actions") ? "none" : ""}`,
                       }}
                     >
-                      Actions
+                      <p>Actions</p>
+                      
                     </TableCell>
                   </TableRow>
                 </TableHead>

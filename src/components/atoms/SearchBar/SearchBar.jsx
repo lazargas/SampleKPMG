@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React, { useRef } from "react";
-import "./styles_components.css";
+import "./styles.css";
 import {
   Autocomplete,
   Chip,
