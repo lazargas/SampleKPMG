@@ -25,9 +25,6 @@ import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
 import "../../styles/atoms/select.css";
 import TagsModal from "../atoms/TagsModal";
 
-
-
-
 import {
   Table,
   TableBody,
@@ -38,14 +35,14 @@ import {
   Paper,
   Typography,
   Box,
-  TableSortLabel
+  TableSortLabel,
 } from "@mui/material";
 import AddNewModal from "../atoms/AddNewModal";
 import ViewModal from "../atoms/ViewModal";
 import ExportExcel from "../../Excel/ExcelExport";
 import ExcelData from "../../data/excelData.json";
 
-const DataView = ({ data,handleSort }) => {
+const DataView = ({ data, handleSort }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModalOpen, setViewModalOpen] = useState(false);
@@ -73,7 +70,8 @@ const DataView = ({ data,handleSort }) => {
   const [tabView, setTabView] = useState("table");
 
   //Variables for sorting
-  const [rotation, setRotation] = useState(0);
+  const [c1rotation, setc1Rotation] = useState(0);
+  const [c2rotation, setc2Rotation] = useState(0);
 
   function paginateData(data, itemsPerPage) {
     const pages = [];
@@ -268,10 +266,6 @@ const DataView = ({ data,handleSort }) => {
     setSearchFilter(e.target.value);
   };
 
-  
-
-
-
   const applyAdvancedFilter = (data, advancedFilter) => {
     return data.filter((row) => {
       return row.every(({ columnName, columnValue }) => {
@@ -345,9 +339,10 @@ const DataView = ({ data,handleSort }) => {
     advancedFilterState,
     tableData,
     filteredColumns,
-    rotation
+    c1rotation,
+    c2rotation,
   ]);
-  
+
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
@@ -410,13 +405,17 @@ const DataView = ({ data,handleSort }) => {
               )}
             </div>
           ))}
-
-          {advancedFilterState.length + (searchFilter ? 1 : 0) > 0 && (
-            <button></button>
-          )}
         </div>
 
-        <div className={`relative flex flex-col gap-2 justify-between items-center px-4 ${advancedFilterState[0].value || searchFilter!="" || advancedFilterState[1].value ? `pb-4` : ``}`}>
+        <div
+          className={`relative flex flex-col gap-2 justify-between items-center px-4 ${
+            advancedFilterState[0].value ||
+            searchFilter != "" ||
+            advancedFilterState[1].value
+              ? `pb-4`
+              : ``
+          }`}
+        >
           <div className="flex flex-row justify-between gap-4">
             <button title="Add Row">
               <AddCircleOutlineIcon
@@ -434,9 +433,6 @@ const DataView = ({ data,handleSort }) => {
               />
             </button>
             <ExportExcel fileName={"LookupTypeData"} excelData={ExcelData} />
-
-
-
           </div>
           <div className="flex flex-row justify-between gap-3">
             <button
@@ -478,14 +474,17 @@ const DataView = ({ data,handleSort }) => {
               />
             </button>
           </div>
-          <div
-            className="font-poppins opacity-40"
-            onClick={handleTagModal}
-          >
-            {
-              advancedFilterState[0].value || searchFilter!="" || advancedFilterState[1].value ? <button title="Show All Tags" className="font-bold" >All Tags</button>  : <></>
-            }
-            
+          <div className="font-poppins opacity-40" onClick={handleTagModal}>
+            {advancedFilterState[0].value ||
+            searchFilter != "" ||
+            advancedFilterState[1].value ? (
+              <button title="Show All Tags" className="font-bold">
+                All Tags
+              </button>
+            ) : (
+              <></>
+            )}
+
             {/* <ArrowDownwardIcon
               sx={{
                 rotate: "-90deg",
@@ -513,7 +512,7 @@ const DataView = ({ data,handleSort }) => {
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeModal}
-        onDelete={() => { }}
+        onDelete={() => {}}
         itemName={selectedData}
       />
 
@@ -527,13 +526,12 @@ const DataView = ({ data,handleSort }) => {
       <TagsModal
         isOpen={isTagModalOpen}
         onClose={closeModal}
-        onDelete={() => { }}
+        onDelete={() => {}}
         searchFilter={searchFilter}
         setSearchFilter={setSearchFilter}
         advancedFilterState={advancedFilterState}
         updateAllOperator={updateAllOperator}
         updateAllValue={updateAllValue}
-
       />
 
       <div className="min-h-[350px]">
@@ -564,23 +562,50 @@ const DataView = ({ data,handleSort }) => {
                             paddingRight: "0",
                             minWidth: { md: "250px", xl: "300px" },
                             fontSize: { md: "10px", lg: "12px" },
-                            display: `${checkFiltered(col.columnName) ? "none" : ""
-                              }`,
+                            display: `${
+                              checkFiltered(col.columnName) ? "none" : ""
+                            }`,
                           }}
                         >
-                          <div className="flex gap-[0.25rem]"
-
+                          <div
+                            className="flex gap-[0.25rem]"
                             onClick={() => {
-                              setRotation((prevRotation) => prevRotation + 180);
-                              const ascOrDesc = (rotation / 180) % 2 == 0 ? 'asc' : 'desc';
-                              handleSort(tableData, ascOrDesc)
+                              if (col.columnName === "Lookup Type Name") {
+                                setc1Rotation(
+                                  (prevRotation) => prevRotation + 180
+                                );
+                                const ascOrDesc =
+                                  (c1rotation / 180) % 2 == 0 ? "asc" : "desc";
+                                handleSort(
+                                  tableData,
+                                  ascOrDesc,
+                                  col.columnName
+                                );
+                              } else {
+                                setc2Rotation(
+                                  (prevRotation) => prevRotation + 180
+                                );
+                                const ascOrDesc =
+                                  (c2rotation / 180) % 2 == 0 ? "asc" : "desc";
+                                handleSort(
+                                  tableData,
+                                  ascOrDesc,
+                                  col.columnName
+                                );
+                              }
                             }}
                             key={index}
                           >
                             <p>{col.columnName}</p>
                             <ArrowDownwardIcon
                               fontSize="small"
-                              style={{ transform: `rotate(${rotation}deg)` }}
+                              style={{
+                                transform: `rotate(${
+                                  col.columnName === "Lookup Type Name"
+                                    ? c1rotation
+                                    : c2rotation
+                                }deg)`,
+                              }}
                             />
                           </div>
                         </TableCell>
@@ -599,14 +624,16 @@ const DataView = ({ data,handleSort }) => {
                       }}
                     >
                       <p>Actions</p>
-                      
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {tablePaginatedData[currentPage - 1]?.map(
                     (rowData, rowIndex) => (
-                      <TableRow key={rowIndex} className={`border-b  bg-white hover:bg-gray-100 `}>
+                      <TableRow
+                        key={rowIndex}
+                        className={`border-b  bg-white hover:bg-gray-100 `}
+                      >
                         {rowData.map((col, colIndex) => {
                           return (
                             <TableCell
@@ -618,8 +645,9 @@ const DataView = ({ data,handleSort }) => {
                                 paddingRight: "0",
                                 minWidth: { md: "250px", xl: "300px" },
                                 fontSize: { md: "10px", lg: "12px" },
-                                display: `${checkFiltered(col.columnName) ? "none" : ""
-                                  }`,
+                                display: `${
+                                  checkFiltered(col.columnName) ? "none" : ""
+                                }`,
                               }}
                             >
                               {col.columnValue}
@@ -632,8 +660,9 @@ const DataView = ({ data,handleSort }) => {
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
                             paddingRight: "0",
                             minWidth: { md: "250px", xl: "300px" },
-                            display: `${checkFiltered("Actions") ? "none" : ""
-                              }`,
+                            display: `${
+                              checkFiltered("Actions") ? "none" : ""
+                            }`,
                           }}
                           className={`flex gap-3 `}
                         >
@@ -644,43 +673,48 @@ const DataView = ({ data,handleSort }) => {
                             InfoIcon,
                           ].map((IconComponent, index) => (
                             <button
-                              title={IconComponent===EditIcon ? "Edit" : (IconComponent===DeleteIcon ? "Delete" : "View" ) }
+                              title={
+                                IconComponent === EditIcon
+                                  ? "Edit"
+                                  : IconComponent === DeleteIcon
+                                  ? "Delete"
+                                  : "View"
+                              }
                               key={index}
                               onClick={() =>
                                 IconComponent === DeleteIcon
                                   ? handleDeleteClick(rowData)
                                   : IconComponent === EditIcon
-                                    ? handleEditClick(rowData)
-                                    : handleViewClick(rowData)
+                                  ? handleEditClick(rowData)
+                                  : handleViewClick(rowData)
                               }
                             >
-                              {
-                                IconComponent==DeleteIcon ? 
+                              {IconComponent == DeleteIcon ? (
                                 <IconComponent
-                                className="mr-3"
-                                sx={{
-                                  fontSize: "25px",
-                                  padding: "4px",
-                                  borderRadius: "50%",
-                                  "&:hover": {
-                                    backgroundColor: "#f5f5f5",
-                                  },
-                                }}
-                                style={{ color: 'red' }}
-                              />
-                                : <IconComponent
-                                className="mr-3"
-                                sx={{
-                                  fontSize: "25px",
-                                  padding: "4px",
-                                  borderRadius: "50%",
-                                  "&:hover": {
-                                    backgroundColor: "#f5f5f5",
-                                  },
-                                }}
-                              />
-                              }
-                              
+                                  className="mr-3"
+                                  sx={{
+                                    fontSize: "25px",
+                                    padding: "4px",
+                                    borderRadius: "50%",
+                                    "&:hover": {
+                                      backgroundColor: "#f5f5f5",
+                                    },
+                                  }}
+                                  style={{ color: "red" }}
+                                />
+                              ) : (
+                                <IconComponent
+                                  className="mr-3"
+                                  sx={{
+                                    fontSize: "25px",
+                                    padding: "4px",
+                                    borderRadius: "50%",
+                                    "&:hover": {
+                                      backgroundColor: "#f5f5f5",
+                                    },
+                                  }}
+                                />
+                              )}
                             </button>
                           ))}
                         </TableCell>
@@ -724,8 +758,9 @@ const DataView = ({ data,handleSort }) => {
                           minWidth: { md: "200px", xl: "300px" },
                           width: { md: "300px", xl: "400px" },
                           mr: 2,
-                          display: `${checkFiltered(col.columnName) ? "none" : ""
-                            }`,
+                          display: `${
+                            checkFiltered(col.columnName) ? "none" : ""
+                          }`,
                         }}
                       >
                         <div>
@@ -764,33 +799,36 @@ const DataView = ({ data,handleSort }) => {
                         </Typography>
 
                         <div className="flex flex-row items-center mt-1">
-                          {[EditIcon, RemoveRedEyeIcon, DeleteIcon, InfoIcon].map(
-                            (IconComponent, index) => (
-                              <button
-                                key={index}
-                                onClick={() =>
-                                  IconComponent === DeleteIcon
-                                    ? handleDeleteClick(rowData)
-                                    : IconComponent === EditIcon
-                                      ? handleEditClick(rowData)
-                                      : handleViewClick(rowData)
-                                }
-                              >
-                                <IconComponent
-                                  className="mr-2"
-                                  sx={{
-                                    fontSize: "25px",
-                                    padding: "4px",
-                                    borderRadius: "100%",
-                                    "&:hover": {
-                                      color: "#36454F",
-                                    },
-                                    color: "black",
-                                  }}
-                                />
-                              </button>
-                            )
-                          )}
+                          {[
+                            EditIcon,
+                            RemoveRedEyeIcon,
+                            DeleteIcon,
+                            InfoIcon,
+                          ].map((IconComponent, index) => (
+                            <button
+                              key={index}
+                              onClick={() =>
+                                IconComponent === DeleteIcon
+                                  ? handleDeleteClick(rowData)
+                                  : IconComponent === EditIcon
+                                  ? handleEditClick(rowData)
+                                  : handleViewClick(rowData)
+                              }
+                            >
+                              <IconComponent
+                                className="mr-2"
+                                sx={{
+                                  fontSize: "25px",
+                                  padding: "4px",
+                                  borderRadius: "100%",
+                                  "&:hover": {
+                                    color: "#36454F",
+                                  },
+                                  color: "black",
+                                }}
+                              />
+                            </button>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -817,7 +855,10 @@ const DataView = ({ data,handleSort }) => {
                   className="rounded-lg border-[3px] border-[#4856bef5]"
                 >
                   <div className="flex flex-row justify-between items-center bg-[#4856bef5] rounded-t-sm p-4 py-2">
-                    <Typography className="text-white" style={{ fontSize: "12px" }}>
+                    <Typography
+                      className="text-white"
+                      style={{ fontSize: "12px" }}
+                    >
                       Row {(currentPage - 1) * itemsPerPage + index + 1}
                     </Typography>
                     <div
@@ -834,8 +875,8 @@ const DataView = ({ data,handleSort }) => {
                               IconComponent === DeleteIcon
                                 ? handleDeleteClick(data)
                                 : IconComponent === EditIcon
-                                  ? handleEditClick(data)
-                                  : handleViewClick(data)
+                                ? handleEditClick(data)
+                                : handleViewClick(data)
                             }
                           >
                             <IconComponent
@@ -858,12 +899,12 @@ const DataView = ({ data,handleSort }) => {
                       <div
                         key={colIndex}
                         style={{
-                          display: `${checkFiltered(col.columnName) ? "none" : ""
-                            }`,
+                          display: `${
+                            checkFiltered(col.columnName) ? "none" : ""
+                          }`,
                         }}
                       >
                         <Typography
-
                           className="text-gray-400 py-1 text-sm"
                           style={{ fontWeight: "400", fontSize: "12px" }}
                         >
@@ -880,7 +921,6 @@ const DataView = ({ data,handleSort }) => {
                   </div>
                 </Paper>
               ))}
-
             </div>
             {tablePaginatedData.length === 0 && (
               <div>
@@ -891,13 +931,15 @@ const DataView = ({ data,handleSort }) => {
             )}
           </>
         )}
-
       </div>
 
-
       <div className="pagination mr-4">
-        <div className="relative inline-block" >
-          <label htmlFor="rowsPerPage" className="mr-2 text-gray-700" style={{ fontSize: "14px" }}>
+        <div className="relative inline-block">
+          <label
+            htmlFor="rowsPerPage"
+            className="mr-2 text-gray-700"
+            style={{ fontSize: "14px" }}
+          >
             Rows Per Page:
           </label>
           <select
@@ -914,14 +956,16 @@ const DataView = ({ data,handleSort }) => {
         </div>
 
         <div className="pages pt-1">
-          <button style={{ fontSize: "14px" }}>{`${tablePaginatedData?.length === 0
-            ? 0
-            : (currentPage - 1) * itemsPerPage + 1
-            } - ${tablePaginatedData?.length === 0
+          <button style={{ fontSize: "14px" }}>{`${
+            tablePaginatedData?.length === 0
+              ? 0
+              : (currentPage - 1) * itemsPerPage + 1
+          } - ${
+            tablePaginatedData?.length === 0
               ? 0
               : (currentPage - 1) * itemsPerPage +
-              tablePaginatedData[currentPage - 1]?.length
-            } of ${dataLength}`}</button>
+                tablePaginatedData[currentPage - 1]?.length
+          } of ${dataLength}`}</button>
         </div>
 
         <button
@@ -929,7 +973,10 @@ const DataView = ({ data,handleSort }) => {
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
         >
-          <GrPrevious size="14px" color={currentPage <= 1 ? "lightgrey" : "black"} />
+          <GrPrevious
+            size="14px"
+            color={currentPage <= 1 ? "lightgrey" : "black"}
+          />
         </button>
         <button
           className="pagination-button pt-2"

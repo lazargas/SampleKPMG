@@ -45,7 +45,7 @@ const TagsModal = ({ isOpen, onClose, onDelete, searchFilter, setSearchFilter,
                     {/* Modal header */}
                     <div className="bg-[#4856BEF5] px-4 py-3 sm:px-6">
                         <h3 className="text-lg font-medium text-white" id="modal-headline">
-                            {`Delete ${pageLabels.name}`}
+                            {`All Search Tags`}
                         </h3>
                     </div>
 
@@ -54,7 +54,7 @@ const TagsModal = ({ isOpen, onClose, onDelete, searchFilter, setSearchFilter,
                         {/* Body content */}
                         <div className="w-full flex overflow-auto mt-10 justify-start">
                             {searchFilter && (
-                                <div className="flex items-center space-x-2 ml-4">
+                                <div className="flex items-center space-x-2 ml-2">
                                     <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
                                         <span className="">{searchFilter}</span>
                                         <span
@@ -70,7 +70,7 @@ const TagsModal = ({ isOpen, onClose, onDelete, searchFilter, setSearchFilter,
                             )}
 
                             {advancedFilterState.map(({ col: columnName, value, operator }) => (
-                                <div key={columnName} className="flex items-center space-x-2">
+                                <div key={columnName} className="flex items-center space-x-2 ml-2">
                                     {operator && (value || operator?.includes("empty")) && (
                                         <div
                                             key={columnName}
