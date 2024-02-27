@@ -72,7 +72,7 @@ function App() {
       dataIndex: 1,
       data: businessEntityData,
     });
-
+    
     setSelectedCard(index);
   };
 

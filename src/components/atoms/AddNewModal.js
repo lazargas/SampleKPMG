@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import KPMGContext from "../../context/SampleContext";
-
 const AddNewModal = ({ isOpen, onClose, data }) => {
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
 
@@ -11,12 +10,22 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
 
   const [selectedFile, setSelectedFile] = useState();
 
+  const [error, setError] = useState(true);
+  const [dataError, setDataError] = useState(false);
+
+  const errorClickHandler = (data) => {
+    console.log(data);
+    if (data > 2) setDataError((prevState) => !prevState);
+  };
+
   const handleFileChange = (file) => {
     setSelectedFile(file);
   };
 
   const handleSave = () => {
-    onClose();
+    setUploaded("saved");
+
+    if (!error) onClose();
   };
 
   useState(() => {
@@ -57,7 +66,11 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
         >
           {/* Modal header */}
           <div className="bg-[#4856BEF5] px-4 py-3 sm:px-6">
-            <h3 className="text-lg text-white" id="modal-headline" style={{fontSize:"14px"}}>
+            <h3
+              className="text-lg text-white"
+              id="modal-headline"
+              style={{ fontSize: "14px" }}
+            >
               {`Add New ${pageLabels.name}`}
             </h3>
           </div>
@@ -72,7 +85,11 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                 onChange={() => setMode("web")}
                 className="mr-2"
               />
-              <label htmlFor="web" className="text-sm" style={{fontSize:"12px"}}>
+              <label
+                htmlFor="web"
+                className="text-sm"
+                style={{ fontSize: "12px" }}
+              >
                 Web
               </label>
 
@@ -83,9 +100,13 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                 checked={mode === "excel"}
                 onChange={() => setMode("excel")}
                 className="ml-4 mr-2"
-                style={{fontSize:"12px"}}
+                style={{ fontSize: "12px" }}
               />
-              <label htmlFor="excel" className="text-sm" style={{fontSize:"12px"}}>
+              <label
+                htmlFor="excel"
+                className="text-sm"
+                style={{ fontSize: "12px" }}
+              >
                 Excel
               </label>
             </div>
@@ -93,24 +114,26 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
 
           {/* Modal body */}
           <div
-            className="p-6 max-h-[350px] overflow-y-scroll flex gap-[2.5rem]
+            className="p-6 max-h-[350px] flex gap-[2.5rem]
           "
           >
             {/* Input fields */}
             {mode === "web" && (
-              <div className="my-2 mx-2 grid grid-cols-2 gap-12" >
+              <div className="overflow-y-scroll h-[120px] my-2 mx-2 grid grid-cols-2 gap-12">
                 {columnFields?.map((col, index) => (
                   <div className="mb-2" key={index}>
                     <label
                       htmlFor={`input-${col}`}
-                      className="block text-sm font-medium text-gray-700" style={{fontSize:"12px"}}
+                      className="block text-sm font-medium text-gray-700"
+                      style={{ fontSize: "12px" }}
                     >
                       {col}
                     </label>
                     <input
                       type="text"
                       id={`input-${col}`}
-                      className="mt-1 p-2 w-full border border-gray-300 rounded-md" style={{fontSize:"12px"}}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                      style={{ fontSize: "12px" }}
                     />
                   </div>
                 ))}
@@ -120,96 +143,173 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
             {mode === "excel" && (
               <div>
                 {uploaded === "pending" && (
-                  <div className="h-[350px]">
-                    <p className="text-gray-700 text-sm mb-4">
-                      Please fill the data according to the following columns
-                      structure:
+                  <div className="h-[136px]">
+                    <p
+                      className="text-gray-700 text-sm mb-4"
+                      style={{ fontSize: "12px" }}
+                    >
+                      Generate the excel file to upload the data :{" "}
+                      <span>
+                        <button
+                          type="button"
+                          className="px-2 text-sm text-[#4856BE] hover:text-blue-800 hover:bg-[#f2f2f2] rounded-md"
+                          style={{ fontSize: "12px", fontWeight: 600 }}
+                        >
+                          Generate Excel
+                        </button>
+                      </span>
                     </p>
-                    <div className="bg-gray-100 p-4 rounded-md mb-4">
-                      <p className="text-gray-600 font-semibold" style={{fontSize:"12px"}}>
-                        Example Excel Structure:
-                      </p>
-                      <table className="w-full mt-2" style={{fontSize:"12px"}}>
-                        <thead>
-                          <tr>
-                            <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
-                              Input Field 1
-                            </th>
-                            <th className="border-b-2 border-gray-400 p-2 bg-gray-200">
-                              Input Field 2
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[1, 2, 3].map((index) => (
-                            <tr key={index}>
-                              <td
-                                className={`border-b border-gray-400 p-2 ${
-                                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
-                                }`}
-                              >
-                                Data 1
-                              </td>
-                              <td
-                                className={`border-b border-gray-400 p-2 ${
-                                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
-                                }`}
-                              >
-                                Data 2
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+
+                    <div className="mt-8">
+                      <label
+                        className="block text-sm font-medium text-gray-700"
+                        style={{ fontSize: "12px" }}
+                      >
+                        <input
+                          style={{ fontSize: "12px" }}
+                          type="file"
+                          className="mt-1 block w-full border-gray-300 rounded-md pt-2 "
+                          onChange={(e) => handleFileChange(e.target.files[0])}
+                        />
+                      </label>
                     </div>
                   </div>
                 )}
 
-                {uploaded === "uploading" && (
-                  <div className="h-[350px]">
-                    <label className="block text-sm font-medium text-gray-700" style={{fontSize:"12px"}} >
-                      Choose File:
-                      <input
-                      style={{fontSize:"12px"}}
-                        type="file"
-                        className="mt-1 block w-full border-gray-300 rounded-md pt-2 "
-                        onChange={(e) => handleFileChange(e.target.files[0])}
-                      />{" "}
-                    </label>
+                {uploaded === "uploaded" && (
+                  <div className=" w-[400px] h-[380px] rounded-lg">
+                    <div className="overflow-x-auto overflow-y-auto max-h-[270px]">
+                      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
+                        <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
+                          <tr>
+                            <th
+                              scope="col"
+                              className={`px-6 py-3 min-w-[150px]`}
+                              style={{ fontSize: "11px" }}
+                            >
+                              Lookup Type Name
+                            </th>
+                            <th
+                              scope="col"
+                              className={`px-6 py-3 min-w-[150px]`}
+                              style={{ fontSize: "11px" }}
+                            >
+                              Display Name
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="max-h-[200px] overflow-y-auto">
+                          {[1, 2, 3, 4].map((data, index) => {
+                            return (
+                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th
+                                  scope="row"
+                                  style={{ fontSize: "10px" }}
+                                  className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white min-w-[150px]`}
+                                >
+                                  Data 1
+                                </th>
+                                <td
+                                  className={`flex-grow px-6 py-4 min-w-[150px]`}
+                                  style={{ fontSize: "10px" }}
+                                >
+                                  Data 2
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div
+                      className="mt-6 mr-6"
+                      style={{
+                        fontSize: "12px",
+                        display: "flex",
+                        float: "right",
+                      }}
+                    >
+                      No of rows : 200
+                    </div>
                   </div>
                 )}
 
-                {uploaded === "uploaded" && (
-                  <div className="w-[400px] h-[350px]">
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
-                      <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                          <th scope="col" className={`px-6 py-3 `} style={{fontSize:"11px"}}>
-                            Lookup Type Name
-                          </th>
-                          <th scope="col" className={`px-6 py-3 `} style={{fontSize:"11px"}}>
-                            Display Name
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[1, 2, 3, 4].map((data, index) => {
-                          return (
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th
-                                scope="row"
-                                
-                                style={{fontSize:"10px"}}
-                                className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  `}
-                              >
-                                Data 1
-                              </th>
-                              <td className={`flex-grow px-6 py-4 `} style={{fontSize:"10px"}}>Data 2</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                {error && uploaded === "saved" && (
+                  <div className="w-[400px] max-h-[400px] rounded-lg">
+                    <div className="overflow-x-auto overflow-y-auto max-h-[270px]">
+                      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
+                        <thead className="text-xs text-white uppercase bg-[#4856BEF5] dark:bg-gray-700 dark:text-gray-400">
+                          <tr>
+                            <th
+                              scope="col"
+                              className={`px-6 py-3 min-w-[100px]`}
+                              style={{ fontSize: "11px" }}
+                            >
+                              Status
+                            </th>
+                            <th
+                              scope="col"
+                              className={`px-6 py-3 min-w-[150px]`}
+                              style={{ fontSize: "11px" }}
+                            >
+                              Lookup Type Name
+                            </th>
+                            <th
+                              scope="col"
+                              className={`px-6 py-3 min-w-[150px]`}
+                              style={{ fontSize: "11px" }}
+                            >
+                              Display Name
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="max-h-[200px] overflow-y-auto">
+                          {[1, 2, 3, 4].map((data, index) => {
+                            return (
+                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th
+                                  scope="row"
+                                  style={{
+                                    fontSize: "11px",
+                                    color: data > 2 ? "red" : "green",
+                                    cursor: data > 2 ? "pointer" : "default",
+                                  }}
+                                  className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white min-w-[150px]`}
+                                >
+                                  <button
+                                    onClick={(e) => errorClickHandler(data)}
+                                  >
+                                    {data > 2 ? "Error" : "Successful"}
+                                  </button>
+                                </th>
+                                <th
+                                  scope="row"
+                                  style={{ fontSize: "10px" }}
+                                  className={`flex-none px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white min-w-[150px]`}
+                                >
+                                  Data 1
+                                </th>
+                                <td
+                                  className={`flex-grow px-6 py-4 min-w-[150px]`}
+                                  style={{ fontSize: "10px" }}
+                                >
+                                  Data 2
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="h-[15px] ml-4 mt-5">
+                      {dataError && (
+                        <p style={{ fontSize: "12px", color: "red" }}>
+                          Data 2 is a not a valid value for Lookup field
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
@@ -222,17 +322,6 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
               {mode === "excel" && uploaded === "pending" && (
                 <button
                   type="button"
-                  className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
-                  onClick={() => setUploaded("uploading")}
-                  style={{fontSize:"12px"}}
-                >
-                  Generate Excel
-                </button>
-              )}
-
-              {mode === "excel" && uploaded === "uploading" && (
-                <button
-                  type="button"
                   disabled={!selectedFile}
                   className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${
                     !selectedFile
@@ -240,17 +329,18 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                       : "hover:bg-blue-800"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
                   onClick={() => setUploaded("uploaded")}
-                  style={{fontSize:"12px"}}
+                  style={{ fontSize: "12px" }}
                 >
                   Upload Excel File
                 </button>
               )}
+
               {(mode === "web" || uploaded === "uploaded") && (
                 <button
                   type="button"
                   className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] hover:bg-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]"
                   onClick={handleSave}
-                  style={{fontSize:"12px"}}
+                  style={{ fontSize: "12px" }}
                 >
                   Save
                 </button>
@@ -264,7 +354,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                   onClose();
                   setMode("web");
                 }}
-                style={{fontSize:"12px"}}
+                style={{ fontSize: "12px" }}
               >
                 Cancel
               </button>
