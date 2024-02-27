@@ -474,12 +474,12 @@ const DataView = ({ data, handleSort }) => {
               />
             </button>
           </div>
-          <div className="font-poppins opacity-40" onClick={handleTagModal}>
+          <div className="font-poppins opacity-80" onClick={handleTagModal}>
             {advancedFilterState[0].value ||
             searchFilter != "" ||
             advancedFilterState[1].value ? (
-              <button title="Show All Tags" className="font-bold">
-                All Tags
+              <button title="Show All Tags" className="bg-[#4856BEF5] text-white rounded-full py-2 px-3 flex items-center space-x-1 text-xs font-sans">
+                <p>All Tags</p>
               </button>
             ) : (
               <></>
