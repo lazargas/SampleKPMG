@@ -19,29 +19,30 @@ import ReferencesSelected from "./assets/images/References - selected.svg";
 import Sections from "./assets/images/Sections.svg";
 import SectionsSelected from "./assets/images/Sections - selected.svg";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Screen22 from './components/organisms/screens/screen-22/Screen22';
-import ErrorPage from './components/organisms/Error-page/ErrorPage';
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Screen22 from "./components/organisms/screens/screen-22/Screen22";
+import ErrorPage from "./components/organisms/Error-page/ErrorPage";
+import Screen36 from "./components/organisms/screens/screen-36/Screen36";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <CommonPage/>,
-    errorElement:<ErrorPage/>
+    element: <CommonPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/screen-22",
-    element: <Screen22/>,
-    errorElement:<ErrorPage/>
+    element: <Screen22 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-36",
+    element: <Screen36 />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
 function App() {
-
   const [pageLabels, setPageLabels] = useState({
     name: "Lookup Type",
     dataIndex: 0,
@@ -93,7 +94,7 @@ function App() {
       dataIndex: 1,
       data: businessEntityData,
     });
-    
+
     setSelectedCard(index);
   };
 
@@ -102,7 +103,6 @@ function App() {
   useEffect(() => {}, [pageLabels]);
 
   return (
-
     <KPMGContext.Provider
       value={{
         pageLabels,
@@ -110,12 +110,12 @@ function App() {
         handleCardClick,
         selectedCard,
         setSelectedCard,
-        pages
+        pages,
       }}
     >
       <div className="overflow-hidden">
         <Layout>
-           <RouterProvider router={router} />
+          <RouterProvider router={router} />
         </Layout>
       </div>
     </KPMGContext.Provider>
