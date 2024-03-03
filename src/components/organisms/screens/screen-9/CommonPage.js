@@ -20,7 +20,7 @@ const CommonPage = () => {
     setSelectedCard,
     pages} = useContext(KPMGContext);
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
-  const [gsapselect, setgsapSelect] = useState("");
+  const [gsapselect, setgsapSelect] = useState("");//not using from KPMGcontext because of Lag in animation
   const animateSlide = (iconName) => {
     const icon = document.getElementById(iconName);
     const bgIcon = document.getElementById("backgroundIcon");
