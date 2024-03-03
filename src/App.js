@@ -4,6 +4,7 @@ import Layout from "./components/layout/index";
 import CommonPage from "./components/organisms/screens/screen-9/CommonPage";
 import KPMGContext from "./context/SampleContext";
 import { businessEntityData, lookupTypeData } from "./data/tableData";
+import { gsap } from "gsap";
 
 // icons
 import BusinessEntity from "./assets/images/Business entity.svg";
@@ -98,8 +99,27 @@ function App() {
   };
 
   const [selectedCard, setSelectedCard] = useState(5);
+  const [gsapselect, setgsapSelect] = useState("");
 
   useEffect(() => {}, [pageLabels]);
+
+  const animateSlide = (iconName) => {
+    const icon = document.getElementById(iconName);
+    const bgIcon = document.getElementById("backgroundIcon");
+    //root.style.setProperty('--widthVariable', icon.offsetWidth )
+    setgsapSelect(iconName);
+    // Calculate the distance to slide
+    const distance = icon.offsetLeft - bgIcon.offsetLeft;
+    const width = icon.offsetWidth;
+    bgIcon.style.width = width + "px";
+
+    // Animate the background icon
+    gsap.to(bgIcon, {
+      x: distance,
+      duration: 0.5,
+      ease: "power2.inOut",
+    });
+  };
 
   return (
 
@@ -110,7 +130,10 @@ function App() {
         handleCardClick,
         selectedCard,
         setSelectedCard,
-        pages
+        pages,
+        gsapselect,
+        setgsapSelect,
+        animateSlide
       }}
     >
       <div className="overflow-hidden">
