@@ -19,6 +19,27 @@ import ReferencesSelected from "./assets/images/References - selected.svg";
 import Sections from "./assets/images/Sections.svg";
 import SectionsSelected from "./assets/images/Sections - selected.svg";
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Screen22 from './components/organisms/screens/screen-22/Screen22';
+import ErrorPage from './components/organisms/Error-page/ErrorPage';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <CommonPage/>,
+    errorElement:<ErrorPage/>
+  },
+  {
+    path: "/screen-22",
+    element: <Screen22/>,
+    errorElement:<ErrorPage/>
+  },
+]);
+
 function App() {
 
   const [pageLabels, setPageLabels] = useState({
@@ -81,20 +102,20 @@ function App() {
   useEffect(() => {}, [pageLabels]);
 
   return (
+
     <KPMGContext.Provider
       value={{
         pageLabels,
         setPageLabels,
+        handleCardClick,
+        selectedCard,
+        setSelectedCard,
+        pages
       }}
     >
       <div className="overflow-hidden">
         <Layout>
-          <CommonPage
-            handleCardClick={handleCardClick}
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
-            pages={pages}
-          />
+           <RouterProvider router={router} />
         </Layout>
       </div>
     </KPMGContext.Provider>

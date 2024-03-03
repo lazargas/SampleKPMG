@@ -10,7 +10,15 @@ import { businessEntityData, lookupTypeData } from "../../data/tableData";
 import Slider from "../Animation/Slider";
 import "../../styles/Animation/slider.css";
 
-const CommonPage = ({ pages, handleCardClick, selectedCard }) => {
+
+//icons
+
+
+const CommonPage = () => {
+  const {handleCardClick,
+    selectedCard,
+    setSelectedCard,
+    pages} = useContext(KPMGContext);
   const { pageLabels, setPageLabels } = useContext(KPMGContext);
   const [gsapselect, setgsapSelect] = useState("");
   const animateSlide = (iconName) => {
