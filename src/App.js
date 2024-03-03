@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Layout from "./components/layout/index";
-import CommonPage from "./components/molecules/CommonPage";
+import CommonPage from "./components/organisms/screens/screen-9/CommonPage";
 import KPMGContext from "./context/SampleContext";
 import { businessEntityData, lookupTypeData } from "./data/tableData";
 
