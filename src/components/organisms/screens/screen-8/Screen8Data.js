@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import "../../styles/atoms/table.css";
-import DeleteModal from "../atoms/DeleteModal";
-import EditModal from "../atoms/EditModal";
+import "../../../../styles/atoms/table.css";
+import DeleteModal from "../../../atoms/DeleteModal";
+import EditModal from "../../../atoms/EditModal";
 
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,14 +14,15 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { IoIosClose } from "react-icons/io";
-import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
-import KPMGContext from "../../context/SampleContext";
-import demoData from "../../data/tableData";
-import "../../styles/atoms/select.css";
-import Dropdown from "../atoms/Dropdown";
-import FilterModal from "../atoms/FilterModal";
-import SearchBar from "../atoms/SearchBar.js";
-import TagsModal from "../atoms/TagsModal";
+import { GridIcon, ListIcon, TableIcon } from "../../../../assets/Icons";
+import KPMGContext from "../../../../context/SampleContext";
+import demoData from "../../../../data/tableData";
+import "../../../../styles/atoms/select.css";
+import Dropdown from "../../../atoms/Dropdown";
+import FilterModal from "../../../atoms/FilterModal";
+import SearchBar from "../../../atoms/SearchBar.js";
+import TagsModal from "../../../atoms/TagsModal";
+import CustomAccordion from "../../../atoms/CustomAccordian";
 
 import {
   Box,
@@ -30,16 +31,17 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  Checkbox,
   TableHead,
   TableRow,
   Typography,
 } from "@mui/material";
-import ExportExcel from "../../Excel/ExcelExport";
-import ExcelData from "../../data/excelData.json";
-import AddNewModal from "../atoms/AddNewModal";
-import ViewModal from "../atoms/ViewModal";
+import ExportExcel from "../../../../Excel/ExcelExport";
+import ExcelData from "../../../../data/excelData.json";
+import AddNewModal from "../../../atoms/AddNewModal";
+import ViewModal from "../../../atoms/ViewModal";
 
-const DataView = ({ data, handleSort }) => {
+const Screen8Data = ({ data, handleSort }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModalOpen, setViewModalOpen] = useState(false);
@@ -340,13 +342,35 @@ const DataView = ({ data, handleSort }) => {
     c2rotation,
   ]);
 
+  const customAccordianFields = [
+    {
+      disabled: true,
+      col: "Business Entity",
+      value: "WF_BUS_ENT_COND-0047",
+    },
+    {
+      disabled: true,
+      col: "Data Entity",
+      value: "Material_FG",
+    },
+    {
+      disabled: true,
+      col: "Data Function",
+      value: "Marketing",
+    },
+  ];
+
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
-      <div className="relative flex flex-col z-[1] gap-2 pb-2">
-          <p className="relative text-[12px]   opacity-[0.7] " >Select Page:</p>
+        <div className="relative flex flex-col z-[1] gap-2 pb-2">
+          <p className="relative text-[12px]   opacity-[0.7] ">
+            Select Data Function:
+          </p>
 
-          <Dropdown data={["Lookup Type", "Lookup"]} />
+          <Dropdown
+            data={["Materials", "Products", "Suppliers", "Consumers"]}
+          />
 
           <SearchBar
             handleSearch={handleSearch}
@@ -429,7 +453,7 @@ const DataView = ({ data, handleSort }) => {
                 style={{ fontSize: "18px" }}
               />
             </button>
-            <ExportExcel fileName={"LookupTypeData"} excelData={ExcelData} />
+            <ExportExcel fileName={"AttributesData"} excelData={ExcelData} />
           </div>
           <div className="flex flex-row justify-between gap-3">
             <button
@@ -498,7 +522,7 @@ const DataView = ({ data, handleSort }) => {
         isOpen={isAddModalOpen}
         onClose={closeModal}
         data={tableData}
-        title={'Lookup Type'}
+        title={'Attribute'}
       />
       <EditModal
         isOpen={isEditModalOpen}
@@ -535,7 +559,12 @@ const DataView = ({ data, handleSort }) => {
         updateAllValue={updateAllValue}
       />
 
-      <div className="min-h-[350px]">
+      <div className="min-h-[350px] flex flex-col gap-[1.5rem]">
+        <CustomAccordion
+          title={"Reference Values"}
+          data={customAccordianFields}
+        />
+
         {tabView === "table" && (
           <>
             <TableContainer
@@ -547,7 +576,7 @@ const DataView = ({ data, handleSort }) => {
               }}
               component={Paper}
             >
-              <Table className=" text-sm text-left">
+              <Table className="text-sm text-left">
                 <TableHead>
                   <TableRow>
                     {tableData &&
@@ -561,7 +590,7 @@ const DataView = ({ data, handleSort }) => {
                             fontWeight: "bold",
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
                             paddingRight: "0",
-                            minWidth: { md: "250px", xl: "300px" },
+                            // minWidth: { md: "250px", xl: "300px" },
                             fontSize: { md: "10px", lg: "12px" },
                             display: `${
                               checkFiltered(col.columnName) ? "none" : ""
@@ -619,7 +648,7 @@ const DataView = ({ data, handleSort }) => {
                         fontWeight: "bold",
                         borderBottom: "1px solid rgba(224, 224, 224, 1)",
                         paddingRight: "0",
-                        minWidth: { md: "250px", xl: "300px" },
+                        // minWidth: { md: "250px", xl: "300px" },
                         fontSize: { md: "10px", lg: "12px" },
                         display: `${checkFiltered("Actions") ? "none" : ""}`,
                       }}
@@ -644,14 +673,24 @@ const DataView = ({ data, handleSort }) => {
                                 borderBottom:
                                   "1px solid rgba(224, 224, 224, 1)",
                                 paddingRight: "0",
-                                minWidth: { md: "250px", xl: "300px" },
+                                // minWidth: { md: "250px", xl: "300px" },
                                 fontSize: { md: "10px", lg: "12px" },
                                 display: `${
                                   checkFiltered(col.columnName) ? "none" : ""
                                 }`,
                               }}
                             >
-                              {col.columnValue}
+                              {col.columnName === "Is Required" ? (
+                                <Checkbox
+                                  checked={col.columnValue}
+                                  disabled
+                                  inputProps={{
+                                    "aria-label": "disabled checkbox",
+                                  }}
+                                />
+                              ) : (
+                                col.columnValue
+                              )}
                             </TableCell>
                           );
                         })}
@@ -741,7 +780,7 @@ const DataView = ({ data, handleSort }) => {
                       <Box
                         key={colIndex}
                         sx={{
-                          minWidth: { md: "200px", xl: "300px" },
+                          // minWidth: { md: "200px", xl: "300px" },
                           width: { md: "300px", xl: "400px" },
                           mr: 2,
                           display: `${
@@ -765,7 +804,17 @@ const DataView = ({ data, handleSort }) => {
                               textWrap: "wrap",
                             }}
                           >
-                            {col.columnValue}
+                            {col.columnName === "Is Required" ? (
+                              <Checkbox
+                                checked={col.columnValue}
+                                disabled
+                                inputProps={{
+                                  "aria-label": "disabled checkbox",
+                                }}
+                              />
+                            ) : (
+                              col.columnValue
+                            )}
                           </Typography>
                         </div>
                       </Box>
@@ -914,7 +963,17 @@ const DataView = ({ data, handleSort }) => {
                           className="text-black  "
                           style={{ fontSize: "10px" }}
                         >
-                          {col.columnValue}
+                          {col.columnName === "Is Required" ? (
+                            <Checkbox
+                              checked={col.columnValue}
+                              disabled
+                              inputProps={{
+                                "aria-label": "disabled checkbox",
+                              }}
+                            />
+                          ) : (
+                            col.columnValue
+                          )}
                         </Typography>
                       </div>
                     ))}
@@ -995,4 +1054,4 @@ const DataView = ({ data, handleSort }) => {
   );
 };
 
-export default DataView;
+export default Screen8Data;

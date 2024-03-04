@@ -24,6 +24,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Screen22 from "./components/organisms/screens/screen-22/Screen22";
 import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
+import Screen8 from "./components/organisms/screens/screen-8/Screen8";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
   {
     path: "/screen-36",
     element: <Screen36 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-8",
+    element: <Screen8 />,
     errorElement: <ErrorPage />,
   },
 ]);

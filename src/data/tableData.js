@@ -130,4 +130,32 @@ const businessEntityData = [
   ],
 ];
 
-module.exports = { lookupTypeData, businessEntityData };
+const attributesEntityData = [
+  [
+    { columnName: "Attribute Name", columnValue: "Age" },
+    { columnName: "Attribute Type", columnValue: "Integer" },
+    { columnName: "Is Required", columnValue: true },
+    { columnName: "Attribute Length", columnValue: 3 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "age" }
+  ],
+  [
+    { columnName: "Attribute Name", columnValue: "Date of Birth" },
+    { columnName: "Attribute Type", columnValue: "Date" },
+    { columnName: "Is Required", columnValue: false },
+    { columnName: "Attribute Length", columnValue: 7 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "dob" }
+  ],
+  [
+    { columnName: "Attribute Name", columnValue: "Country" },
+    { columnName: "Attribute Type", columnValue: "String" },
+    { columnName: "Is Required", columnValue: true },
+    { columnName: "Attribute Length", columnValue: 50 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "country" }
+  ]
+];
+
+
+module.exports = { lookupTypeData, businessEntityData, attributesEntityData };

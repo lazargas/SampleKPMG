@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import KPMGContext from "../../context/SampleContext";
-const AddNewModal = ({ isOpen, onClose, data }) => {
-  const { pageLabels, setPageLabels } = useContext(KPMGContext);
+const AddNewModal = ({ isOpen, onClose, data, title }) => {
 
   const [columnFields, setColumnFields] = useState([]);
 
@@ -71,7 +70,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
               id="modal-headline"
               style={{ fontSize: "14px" }}
             >
-              {`Add New ${pageLabels.name}`}
+              {`Add New ${title}`}
             </h3>
           </div>
 
@@ -119,7 +118,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
           >
             {/* Input fields */}
             {mode === "web" && (
-              <div className="overflow-y-scroll h-[120px] my-2 mx-2 grid grid-cols-2 gap-12">
+              <div className="overflow-y-scroll grid grid-cols-1 md:grid-cols-2 gap-4 w-[max-content]">
                 {columnFields?.map((col, index) => (
                   <div className="mb-2" key={index}>
                     <label
