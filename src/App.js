@@ -21,10 +21,11 @@ import Sections from "./assets/images/Sections.svg";
 import SectionsSelected from "./assets/images/Sections - selected.svg";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Screen8 from "./components/organisms/screens/screen-8/Screen8";
 import Screen22 from "./components/organisms/screens/screen-22/Screen22";
+import Screen23 from "./components/organisms/screens/screen-23/Screen23";
 import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
-import Screen8 from "./components/organisms/screens/screen-8/Screen8";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
   {
     path: "/screen-22",
     element: <Screen22 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-23",
+    element: <Screen23 />,
     errorElement: <ErrorPage />,
   },
   {
