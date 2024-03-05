@@ -211,6 +211,11 @@ const Screen22 = () => {
     const customAccordianFields = [
         {
             disabled: true,
+            col: "Business Entity Name",
+            value: "TCPL",
+        },
+        {
+            disabled: true,
             col: "Data Entity Type",
             value: "Master",
         },
@@ -229,11 +234,6 @@ const Screen22 = () => {
             col: "Data Function Name",
             value: "Stg_35",
         },
-        {
-            disabled: true,
-            col: "Business Entity Name",
-            value: "TCPL",
-        }
     ];
     const handleDescriptionModal = () => {
 
@@ -920,14 +920,14 @@ const Screen22 = () => {
                             className='py-[0.5rem]'
                             variant="contained"
                             color="primary"
-                           
+
                             sx={{
                                 backgroundColor: "#4856BEF5",
                                 fontSize: "10px",
-                                fontWeight:"800",
+                                fontWeight: "800",
                                 color: "white",
                                 borderRadius: "5px",
-                                padding:"12px"
+                                padding: "12px"
                             }}
                         >
                             Save And Next
@@ -936,14 +936,14 @@ const Screen22 = () => {
                             className='py-[0.5rem]'
                             variant="contained"
                             color="primary"
-                            
+
                             sx={{
                                 backgroundColor: "#4856BEF5",
                                 fontSize: "10px",
-                                fontWeight:"800",
+                                fontWeight: "800",
                                 color: "white",
                                 borderRadius: "5px",
-                                padding:"12px"
+                                padding: "12px"
                             }}
                         >
                             Skip To Next
@@ -955,10 +955,10 @@ const Screen22 = () => {
                             sx={{
                                 backgroundColor: "#4856BEF5",
                                 fontSize: "10px",
-                                fontWeight:"800",
+                                fontWeight: "800",
                                 color: "white",
                                 borderRadius: "5px",
-                                padding:"12px"
+                                padding: "12px"
                             }}
                         >
                             Save And Close
@@ -967,14 +967,14 @@ const Screen22 = () => {
                             className='py-[0.5rem]'
                             variant="contained"
                             color="primary"
-                            
+
                             sx={{
                                 backgroundColor: "#4856BEF5",
                                 fontSize: "10px",
-                                fontWeight:"800",
+                                fontWeight: "800",
                                 color: "white",
                                 borderRadius: "5px",
-                                padding:"12px"
+                                padding: "12px"
                             }}
                         >
                             Reset
@@ -986,10 +986,10 @@ const Screen22 = () => {
                             sx={{
                                 backgroundColor: "#4856BEF5",
                                 fontSize: "10px",
-                                fontWeight:"800",
+                                fontWeight: "800",
                                 color: "white",
                                 borderRadius: "5px",
-                                padding:"12px"
+                                padding: "12px"
                             }}
                         >
                             Cancel
