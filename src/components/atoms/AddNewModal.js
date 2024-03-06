@@ -186,14 +186,14 @@ const AddNewModal = ({ isOpen, onClose, data, title }) => {
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Lookup Type Name
+                              Data Column 1
                             </th>
                             <th
                               scope="col"
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Display Name
+                              Data Column 2
                             </th>
                           </tr>
                         </thead>
@@ -252,14 +252,14 @@ const AddNewModal = ({ isOpen, onClose, data, title }) => {
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Lookup Type Name
+                              Data Column 1
                             </th>
                             <th
                               scope="col"
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Display Name
+                              Data Column 2
                             </th>
                           </tr>
                         </thead>
@@ -305,7 +305,7 @@ const AddNewModal = ({ isOpen, onClose, data, title }) => {
                     <div className="h-[15px] ml-4 mt-5">
                       {dataError && (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                          Data 2 is a not a valid value for Lookup field
+                          Data 2 is a not a valid value for Data Column 1 field
                         </p>
                       )}
                     </div>

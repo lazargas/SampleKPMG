@@ -405,7 +405,7 @@ const DataView = ({ data, handleSort }) => {
         </div>
 
         <div
-          className={`relative flex flex-col gap-2 justify-between items-center px-4 ${
+          className={`relative flex flex-col gap-4 items-center px-4 ${
             advancedFilterState[0].value ||
             searchFilter != "" ||
             advancedFilterState[1].value

@@ -10,6 +10,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 import { GrNext, GrPrevious } from "react-icons/gr";
@@ -18,30 +19,30 @@ import { GridIcon, ListIcon, TableIcon } from "../../../../assets/Icons";
 import KPMGContext from "../../../../context/SampleContext";
 import demoData from "../../../../data/tableData";
 import "../../../../styles/atoms/select.css";
-import Dropdown from "../../../atoms/Dropdown";
 import FilterModal from "../../../atoms/FilterModal";
 import SearchBar from "../../../atoms/SearchBar.js";
 import TagsModal from "../../../atoms/TagsModal";
-import CustomAccordion from "../../../atoms/CustomAccordian";
 
 import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  Checkbox,
-  TableHead,
-  TableRow,
-  Typography,
+    Box,
+    Button,
+    Checkbox,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tooltip,
+    Typography,
 } from "@mui/material";
 import ExportExcel from "../../../../Excel/ExcelExport";
 import ExcelData from "../../../../data/excelData.json";
 import AddNewModal from "../../../atoms/AddNewModal";
 import ViewModal from "../../../atoms/ViewModal";
 
-const Screen8Data = ({ data, handleSort }) => {
+const Screen14Data = ({ data, handleSort }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModalOpen, setViewModalOpen] = useState(false);
@@ -363,14 +364,29 @@ const Screen8Data = ({ data, handleSort }) => {
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
-        <div className="relative flex flex-col z-[1] gap-2 pb-2">
-          <p className="relative text-[12px]   opacity-[0.7] ">
-            Select Data Function:
+        <div className="flex flex-col gap-2 pb-2">
+          <p className="relative text-[16px]  opacity-[0.7] ">
+            Initiate Wizard:
           </p>
 
-          <Dropdown
-            data={["Materials", "Products", "Suppliers", "Consumers"]}
-          />
+          <Tooltip title="Click here to Initiate Wizard" arrow>
+            <Button
+              className="py-[0.5rem]"
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#4856BEF5",
+                fontSize: "10px",
+                fontWeight: "800",
+                color: "white",
+                borderRadius: "5px",
+                padding: "12px",
+              }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            >
+              Start
+            </Button>
+          </Tooltip>
 
           <SearchBar
             handleSearch={handleSearch}
@@ -386,7 +402,7 @@ const Screen8Data = ({ data, handleSort }) => {
           />
         </div>
 
-        <div className="w-full flex mt-10 justify-start overflow-scroll">
+        <div className="flex-grow mt-10 pl-20 flex justify-start">
           {searchFilter && (
             <div className="flex items-center space-x-2 ml-2">
               <div className="bg-[#4856BEF5] opacity-60 text-white rounded-full p-2 px-3 flex items-center space-x-1 text-xs">
@@ -453,7 +469,7 @@ const Screen8Data = ({ data, handleSort }) => {
                 style={{ fontSize: "18px" }}
               />
             </button>
-            <ExportExcel fileName={"AttributesData"} excelData={ExcelData} />
+            <ExportExcel fileName={"BusinessEntityData"} excelData={ExcelData} />
           </div>
           <div className="flex flex-row justify-between gap-3">
             <button
@@ -508,13 +524,6 @@ const Screen8Data = ({ data, handleSort }) => {
             ) : (
               <></>
             )}
-
-            {/* <ArrowDownwardIcon
-              sx={{
-                rotate: "-90deg",
-                opacity: "0.6"
-              }}
-            /> */}
           </div>
         </div>
       </div>
@@ -522,7 +531,7 @@ const Screen8Data = ({ data, handleSort }) => {
         isOpen={isAddModalOpen}
         onClose={closeModal}
         data={tableData}
-        title={'Attribute'}
+        title={"Business Entity"}
       />
       <EditModal
         isOpen={isEditModalOpen}
@@ -559,12 +568,7 @@ const Screen8Data = ({ data, handleSort }) => {
         updateAllValue={updateAllValue}
       />
 
-      <div className="min-h-[350px] flex flex-col gap-[1.5rem]">
-        <CustomAccordion
-          title={"Reference Values"}
-          data={customAccordianFields}
-        />
-
+      <div className="min-h-[350px]">
         {tabView === "table" && (
           <>
             <TableContainer
@@ -600,7 +604,7 @@ const Screen8Data = ({ data, handleSort }) => {
                           <div
                             className="flex gap-[0.25rem]"
                             onClick={() => {
-                              if (col.columnName === "Lookup Type Name") {
+                              if (col.columnName === "Entity Short Name") {
                                 setc1Rotation(
                                   (prevRotation) => prevRotation + 180
                                 );
@@ -631,7 +635,7 @@ const Screen8Data = ({ data, handleSort }) => {
                               fontSize="small"
                               style={{
                                 transform: `rotate(${
-                                  col.columnName === "Lookup Type Name"
+                                  col.columnName === "Entity Short Name"
                                     ? c1rotation
                                     : c2rotation
                                 }deg)`,
@@ -1054,4 +1058,4 @@ const Screen8Data = ({ data, handleSort }) => {
   );
 };
 
-export default Screen8Data;
+export default Screen14Data;
