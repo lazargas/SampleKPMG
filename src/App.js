@@ -24,6 +24,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Screen8 from "./components/organisms/screens/screen-8/Screen8";
 import Screen22 from "./components/organisms/screens/screen-22/Screen22";
 import Screen23 from "./components/organisms/screens/screen-23/Screen23";
+import Screen25 from "./components/organisms/screens/screen-25/Screen25";
 import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
 
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/screen-25",
+    element: <Screen25 />,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/screen-36",
     element: <Screen36 />,
     errorElement: <ErrorPage />,
@@ -61,6 +67,11 @@ function App() {
     dataIndex: 0,
     data: lookupTypeData,
   });
+
+  const [attributeData, setAttributeData] = useState([
+    { name: "", values: [] },
+    // Add more objects as needed
+  ]);
 
   const pages = [
     {
@@ -114,7 +125,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(5);
   const [gsapselect, setgsapSelect] = useState("");
 
-  useEffect(() => {}, [pageLabels]);
+  useEffect(() => { }, [pageLabels]);
 
   const animateSlide = (iconName) => {
     const icon = document.getElementById(iconName);
@@ -146,6 +157,8 @@ function App() {
         gsapselect,
         setgsapSelect,
         animateSlide,
+        attributeData,
+        setAttributeData
       }}
     >
       <div className="overflow-hidden">

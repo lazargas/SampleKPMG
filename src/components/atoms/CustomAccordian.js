@@ -18,14 +18,13 @@ const CustomAccordian = ({ title, data }) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <div className="flex flex-row flex-wrap justify-between">
+        <div className="flex flex-row flex-wrap justify-start gap-[2.5rem]">
           {data?.map((col, index) => (
             <div className="mb-2" key={index} style={{ minWidth: "300px" }}>
               <label
                 htmlFor={`input-${col.col}`}
-                className={`block w-full text-sm font-medium text-gray-700 ${
-                  col.disabled ? "opacity-50" : ""
-                }`}
+                className={`block w-full text-sm font-medium text-gray-700 ${col.disabled ? "opacity-50" : ""
+                  }`}
                 style={{
                   fontSize: "12px",
                   pointerEvents: col.disabled ? "none" : "auto",
@@ -36,9 +35,8 @@ const CustomAccordian = ({ title, data }) => {
               <input
                 type="text"
                 id={`input-${col}`}
-                className={`mt-1 p-2 w-full border border-gray-300 rounded-md  ${
-                  col.disabled ? "opacity-50 bg-gray-200" : ""
-                }`}
+                className={`mt-1 p-2 w-full border border-gray-300 rounded-md  ${col.disabled ? "opacity-50 bg-gray-200" : ""
+                  }`}
                 style={{
                   fontSize: "12px",
                   pointerEvents: col.disabled ? "none" : "",

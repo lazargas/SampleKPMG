@@ -55,6 +55,7 @@ const Screen23 = () => {
         data: [],
     });
     const [gsapselect, setgsapSelect] = useState("");
+    const [selectedButton, setSelectedButton] = useState(1);
     const pages = [
         {
             name: "Business Entity",
@@ -206,6 +207,9 @@ const Screen23 = () => {
         },
     ];
     const handleDescriptionModal = () => {
+    }
+    const handleSelectedButton = (index) => {
+        setSelectedButton(index);
     }
     return (
         <>
