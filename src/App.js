@@ -29,6 +29,7 @@ import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
 import Screen14 from "./components/organisms/screens/screen-14/Screen14";
 import Screen15 from "./components/organisms/screens/screen-15/Screen15";
+import Screen16 from "./components/organisms/screens/screen-16/Screen16";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
   {
     path: "/screen-15",
     element: <Screen15 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-16",
+    element: <Screen16 />,
     errorElement: <ErrorPage />,
   },
 ]);
