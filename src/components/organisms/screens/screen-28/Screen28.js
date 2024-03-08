@@ -315,7 +315,7 @@ const Screen22 = () => {
                             aria-labelledby="modal-headline"
                         >
                             {/* Modal header */}
-                            <div className="px-6 pt-4">
+                            <div className=" pt-4">
                                 <div className="flex items-center">
                                     <input
                                         type="radio"
@@ -352,7 +352,7 @@ const Screen22 = () => {
                             </div>
                             {/* Modal body */}
                             <div
-                                className="p-6 max-h-[350px] flex gap-[2.5rem]
+                                className="py-6 max-h-[350px] flex gap-[2.5rem]
           "
                             >
                                 {/* Input fields */}
