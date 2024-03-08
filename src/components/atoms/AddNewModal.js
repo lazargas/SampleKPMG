@@ -36,9 +36,8 @@ const AddNewModal = ({ isOpen, onClose, data, title }) => {
   return (
     // Modal container
     <div
-      className={`${
-        isOpen ? "block" : "hidden"
-      } fixed inset-0 overflow-y-auto z-50 `}
+      className={`${isOpen ? "block" : "hidden"
+        } fixed inset-0 overflow-y-auto z-50 `}
     >
       <div className="w-[450px] mx-auto flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Background overlay */}
@@ -322,11 +321,10 @@ const AddNewModal = ({ isOpen, onClose, data, title }) => {
                 <button
                   type="button"
                   disabled={!selectedFile}
-                  className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${
-                    !selectedFile
+                  className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${!selectedFile
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-blue-800"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
                   onClick={() => setUploaded("uploaded")}
                   style={{ fontSize: "12px" }}
                 >

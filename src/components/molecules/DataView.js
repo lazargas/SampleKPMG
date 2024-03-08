@@ -343,7 +343,7 @@ const DataView = ({ data, handleSort }) => {
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
-      <div className="relative flex flex-col z-[1] gap-2 pb-2">
+        <div className="relative flex flex-col z-[1] gap-2 pb-2">
           <p className="relative text-[12px]   opacity-[0.7] " >Select Page:</p>
 
           <Dropdown data={["Lookup Type", "Lookup"]} />
@@ -405,13 +405,12 @@ const DataView = ({ data, handleSort }) => {
         </div>
 
         <div
-          className={`relative flex flex-col gap-4 items-center px-4 ${
-            advancedFilterState[0].value ||
+          className={`relative flex flex-col gap-4 items-center px-4 ${advancedFilterState[0].value ||
             searchFilter != "" ||
             advancedFilterState[1].value
-              ? `pb-4`
-              : ``
-          }`}
+            ? `pb-4`
+            : ``
+            }`}
         >
           <div className="flex flex-row justify-between gap-4">
             <button title="Add Row">
@@ -473,8 +472,8 @@ const DataView = ({ data, handleSort }) => {
           </div>
           <div className="font-poppins opacity-80" onClick={handleTagModal}>
             {advancedFilterState[0].value ||
-            searchFilter != "" ||
-            advancedFilterState[1].value ? (
+              searchFilter != "" ||
+              advancedFilterState[1].value ? (
               <button
                 title="Show All Tags"
                 className="bg-[#4856BEF5] text-white rounded-full py-2 px-3 flex items-center space-x-1 text-xs font-sans"
@@ -513,7 +512,7 @@ const DataView = ({ data, handleSort }) => {
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={closeModal}
-        onDelete={() => {}}
+        onDelete={() => { }}
         itemName={selectedData}
       />
 
@@ -527,7 +526,7 @@ const DataView = ({ data, handleSort }) => {
       <TagsModal
         isOpen={isTagModalOpen}
         onClose={closeModal}
-        onDelete={() => {}}
+        onDelete={() => { }}
         searchFilter={searchFilter}
         setSearchFilter={setSearchFilter}
         advancedFilterState={advancedFilterState}
@@ -563,9 +562,8 @@ const DataView = ({ data, handleSort }) => {
                             paddingRight: "0",
                             minWidth: { md: "250px", xl: "300px" },
                             fontSize: { md: "10px", lg: "12px" },
-                            display: `${
-                              checkFiltered(col.columnName) ? "none" : ""
-                            }`,
+                            display: `${checkFiltered(col.columnName) ? "none" : ""
+                              }`,
                           }}
                         >
                           <div
@@ -601,11 +599,10 @@ const DataView = ({ data, handleSort }) => {
                             <ArrowDownwardIcon
                               fontSize="small"
                               style={{
-                                transform: `rotate(${
-                                  col.columnName === "Lookup Type Name"
-                                    ? c1rotation
-                                    : c2rotation
-                                }deg)`,
+                                transform: `rotate(${col.columnName === "Lookup Type Name"
+                                  ? c1rotation
+                                  : c2rotation
+                                  }deg)`,
                               }}
                             />
                           </div>
@@ -646,9 +643,8 @@ const DataView = ({ data, handleSort }) => {
                                 paddingRight: "0",
                                 minWidth: { md: "250px", xl: "300px" },
                                 fontSize: { md: "10px", lg: "12px" },
-                                display: `${
-                                  checkFiltered(col.columnName) ? "none" : ""
-                                }`,
+                                display: `${checkFiltered(col.columnName) ? "none" : ""
+                                  }`,
                               }}
                             >
                               {col.columnValue}
@@ -661,9 +657,8 @@ const DataView = ({ data, handleSort }) => {
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
                             paddingRight: "0",
                             minWidth: { md: "250px", xl: "300px" },
-                            display: `${
-                              checkFiltered("Actions") ? "none" : ""
-                            }`,
+                            display: `${checkFiltered("Actions") ? "none" : ""
+                              }`,
                           }}
                           className={`flex gap-3 `}
                         >
@@ -678,16 +673,16 @@ const DataView = ({ data, handleSort }) => {
                                 IconComponent === EditIcon
                                   ? "Edit"
                                   : IconComponent === DeleteIcon
-                                  ? "Delete"
-                                  : "View"
+                                    ? "Delete"
+                                    : "View"
                               }
                               key={index}
                               onClick={() =>
                                 IconComponent === DeleteIcon
                                   ? handleDeleteClick(rowData)
                                   : IconComponent === EditIcon
-                                  ? handleEditClick(rowData)
-                                  : handleViewClick(rowData)
+                                    ? handleEditClick(rowData)
+                                    : handleViewClick(rowData)
                               }
                             >
                               <IconComponent
@@ -744,9 +739,8 @@ const DataView = ({ data, handleSort }) => {
                           minWidth: { md: "200px", xl: "300px" },
                           width: { md: "300px", xl: "400px" },
                           mr: 2,
-                          display: `${
-                            checkFiltered(col.columnName) ? "none" : ""
-                          }`,
+                          display: `${checkFiltered(col.columnName) ? "none" : ""
+                            }`,
                         }}
                       >
                         <div>
@@ -797,15 +791,15 @@ const DataView = ({ data, handleSort }) => {
                                 IconComponent === DeleteIcon
                                   ? handleDeleteClick(rowData)
                                   : IconComponent === EditIcon
-                                  ? handleEditClick(rowData)
-                                  : handleViewClick(rowData)
+                                    ? handleEditClick(rowData)
+                                    : handleViewClick(rowData)
                               }
                               title={
                                 IconComponent === EditIcon
                                   ? "Edit"
                                   : IconComponent === DeleteIcon
-                                  ? "Delete"
-                                  : "View"
+                                    ? "Delete"
+                                    : "View"
                               }
                             >
                               <IconComponent
@@ -868,15 +862,15 @@ const DataView = ({ data, handleSort }) => {
                               IconComponent === DeleteIcon
                                 ? handleDeleteClick(data)
                                 : IconComponent === EditIcon
-                                ? handleEditClick(data)
-                                : handleViewClick(data)
+                                  ? handleEditClick(data)
+                                  : handleViewClick(data)
                             }
                             title={
                               IconComponent === EditIcon
                                 ? "Edit"
                                 : IconComponent === DeleteIcon
-                                ? "Delete"
-                                : "View"
+                                  ? "Delete"
+                                  : "View"
                             }
                           >
                             <IconComponent
@@ -899,9 +893,8 @@ const DataView = ({ data, handleSort }) => {
                       <div
                         key={colIndex}
                         style={{
-                          display: `${
-                            checkFiltered(col.columnName) ? "none" : ""
-                          }`,
+                          display: `${checkFiltered(col.columnName) ? "none" : ""
+                            }`,
                         }}
                       >
                         <Typography
@@ -956,16 +949,14 @@ const DataView = ({ data, handleSort }) => {
         </div>
 
         <div className="pages pt-1">
-          <button style={{ fontSize: "14px" }}>{`${
-            tablePaginatedData?.length === 0
-              ? 0
-              : (currentPage - 1) * itemsPerPage + 1
-          } - ${
-            tablePaginatedData?.length === 0
+          <button style={{ fontSize: "14px" }}>{`${tablePaginatedData?.length === 0
+            ? 0
+            : (currentPage - 1) * itemsPerPage + 1
+            } - ${tablePaginatedData?.length === 0
               ? 0
               : (currentPage - 1) * itemsPerPage +
-                tablePaginatedData[currentPage - 1]?.length
-          } of ${dataLength}`}</button>
+              tablePaginatedData[currentPage - 1]?.length
+            } of ${dataLength}`}</button>
         </div>
 
         <button
