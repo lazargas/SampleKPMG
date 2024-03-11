@@ -188,25 +188,108 @@ const Screen16 = () => {
     "Item 6",
   ]);
 
+  const [allUsers, setAllUsers] = useState([
+    { name: 'John Doe', age: 30 },
+    { name: 'Jane Smith', age: 28 },
+    { name: 'Mike Johnson', age: 35 },
+    { name: 'Emma Brown', age: 22 },
+    { name: 'Alex White', age: 33 },
+    { name: 'Sophia Green', age: 25 },
+    { name: 'James Blue', age: 31 },
+    { name: 'Olivia Yellow', age: 27 },
+    { name: 'Benjamin Red', age: 34 },
+    { name: 'Ava Pink', age: 29 },
+    { name: 'User 11', age: 36 },
+    { name: 'User 12', age: 23 },
+    { name: 'User 13', age: 37 },
+    { name: 'User 14', age: 24 },
+    { name: 'User 15', age: 38 },
+    { name: 'User 16', age: 25 },
+    { name: 'User 17', age: 39 },
+    { name: 'User 18', age: 26 },
+    { name: 'User 19', age: 40 },
+    { name: 'User 20', age: 27 },
+    { name: 'User 21', age: 41 },
+    { name: 'User 22', age: 28 },
+    { name: 'User 23', age: 42 },
+    { name: 'User 24', age: 29 },
+    { name: 'User 25', age: 43 },
+    { name: 'User 26', age: 30 },
+    { name: 'User 27', age: 44 },
+    { name: 'User 28', age: 31 },
+    { name: 'User 29', age: 45 },
+    { name: 'User 30', age: 32 },
+    { name: 'User 31', age: 46 },
+    { name: 'User 32', age: 33 },
+    { name: 'User 33', age: 47 },
+    { name: 'User 34', age: 34 },
+    { name: 'User 35', age: 48 },
+    { name: 'User 36', age: 35 },
+    { name: 'User 37', age: 49 },
+    { name: 'User 38', age: 36 },
+    { name: 'User 39', age: 50 },
+    { name: 'User 40', age: 37 },
+    { name: 'User 41', age: 51 },
+    { name: 'User 42', age: 38 },
+    { name: 'User 43', age: 52 },
+    { name: 'User 44', age: 39 },
+    { name: 'User 45', age: 53 },
+    { name: 'User 46', age: 40 },
+    { name: 'User 47', age: 54 },
+    { name: 'User 48', age: 41 },
+    { name: 'User 49', age: 55 },
+    { name: 'User 50', age: 42 },
+  ]);
+
+  const [applicationUsers, setApplicationUsers] = useState([
+    allUsers[0],
+    allUsers[10],
+    allUsers[20],
+    allUsers[30],
+    allUsers[40],
+  ]);
+
+
   const handleButtonClick = (buttonNumber) => {
-    // Example of changing list content based on button click
     switch (buttonNumber) {
       case 1:
-        setListContent(["New Item A", "New Item B", "New Item C"]);
+        updateApplicationUsers();
         break;
       case 2:
-        setListContent(["Another Item X", "Another Item Y", "Another Item Z"]);
+
         break;
       case 3:
-        setListContent(["Updated Item 1", "Updated Item 2", "Updated Item 3"]);
+
         break;
       case 4:
-        setListContent(["Custom Item 1", "Custom Item 2", "Custom Item 3"]);
+
         break;
       default:
         break;
     }
   };
+
+  const [checkedStatus, setCheckedStatus] = useState(
+    allUsers.reduce((acc, user) => ({ ...acc, [user.name]: false }), {})
+  );
+
+  const handleCheckboxChange = (event, userName) => {
+    const isChecked = event.target.checked;
+    setCheckedStatus(prevState => ({ ...prevState, [userName]: isChecked }));
+  };
+
+  const updateApplicationUsers = () => {
+    const updatedApplicationUsers = [...applicationUsers];
+   
+    allUsers.forEach(user => {
+       if (checkedStatus[user.name] && !applicationUsers.some(appUser => appUser.name === user.name && appUser.age === user.age)) {
+         updatedApplicationUsers.push(user);
+       }
+    });
+    
+    setApplicationUsers(updatedApplicationUsers);
+   };
+
 
   return (
     <>
@@ -252,11 +335,10 @@ const Screen16 = () => {
                 </div>
 
                 <div
-                  className={`slider text-lg mt-1 px-2 rounded-md ${
-                    gsapselect === pages[index].name
-                      ? "text-white"
-                      : "text-black"
-                  } `}
+                  className={`slider text-lg mt-1 px-2 rounded-md ${gsapselect === pages[index].name
+                    ? "text-white"
+                    : "text-black"
+                    } `}
                   style={{
                     fontSize: "13px",
                     fontWeight: 400,
@@ -284,15 +366,15 @@ const Screen16 = () => {
           </div>
 
           <div className="grid-container box p-4 bg-gray-100 rounded-lg">
-            <Grid container spacing={2}>
+            <Grid container spacing={2} alignItems="center">
               {/* First column */}
               <Grid item xs={5}>
                 {/* First column */}
-                <Card className="card">
-                  <h3 className="text-lg font-semibold mb-4">First Column</h3>
-                  <ul className="max-h-[200px] overflow-y-auto">
+                <Card className="card px-8 py-2">
+                  <h3 className="text-lg font-semibold mb-4">Application Users</h3>
+                  <ul className="max-h-[200px] overflow-y-auto pl-2">
                     {/* List of items with checkboxes */}
-                    {listContent.map((item, index) => (
+                    {applicationUsers.map((item, index) => (
                       <li key={index} className="mb-2">
                         <input
                           type="checkbox"
@@ -303,7 +385,7 @@ const Screen16 = () => {
                           htmlFor={`item1-${index}`}
                           className="select-none"
                         >
-                          {item}
+                          {item.name}
                         </label>
                       </li>
                     ))}
@@ -314,66 +396,68 @@ const Screen16 = () => {
               {/* Button box */}
               <Grid item xs={2}>
                 <div className="flex justify-center items-center">
-                <Card className="card">
-                    <h3 className="text-lg font-semibold mb-4">Buttons</h3>
+                  <div className="flex flex-col">
                     <div className="flex flex-col gap-2 justify-between">
                       <Button
                         variant="contained"
                         onClick={() => handleButtonClick(1)}
                       >
-                        Button 1
+                        Left Shift
                       </Button>
                       <Button
                         variant="contained"
                         onClick={() => handleButtonClick(2)}
                       >
-                        Button 2
+                        Less Than
                       </Button>
                       <Button
                         variant="contained"
                         onClick={() => handleButtonClick(3)}
                       >
-                        Button 3
+                        Right Shift
                       </Button>
                       <Button
                         variant="contained"
                         onClick={() => handleButtonClick(4)}
                       >
-                        Button 4
+                        Greater Than
                       </Button>
                     </div>
-                  </Card>
+                  </div>
                 </div>
               </Grid>
 
               {/* Second column */}
               <Grid item xs={5}>
-                <div className="box p-4 bg-gray-100 rounded-lg">
-                  {/* Second column */}
-                  <div className="column flex flex-col">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Second Column
-                    </h3>
-                    <ul className="max-h-[200px] overflow-y-auto">
-                      {/* List of items with checkboxes */}
-                      {listContent.map((item, index) => (
-                        <li key={index} className="mb-2">
-                          <input
-                            type="checkbox"
-                            id={`item2-${index}`}
-                            className="mr-2"
-                          />
-                          <label
-                            htmlFor={`item2-${index}`}
-                            className="select-none"
-                          >
-                            {item}
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                {/* Second column */}
+                <Card className="card px-8 py-2">
+                  <h3 className="text-lg font-semibold mb-4">
+                    All Users
+                  </h3>
+                  <ul className="max-h-[200px] overflow-y-auto pl-2">
+                    {/* List of items with checkboxes */}
+                    {allUsers.map((item, index) => {
+                      const isInApplicationUsers = applicationUsers.some(user => user.name === item.name && user.age === item.age);
+
+                      return <li key={index} className="mb-2">
+                        <input
+                          type="checkbox"
+                          id={`item2-${index}`}
+                          className={`mr-2 ${isInApplicationUsers ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          disabled={isInApplicationUsers}
+                          checked={checkedStatus[item.name] || isInApplicationUsers}
+                          onChange={(event) => handleCheckboxChange(event, item.name)}
+                        />
+                        <label
+                          htmlFor={`item2-${index}`}
+                          className="select-none"
+                        >
+                          {item.name}
+                        </label>
+                      </li>
+                    })}
+                  </ul>
+                </Card>
               </Grid>
             </Grid>
           </div>
