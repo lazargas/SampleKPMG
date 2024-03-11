@@ -26,11 +26,12 @@ import Screen22 from "./components/organisms/screens/screen-22/Screen22";
 import Screen23 from "./components/organisms/screens/screen-23/Screen23";
 import Screen25 from "./components/organisms/screens/screen-25/Screen25";
 import Screen28 from "./components/organisms/screens/screen-28/Screen28"
-import ErrorPage from "./components/organisms/Error-page/ErrorPage";
+import Screen32 from "./components/organisms/screens/screen-32/Screen32";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
 import Screen14 from "./components/organisms/screens/screen-14/Screen14";
 import Screen15 from "./components/organisms/screens/screen-15/Screen15";
 import Screen16 from "./components/organisms/screens/screen-16/Screen16";
+import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,16 @@ const router = createBrowserRouter([
   {
     path: "/screen-25",
     element: <Screen25 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-28",
+    element: <Screen28 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-32",
+    element: <Screen32 />,
     errorElement: <ErrorPage />,
   },
   {
@@ -78,11 +89,6 @@ const router = createBrowserRouter([
     element: <Screen16 />,
     errorElement: <ErrorPage />,
   },
-  {
-    path: "/screen-28",
-    element: <Screen28 />,
-    errorElement: <ErrorPage />,
-  }
 ]);
 
 function App() {
