@@ -1,17 +1,24 @@
 import react, { useContext, useState } from 'react';
 import KPMGContext from '../../../../context/SampleContext';
-import BusinessEntity from "../../../../assets/images/Business entity.svg";
-import BusinessEntitySelected from "../../../../assets/images/Business entity - selected.svg";
-import Function from "../../../../assets/images/Function.svg";
-import FunctionSelected from "../../../../assets/images/Function - selected.svg";
-import Data from "../../../../assets/images/Data.svg";
-import DataSelected from "../../../../assets/images/Data - selected.svg";
-import Attributes from "../../../../assets/images/Attributes.svg";
+//icons
 import AttributesSelected from "../../../../assets/images/Attributes - selected.svg";
-import References from "../../../../assets/images/References.svg";
+import Attributes from "../../../../assets/images/Attributes.svg";
+import BusinessEntitySelected from "../../../../assets/images/Business entity - selected.svg";
+import BusinessEntity from "../../../../assets/images/Business entity.svg";
+import ComputationSelected from "../../../../assets/images/Computation - selected.svg";
+import Computation from "../../../../assets/images/Computation.svg";
+import DataSelected from "../../../../assets/images/Data - selected.svg";
+import Data from "../../../../assets/images/Data.svg";
+import DataEntityGroupSelected from "../../../../assets/images/DataEntityGroup - selected.svg";
+import DataEntityGroup from "../../../../assets/images/DataEntityGroup.svg";
+import FunctionSelected from "../../../../assets/images/Function - selected.svg";
+import Function from "../../../../assets/images/Function.svg";
 import ReferencesSelected from "../../../../assets/images/References - selected.svg";
-import Sections from "../../../../assets/images/Sections.svg";
+import References from "../../../../assets/images/References.svg";
 import SectionsSelected from "../../../../assets/images/Sections - selected.svg";
+import Sections from "../../../../assets/images/Sections.svg";
+import ApplicationnUserSelected from "../../../../assets/images/User - selected.svg";
+import ApplicationnUser from "../../../../assets/images/User.svg";
 import LineWeightIcon from "@mui/icons-material/LineWeight";
 import { gsap } from "gsap";
 import CustomAccordian from './atoms/CustomAccordian';
@@ -58,60 +65,60 @@ const Screen23 = () => {
     const [selectedButton, setSelectedButton] = useState(1);
     const pages = [
         {
-            name: "Business Entity",
-            notSelected: BusinessEntity,
-            selected: BusinessEntitySelected,
-            data: businessEntityData,
+          name: "Business Entity",
+          notSelected: BusinessEntity,
+          selected: BusinessEntitySelected,
+          data: businessEntityData,
         },
         {
-            name: "Application User",
-            notSelected: Data,
-            selected: DataSelected,
-            data: [],
+          name: "Application User",
+          notSelected: ApplicationnUser,
+          selected: ApplicationnUserSelected,
+          data: [],
         },
         {
-            name: "Data Entity Group",
-            notSelected: Data,
-            selected: DataSelected,
-            data: [],
+          name: "Data Entity Group",
+          notSelected: DataEntityGroup,
+          selected: DataEntityGroupSelected,
+          data: [],
         },
         {
-            name: "Data Entity",
-            notSelected: Data,
-            selected: DataSelected,
-            data: [],
+          name: "Data Entity",
+          notSelected: Data,
+          selected: DataSelected,
+          data: [],
         },
         {
-            name: "Function",
-            notSelected: Function,
-            selected: FunctionSelected,
-            data: [],
+          name: "Function",
+          notSelected: Function,
+          selected: FunctionSelected,
+          data: [],
         },
         {
-            name: "Section",
-            notSelected: Sections,
-            selected: SectionsSelected,
-            data: [],
+          name: "Section",
+          notSelected: Sections,
+          selected: SectionsSelected,
+          data: [],
         },
         {
-            name: "Attributes",
-            notSelected: Attributes,
-            selected: AttributesSelected,
-            data: [],
+          name: "Attributes",
+          notSelected: Attributes,
+          selected: AttributesSelected,
+          data: [],
         },
         {
-            name: "Computation",
-            notSelected: Attributes,
-            selected: AttributesSelected,
-            data: [],
+          name: "Computation",
+          notSelected: Computation,
+          selected: ComputationSelected,
+          data: [],
         },
         {
-            name: "References",
-            notSelected: References,
-            selected: ReferencesSelected,
-            data: lookupTypeData,
+          name: "References",
+          notSelected: References,
+          selected: ReferencesSelected,
+          data: lookupTypeData,
         },
-    ];
+      ];
     const animateSlide = (iconName) => {
         const icon = document.getElementById(iconName);
         const bgIcon = document.getElementById("backgroundIcon");

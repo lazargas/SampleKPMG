@@ -11,8 +11,10 @@ body {
 }
 
 code {
-  font-family:  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
+*{
+  font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 

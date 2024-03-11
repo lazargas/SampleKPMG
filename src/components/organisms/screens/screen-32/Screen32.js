@@ -4,8 +4,7 @@ import BusinessEntity from "../../../../assets/images/Business entity.svg";
 import BusinessEntitySelected from "../../../../assets/images/Business entity - selected.svg";
 import Function from "../../../../assets/images/Function.svg";
 import FunctionSelected from "../../../../assets/images/Function - selected.svg";
-import Data from "../../../../assets/images/Data.svg";
-import DataSelected from "../../../../assets/images/Data - selected.svg";
+
 import Attributes from "../../../../assets/images/Attributes.svg";
 import AttributesSelected from "../../../../assets/images/Attributes - selected.svg";
 import References from "../../../../assets/images/References.svg";
@@ -17,6 +16,26 @@ import { gsap } from "gsap";
 import CustomAccordian from '../../../atoms/CustomAccordian';
 import CustomButton from '../../../atoms/CustomButton';
 import CustomButtonSecondary from '../../../atoms/CustomButtonSecondary';
+import Data from "../../../../assets/screens/screen-32/Data.svg";
+import DataSelected from "../../../../assets/screens/screen-32/DataSelected.svg";
+import AttributeTagging from "../../../../assets/screens/screen-32/attributeTagging.svg";
+import AttributeTaggingSelected from "../../../../assets/screens/screen-32/attributeTaggingSelected.svg";
+import DataCollection from "../../../../assets/screens/screen-32/DataCollection.svg";
+import DataCollectionSelected from "../../../../assets/screens/screen-32/DataCollectionSelected.svg";
+import Delegate from "../../../../assets/screens/screen-32/Delegate.svg";
+import DelegateSelected from "../../../../assets/screens/screen-32/DelegateSelected.svg";
+import Order from "../../../../assets/screens/screen-32/Order.svg";
+import OrderSelected from "../../../../assets/screens/screen-32/OrderSelected.svg";
+import Process from "../../../../assets/screens/screen-32/process.svg";
+import ProcessSelected from "../../../../assets/screens/screen-32/processSelected.svg";
+import RolesAndLevels from "../../../../assets/screens/screen-32/RolesAndLevels.svg";
+import RolesAndLevelsSelected from "../../../../assets/screens/screen-32/RolesAndLevelsSelected.svg";
+import Users from "../../../../assets/screens/screen-32/users.svg";
+import UsersSelected from "../../../../assets/screens/screen-32/usersSelected.svg";
+import Workflow from "../../../../assets/screens/screen-32/workflow.svg";
+import WorkflowSelected from "../../../../assets/screens/screen-32/workflowSelected.svg";
+import WorkflowRel from "../../../../assets/screens/screen-32/workflowRel.svg";
+import WorkflowRelSelected from "../../../../assets/screens/screen-32/workflowRelSelected.svg";
 //data
 import { lookupTypeData as data } from '../../../../data/tableData';
 //css
@@ -72,8 +91,8 @@ const Screen32 = () => {
     const pages = [
         {
             name: "Workflow",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: Workflow,
+            selected: WorkflowSelected,
             data: [],
         },
         {
@@ -84,52 +103,52 @@ const Screen32 = () => {
         },
         {
             name: "Conditional Data Governance",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: DataCollection,
+            selected: DataCollectionSelected,
             data: [],
         },
         {
             name: "Workflow Relationship",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: WorkflowRel,
+            selected: WorkflowRelSelected,
             data: [],
         },
         {
             name: "Delegate Workflow",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: Delegate,
+            selected: DelegateSelected,
             data: [],
         },
         {
             name: "Workflow Process",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: Process,
+            selected: ProcessSelected,
             data: [],
         },
     ];
     const subPages = [
         {
             name: "Roles And Levels",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: RolesAndLevels,
+            selected: RolesAndLevelsSelected,
             data: [],
         },
         {
             name: "Order Roles And Levels",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: Order,
+            selected: OrderSelected,
             data: [],
         },
         {
             name: "Users and SLA",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: Users,
+            selected: UsersSelected,
             data: [],
         },
         {
             name: "Attribute Tagging",
-            notSelected: Data,
-            selected: DataSelected,
+            notSelected: AttributeTagging,
+            selected: AttributeTaggingSelected,
             data: [],
         },
     ];
@@ -325,6 +344,7 @@ const Screen32 = () => {
                             >
                                 <div className="flex flex-row justify-center mt-2 mx-2">
                                     <img
+                                        className={`${index==1 || index==2 ? "" : ""} `}
                                         id={`cards-${index + 1}`}
                                         src={
                                             selectedCard === index ? card.selected : card.notSelected
@@ -334,10 +354,10 @@ const Screen32 = () => {
                                     />
                                 </div>
                                 <div
-                                    className={`slider text-lg mt-1 px-2  rounded-md ${gsapselect === pages[index].name
+                                    className={`slider text-lg px-2  rounded-md ${gsapselect === pages[index].name
                                         ? "text-white"
                                         : "text-black"
-                                        } `}
+                                        } ${index==1 || index==2 ? "" : "mt-1"} `}
                                     style={{
                                         fontSize: "13px",
                                         fontWeight: 400,
@@ -635,13 +655,13 @@ const Screen32 = () => {
 
 
                             <Button
-                                className='py-[0.5rem]'
+                                className=' '
                                 variant="contained"
                                 color="primary"
                                 sx={{
                                     backgroundColor: "#4856BEF5",
                                     fontSize: "10px",
-                                    fontWeight: "800",
+                                     
                                     color: "white",
                                     borderRadius: "5px",
                                     padding: "12px"
@@ -652,13 +672,13 @@ const Screen32 = () => {
 
 
                             <Button
-                                className='py-[0.5rem]'
+                                className=' '
                                 variant="contained"
                                 color="primary"
                                 sx={{
                                     backgroundColor: "#4856BEF5",
                                     fontSize: "10px",
-                                    fontWeight: "800",
+                                     
                                     color: "white",
                                     borderRadius: "5px",
                                     padding: "12px"
@@ -668,13 +688,13 @@ const Screen32 = () => {
                             </Button>
 
                             <Button
-                                className='py-[0.5rem]'
+                                className=' '
                                 variant="contained"
                                 color="primary"
                                 sx={{
                                     backgroundColor: "#4856BEF5",
                                     fontSize: "10px",
-                                    fontWeight: "800",
+                                     
                                     color: "white",
                                     borderRadius: "5px",
                                     padding: "12px"
@@ -683,13 +703,13 @@ const Screen32 = () => {
                                 Save And Close
                             </Button>
                             <Button
-                                className='py-[0.5rem]'
+                                className=' '
                                 variant="contained"
                                 color="primary"
                                 sx={{
                                     backgroundColor: "#4856BEF5",
                                     fontSize: "10px",
-                                    fontWeight: "800",
+                                     
                                     color: "white",
                                     borderRadius: "5px",
                                     padding: "12px"
@@ -698,13 +718,13 @@ const Screen32 = () => {
                                 Reset
                             </Button>
                             <Button
-                                className='py-[0.5rem]'
+                                className=' '
                                 variant="contained"
                                 color="primary"
                                 sx={{
                                     backgroundColor: "#4856BEF5",
                                     fontSize: "10px",
-                                    fontWeight: "800",
+                                     
                                     color: "white",
                                     borderRadius: "5px",
                                     padding: "12px"

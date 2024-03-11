@@ -342,6 +342,7 @@ const Screen16 = () => {
                   style={{
                     fontSize: "13px",
                     fontWeight: 400,
+                    width:"max-content"
                   }}
                   id={pages[index].name}
                 >
