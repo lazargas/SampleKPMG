@@ -28,6 +28,7 @@ import Screen23 from "./components/organisms/screens/screen-23/Screen23";
 import Screen25 from "./components/organisms/screens/screen-25/Screen25";
 import Screen28 from "./components/organisms/screens/screen-28/Screen28"
 import Screen32 from "./components/organisms/screens/screen-32/Screen32";
+import Screen33 from "./components/organisms/screens/screen-33/Screen33";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
 import Screen14 from "./components/organisms/screens/screen-14/Screen14";
 import Screen15 from "./components/organisms/screens/screen-15/Screen15";
@@ -63,6 +64,11 @@ const router = createBrowserRouter([
   {
     path: "/screen-32",
     element: <Screen32 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-33",
+    element: <Screen33 />,
     errorElement: <ErrorPage />,
   },
   {
