@@ -78,7 +78,7 @@ const SearchBar = ({
           advancedModal ? "flex " : "hidden"
         } fixed inset-0 items-center justify-center z-50 bg-gray-800 bg-opacity-50`}
       >
-        <form className="w-[60%] bg-white rounded-lg p-6">
+        <form className="w-[60%] bg-white rounded-lg p-6 max-h-[400px] overflow-y-scroll">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

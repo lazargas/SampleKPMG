@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import KPMGContext from "../../context/SampleContext";
-const AddNewModal = ({ isOpen, onClose, data }) => {
-  const { pageLabels, setPageLabels } = useContext(KPMGContext);
+const AddNewModal = ({ isOpen, onClose, data, title }) => {
 
   const [columnFields, setColumnFields] = useState([]);
 
@@ -37,9 +36,8 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
   return (
     // Modal container
     <div
-      className={`${
-        isOpen ? "block" : "hidden"
-      } fixed inset-0 overflow-y-auto z-50 `}
+      className={`${isOpen ? "block" : "hidden"
+        } fixed inset-0 overflow-y-auto z-50 `}
     >
       <div className="w-[450px] mx-auto flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Background overlay */}
@@ -71,7 +69,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
               id="modal-headline"
               style={{ fontSize: "14px" }}
             >
-              {`Add New ${pageLabels.name}`}
+              {`Add New ${title}`}
             </h3>
           </div>
 
@@ -119,7 +117,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
           >
             {/* Input fields */}
             {mode === "web" && (
-              <div className="overflow-y-scroll h-[120px] my-2 mx-2 grid grid-cols-2 gap-12">
+              <div className="overflow-y-scroll grid grid-cols-1 md:grid-cols-2 gap-4 w-[max-content]">
                 {columnFields?.map((col, index) => (
                   <div className="mb-2" key={index}>
                     <label
@@ -187,14 +185,14 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Lookup Type Name
+                              Data Column 1
                             </th>
                             <th
                               scope="col"
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Display Name
+                              Data Column 2
                             </th>
                           </tr>
                         </thead>
@@ -253,14 +251,14 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Lookup Type Name
+                              Data Column 1
                             </th>
                             <th
                               scope="col"
                               className={`px-6 py-3 min-w-[150px]`}
                               style={{ fontSize: "11px" }}
                             >
-                              Display Name
+                              Data Column 2
                             </th>
                           </tr>
                         </thead>
@@ -306,7 +304,7 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                     <div className="h-[15px] ml-4 mt-5">
                       {dataError && (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                          Data 2 is a not a valid value for Lookup field
+                          Data 2 is a not a valid value for Data Column 1 field
                         </p>
                       )}
                     </div>
@@ -323,11 +321,10 @@ const AddNewModal = ({ isOpen, onClose, data }) => {
                 <button
                   type="button"
                   disabled={!selectedFile}
-                  className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${
-                    !selectedFile
+                  className={`inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-[#4856BE] ${!selectedFile
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-blue-800"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4856BE]`}
                   onClick={() => setUploaded("uploaded")}
                   style={{ fontSize: "12px" }}
                 >

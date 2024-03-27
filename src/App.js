@@ -21,20 +21,55 @@ import Sections from "./assets/images/Sections.svg";
 import SectionsSelected from "./assets/images/Sections - selected.svg";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "./components/organisms/Home-Page/HomePage";
+import Screen8 from "./components/organisms/screens/screen-8/Screen8";
 import Screen22 from "./components/organisms/screens/screen-22/Screen22";
-import ErrorPage from "./components/organisms/Error-page/ErrorPage";
+import Screen23 from "./components/organisms/screens/screen-23/Screen23";
+import Screen25 from "./components/organisms/screens/screen-25/Screen25";
+import Screen28 from "./components/organisms/screens/screen-28/Screen28";
+import Screen32 from "./components/organisms/screens/screen-32/Screen32";
+import Screen33 from "./components/organisms/screens/screen-33/Screen33";
 import Screen36 from "./components/organisms/screens/screen-36/Screen36";
+import Screen14 from "./components/organisms/screens/screen-14/Screen14";
+import Screen15 from "./components/organisms/screens/screen-15/Screen15";
+import Screen16 from "./components/organisms/screens/screen-16/Screen16";
+import ErrorPage from "./components/organisms/Error-page/ErrorPage";
 import Screen42 from "./components/organisms/screens/screen-42/Screen42";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <CommonPage />,
+    element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/screen-22",
     element: <Screen22 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-23",
+    element: <Screen23 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-25",
+    element: <Screen25 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-28",
+    element: <Screen28 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-32",
+    element: <Screen32 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-33",
+    element: <Screen33 />,
     errorElement: <ErrorPage />,
   },
   {
@@ -47,6 +82,31 @@ const router = createBrowserRouter([
     element: <Screen42 />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/screen-8",
+    element: <Screen8 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-9",
+    element: <CommonPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-14",
+    element: <Screen14 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-15",
+    element: <Screen15 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/screen-16",
+    element: <Screen16 />,
+    errorElement: <ErrorPage />,
+  },
 ]);
 
 function App() {
@@ -55,6 +115,11 @@ function App() {
     dataIndex: 0,
     data: lookupTypeData,
   });
+
+  const [attributeData, setAttributeData] = useState([
+    { name: "", values: [] },
+    // Add more objects as needed
+  ]);
 
   const pages = [
     {
@@ -140,6 +205,8 @@ function App() {
         gsapselect,
         setgsapSelect,
         animateSlide,
+        attributeData,
+        setAttributeData,
       }}
     >
       <div className="overflow-hidden">

@@ -11,18 +11,26 @@ import Slider from "../../../Animation/Slider";
 import "../../../../styles/Animation/slider.css";
 
 // icons
-import BusinessEntity from "../../../../assets/images/Business entity.svg";
-import BusinessEntitySelected from "../../../../assets/images/Business entity - selected.svg";
-import Function from "../../../../assets/images/Function.svg";
-import FunctionSelected from "../../../../assets/images/Function - selected.svg";
-import Data from "../../../../assets/images/Data.svg";
-import DataSelected from "../../../../assets/images/Data - selected.svg";
-import Attributes from "../../../../assets/images/Attributes.svg";
-import AttributesSelected from "../../../../assets/images/Attributes - selected.svg";
-import References from "../../../../assets/images/References.svg";
-import ReferencesSelected from "../../../../assets/images/References - selected.svg";
-import Sections from "../../../../assets/images/Sections.svg";
-import SectionsSelected from "../../../../assets/images/Sections - selected.svg";
+import Data from "../../../../assets/screens/screen-32/Data.svg";
+import DataSelected from "../../../../assets/screens/screen-32/DataSelected.svg";
+import AttributeTagging from "../../../../assets/screens/screen-32/attributeTagging.svg";
+import AttributeTaggingSelected from "../../../../assets/screens/screen-32/attributeTaggingSelected.svg";
+import DataCollection from "../../../../assets/screens/screen-32/DataCollection.svg";
+import DataCollectionSelected from "../../../../assets/screens/screen-32/DataCollectionSelected.svg";
+import Delegate from "../../../../assets/screens/screen-32/Delegate.svg";
+import DelegateSelected from "../../../../assets/screens/screen-32/DelegateSelected.svg";
+import Order from "../../../../assets/screens/screen-32/Order.svg";
+import OrderSelected from "../../../../assets/screens/screen-32/OrderSelected.svg";
+import Process from "../../../../assets/screens/screen-32/process.svg";
+import ProcessSelected from "../../../../assets/screens/screen-32/processSelected.svg";
+import RolesAndLevels from "../../../../assets/screens/screen-32/RolesAndLevels.svg";
+import RolesAndLevelsSelected from "../../../../assets/screens/screen-32/RolesAndLevelsSelected.svg";
+import Users from "../../../../assets/screens/screen-32/users.svg";
+import UsersSelected from "../../../../assets/screens/screen-32/usersSelected.svg";
+import Workflow from "../../../../assets/screens/screen-32/workflow.svg";
+import WorkflowSelected from "../../../../assets/screens/screen-32/workflowSelected.svg";
+import WorkflowRel from "../../../../assets/screens/screen-32/workflowRel.svg";
+import WorkflowRelSelected from "../../../../assets/screens/screen-32/workflowRelSelected.svg";
 
 // MUI Components
 import CustomAccordian from "../../../atoms/CustomAccordian";
@@ -56,42 +64,42 @@ const Screen36 = () => {
 
   const pages = [
     {
-      name: "Workflow",
-      notSelected: BusinessEntitySelected,
-      selected: BusinessEntitySelected,
-      data: businessEntityData,
+        name: "Workflow",
+        notSelected: Workflow,
+        selected: WorkflowSelected,
+        data: [],
     },
     {
-      name: "Data Governance",
-      notSelected: DataSelected,
-      selected: DataSelected,
-      data: [],
+        name: "Data Governance",
+        notSelected: Data,
+        selected: DataSelected,
+        data: [],
     },
     {
-      name: "Conditional Data Governance",
-      notSelected: FunctionSelected,
-      selected: FunctionSelected,
-      data: [],
+        name: "Conditional Data Governance",
+        notSelected: DataCollection,
+        selected: DataCollectionSelected,
+        data: [],
     },
     {
-      name: "Workflow Relationship",
-      notSelected: Sections,
-      selected: SectionsSelected,
-      data: [],
+        name: "Workflow Relationship",
+        notSelected: WorkflowRel,
+        selected: WorkflowRelSelected,
+        data: [],
     },
     {
-      name: "Delegate Workflow",
-      notSelected: Attributes,
-      selected: AttributesSelected,
-      data: [],
+        name: "Delegate Workflow",
+        notSelected: Delegate,
+        selected: DelegateSelected,
+        data: [],
     },
     {
-      name: "Attribute Tagging",
-      notSelected: References,
-      selected: ReferencesSelected,
-      data: lookupTypeData,
+        name: "Workflow Process",
+        notSelected: Process,
+        selected: ProcessSelected,
+        data: [],
     },
-  ];
+];
 
   const handleCardClick = (index) => {
     setPageLabels({
@@ -493,24 +501,107 @@ const Screen36 = () => {
                 </TableContainer>
               </div>
 
-              <div className="mx-2">
-                <Tooltip title="Add new row" arrow>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<AddIcon />}
-                    onClick={handleAddRow}
-                    sx={{
-                      backgroundColor: "#4856BEF5",
-                      fontSize: "10px",
-                      color: "white",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    Add
-                  </Button>
-                </Tooltip>
-              </div>
+              <div className='flex justify-between items-center'>
+                        <div className="px-3">
+                            <Tooltip title="Add new row" arrow>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<AddIcon />}
+                                    onClick={handleAddRow}
+                                    sx={{
+                                        backgroundColor: "#4856BEF5",
+                                        fontSize: "10px",
+                                        color: "white",
+                                        borderRadius: "5px",
+                                    }}
+                                >
+                                    Add
+                                </Button>
+                            </Tooltip></div>
+                        <div className='flex gap-[0.5rem] justify-end items-center px-3' >
+
+
+                            <Button
+                                className='py-[0.5rem]'
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    backgroundColor: "#4856BEF5",
+                                    fontSize: "10px",
+                                      
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    padding: "12px"
+                                }}
+                            >
+                                Previous
+                            </Button>
+
+
+                            <Button
+                                className='py-[0.5rem]'
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    backgroundColor: "#4856BEF5",
+                                    fontSize: "10px",
+                                      
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    padding: "12px"
+                                }}
+                            >
+                                Save And Next
+                            </Button>
+
+                            <Button
+                                className='py-[0.5rem]'
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    backgroundColor: "#4856BEF5",
+                                    fontSize: "10px",
+                                      
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    padding: "12px"
+                                }}
+                            >
+                                Save And Close
+                            </Button>
+                            <Button
+                                className='py-[0.5rem]'
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    backgroundColor: "#4856BEF5",
+                                    fontSize: "10px",
+                                      
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    padding: "12px"
+                                }}
+                            >
+                                Reset
+                            </Button>
+                            <Button
+                                className='py-[0.5rem]'
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    backgroundColor: "#4856BEF5",
+                                    fontSize: "10px",
+                                      
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    padding: "12px"
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
             </Grid>
 
             <Grid item xs={2} className="bg-[#F7F9FB] rounded-lg">

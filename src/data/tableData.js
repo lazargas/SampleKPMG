@@ -107,27 +107,73 @@ const lookupTypeData = [
 
 const businessEntityData = [
   [
-    { columnName: "Business Entity Type", columnValue: "Toyota" },
-    {
-      columnName: "Display Name",
-      columnValue: "Toyota Motor Corporation",
-    },
+    { columnName: "Entity Short Name", columnValue: "Toyota" },
+    { columnName: "Business Entity Name", columnValue: "Toyota Motor Corporation" },
   ],
   [
-    { columnName: "Business Entity Type", columnValue: "Honda" },
-    { columnName: "Display Name", columnValue: "Honda Motor Co., Ltd." },
+    { columnName: "Entity Short Name", columnValue: "Honda" },
+    { columnName: "Business Entity Name", columnValue: "Honda Motor Co., Ltd." },
   ],
   [
-    { columnName: "Business Entity Type", columnValue: "BMW" },
-    {
-      columnName: "Display Name",
-      columnValue: "Bayerische Motoren Werke AG",
-    },
+    { columnName: "Entity Short Name", columnValue: "BMW" },
+    { columnName: "Business Entity Name", columnValue: "Bayerische Motoren Werke AG" },
   ],
   [
-    { columnName: "Business Entity Type", columnValue: "Mercedes-Benz" },
-    { columnName: "Display Name", columnValue: "Mercedes-Benz" },
+    { columnName: "Entity Short Name", columnValue: "Mercedes-Benz" },
+    { columnName: "Business Entity Name", columnValue: "Mercedes-Benz" },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "Apple" },
+    { columnName: "Business Entity Name", columnValue: "Apple Inc." },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "Google" },
+    { columnName: "Business Entity Name", columnValue: "Alphabet Inc." },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "Amazon" },
+    { columnName: "Business Entity Name", columnValue: "Amazon.com Inc." },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "Microsoft" },
+    { columnName: "Business Entity Name", columnValue: "Microsoft Corporation" },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "Samsung" },
+    { columnName: "Business Entity Name", columnValue: "Samsung Electronics Co., Ltd." },
+  ],
+  [
+    { columnName: "Entity Short Name", columnValue: "General Electric" },
+    { columnName: "Business Entity Name", columnValue: "General Electric Company" },
   ],
 ];
 
-module.exports = { lookupTypeData, businessEntityData };
+const attributesEntityData = [
+  [
+    { columnName: "Attribute Name", columnValue: "Age" },
+    { columnName: "Attribute Type", columnValue: "Integer" },
+    { columnName: "Is Required", columnValue: true },
+    { columnName: "Attribute Length", columnValue: 3 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "age" }
+  ],
+  [
+    { columnName: "Attribute Name", columnValue: "Date of Birth" },
+    { columnName: "Attribute Type", columnValue: "Date" },
+    { columnName: "Is Required", columnValue: false },
+    { columnName: "Attribute Length", columnValue: 7 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "dob" }
+  ],
+  [
+    { columnName: "Attribute Name", columnValue: "Country" },
+    { columnName: "Attribute Type", columnValue: "String" },
+    { columnName: "Is Required", columnValue: true },
+    { columnName: "Attribute Length", columnValue: 50 },
+    { columnName: "table Name", columnValue: "Users" },
+    { columnName: "column Name", columnValue: "country" }
+  ]
+];
+
+
+module.exports = { lookupTypeData, businessEntityData, attributesEntityData };

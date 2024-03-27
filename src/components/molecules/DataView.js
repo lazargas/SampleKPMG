@@ -1,46 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
-import EditModal from "../atoms/EditModal";
-import DeleteModal from "../atoms/DeleteModal";
 import "../../styles/atoms/table.css";
+import DeleteModal from "../atoms/DeleteModal";
+import EditModal from "../atoms/EditModal";
 
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-import { GrPrevious, GrNext } from "react-icons/gr";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import FilterModal from "../atoms/FilterModal";
-import KPMGContext from "../../context/SampleContext";
-import SearchBar from "../atoms/SearchBar.js";
-import { IoIosClose } from "react-icons/io";
-import demoData from "../../data/tableData";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import Dropdown from "../atoms/Dropdown";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
-import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import { GrNext, GrPrevious } from "react-icons/gr";
+import { IoIosClose } from "react-icons/io";
 import { GridIcon, ListIcon, TableIcon } from "../../assets/Icons";
+import KPMGContext from "../../context/SampleContext";
+import demoData from "../../data/tableData";
 import "../../styles/atoms/select.css";
+import Dropdown from "../atoms/Dropdown";
+import FilterModal from "../atoms/FilterModal";
+import SearchBar from "../atoms/SearchBar.js";
 import TagsModal from "../atoms/TagsModal";
 
 import {
+  Box,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
-  Box,
-  TableSortLabel,
 } from "@mui/material";
-import AddNewModal from "../atoms/AddNewModal";
-import ViewModal from "../atoms/ViewModal";
 import ExportExcel from "../../Excel/ExcelExport";
 import ExcelData from "../../data/excelData.json";
+import AddNewModal from "../atoms/AddNewModal";
+import ViewModal from "../atoms/ViewModal";
 
 const DataView = ({ data, handleSort }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -346,8 +343,8 @@ const DataView = ({ data, handleSort }) => {
   return (
     <div className="table-container-inside bg-[#F7F9FB] ">
       <div className=" flex justify-between gap-4">
-        <div className="relative flex flex-col z-[1] gap-4 pb-4">
-          {/* <p className="absolute text-[12px]  top-[-20px]  opacity-[0.4] " >Select Page</p> */}
+        <div className="relative flex flex-col z-[1] gap-2 pb-2">
+          <p className="relative text-[12px]   opacity-[0.7] ">Select Page:</p>
 
           <Dropdown data={["Lookup Type", "Lookup"]} />
 
@@ -408,7 +405,7 @@ const DataView = ({ data, handleSort }) => {
         </div>
 
         <div
-          className={`relative flex flex-col gap-2 justify-between items-center px-4 ${
+          className={`relative flex flex-col gap-4 items-center px-4 ${
             advancedFilterState[0].value ||
             searchFilter != "" ||
             advancedFilterState[1].value
@@ -501,6 +498,7 @@ const DataView = ({ data, handleSort }) => {
         isOpen={isAddModalOpen}
         onClose={closeModal}
         data={tableData}
+        title={"Lookup Type"}
       />
       <EditModal
         isOpen={isEditModalOpen}
@@ -692,32 +690,17 @@ const DataView = ({ data, handleSort }) => {
                                   : handleViewClick(rowData)
                               }
                             >
-                              {IconComponent == DeleteIcon ? (
-                                <IconComponent
-                                  className="mr-3"
-                                  sx={{
-                                    fontSize: "25px",
-                                    padding: "4px",
-                                    borderRadius: "50%",
-                                    "&:hover": {
-                                      backgroundColor: "#f5f5f5",
-                                    },
-                                  }}
-                                  style={{ color: "red" }}
-                                />
-                              ) : (
-                                <IconComponent
-                                  className="mr-3"
-                                  sx={{
-                                    fontSize: "25px",
-                                    padding: "4px",
-                                    borderRadius: "50%",
-                                    "&:hover": {
-                                      backgroundColor: "#f5f5f5",
-                                    },
-                                  }}
-                                />
-                              )}
+                              <IconComponent
+                                className="mr-3"
+                                sx={{
+                                  fontSize: "25px",
+                                  padding: "4px",
+                                  borderRadius: "50%",
+                                  "&:hover": {
+                                    backgroundColor: "#f5f5f5",
+                                  },
+                                }}
+                              />
                             </button>
                           ))}
                         </TableCell>
