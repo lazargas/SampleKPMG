@@ -478,7 +478,10 @@ const DataView = ({ data, handleSort }) => {
             {advancedFilterState[0].value ||
             searchFilter != "" ||
             advancedFilterState[1].value ? (
-              <button title="Show All Tags" className="bg-[#4856BEF5] text-white rounded-full py-2 px-3 flex items-center space-x-1 text-xs font-sans">
+              <button
+                title="Show All Tags"
+                className="bg-[#4856BEF5] text-white rounded-full py-2 px-3 flex items-center space-x-1 text-xs font-sans"
+              >
                 <p>All Tags</p>
               </button>
             ) : (
@@ -688,7 +691,6 @@ const DataView = ({ data, handleSort }) => {
                                   ? handleEditClick(rowData)
                                   : handleViewClick(rowData)
                               }
-                              
                             >
                               {IconComponent == DeleteIcon ? (
                                 <IconComponent

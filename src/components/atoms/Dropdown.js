@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Select, MenuItem, FormControl,Typography } from "@mui/material";
+import { Select, MenuItem, FormControl, Typography } from "@mui/material";
 
 const Dropdown = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
-    // Set the initial selected value to the first item in the data array
     if (data.length > 0) {
       setSelectedValue(data[0]);
     }
@@ -13,7 +12,6 @@ const Dropdown = ({ data }) => {
 
   return (
     <div title="Select Page">
-      
       <FormControl
         sx={{ width: 190, bgcolor: "#4856BEF5", borderRadius: "5px" }}
       >
@@ -22,9 +20,9 @@ const Dropdown = ({ data }) => {
           onChange={(e) => setSelectedValue(e.target.value)}
           displayEmpty
           sx={{
-            fontSize:"12px",
-            height:"42px",
-       
+            fontSize: "12px",
+            height: "42px",
+
             color: "white",
             ".MuiOutlinedInput-notchedOutline": {
               borderColor: "rgba(228, 219, 233, 0.25)",
@@ -42,8 +40,7 @@ const Dropdown = ({ data }) => {
         >
           {data &&
             data.map((item) => (
-              <MenuItem key={item} value={item} sx={{ fontSize:"12px"
-            }}>
+              <MenuItem key={item} value={item} sx={{ fontSize: "12px" }}>
                 {item}
               </MenuItem>
             ))}
